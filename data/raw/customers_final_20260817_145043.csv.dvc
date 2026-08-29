@@ -1,0 +1,5 @@
+outs:
+- md5: a335f31407c51bcacf366e577abbddc6
+  size: 1285371
+  hash: md5
+  path: customers_final_20260817_145043.csv

@@ -1,0 +1,72 @@
+# =============================================================
+# CIF Credit Intelligence — Pipeline DVC reproductible
+#
+# Étapes : préparation des features → entraînement → évaluation.
+# Paramètres entrepris dans configs/params.yaml (source de vérité)
+# et injectés via `params` ci-dessous.
+#
+# Rejouer tout :  uv run dvc repro
+# =============================================================
+
+stages:
+  prepare:
+    cmd: >-
+      uv run cifci-prepare
+      --customers data/raw/customers_final_20260817_145043.csv
+      --loans data/raw/loans_final_20260817_145043.csv
+      --out data/processed/features_prepared_pipeline.csv
+    deps:
+      - data/raw/customers_final_20260817_145043.csv
+      - data/raw/loans_final_20260817_145043.csv
+      - src/cifci/features/build.py
+    params:
+      - configs/params.yaml:
+          - data.random_seed
+          - features.list
+          - features.forbidden_variables
+    outs:
+      - data/processed/features_prepared_pipeline.csv
+
+  train:
+    cmd: >-
+      uv run cifci-run-train
+      --features data/processed/features_prepared_pipeline.csv
+      --out models/trained/pipeline_model.joblib
+    deps:
+      - data/processed/features_prepared_pipeline.csv
+      - src/cifci/features/validate.py
+      - src/cifci/models/train.py
+    params:
+      - configs/params.yaml:
+          - model.algorithm
+          - model.objective
+          - model.eval_metric
+          - model.n_estimators
+          - model.max_depth
+          - model.learning_rate
+          - model.subsample
+          - model.colsample_bytree
+          - model.random_state
+          - model.early_stopping_rounds
+          - calibration.method
+    outs:
+      - models/trained/pipeline_model.joblib
+
+  evaluate:
+    cmd: >-
+      uv run cifci-evaluate
+      --features data/processed/features_prepared_pipeline.csv
+      --model models/trained/pipeline_model.joblib
+      --out reports/metrics/pipeline_evaluation.json
+    deps:
+      - data/processed/features_prepared_pipeline.csv
+      - models/trained/pipeline_model.joblib
+      - src/cifci/evaluate/metrics.py
+    params:
+      - configs/params.yaml:
+          - evaluation.bootstrap_splits
+          - evaluation.time_windows
+          - decision_engine.thresholds
+    metrics:
+      - reports/metrics/pipeline_evaluation.json:
+          cache: false

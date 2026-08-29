@@ -1,0 +1,126 @@
+schema: '2.0'
+stages:
+  prepare:
+    cmd: uv run cifci-prepare --customers 
+      data/raw/customers_final_20260817_145043.csv --loans 
+      data/raw/loans_final_20260817_145043.csv --out 
+      data/processed/features_prepared_pipeline.csv
+    deps:
+    - path: data/raw/customers_final_20260817_145043.csv
+      hash: md5
+      md5: a335f31407c51bcacf366e577abbddc6
+      size: 1285371
+    - path: data/raw/loans_final_20260817_145043.csv
+      hash: md5
+      md5: bcb0a53bf1d2f5defb0cd1923d11c898
+      size: 1330303
+    - path: src/cifci/features/build.py
+      hash: md5
+      md5: 5903c6665845ac1f93b2abd628468d82
+      size: 5723
+    params:
+      configs/params.yaml:
+        data.random_seed: 42
+        features.forbidden_variables:
+        - p_default_true
+        - p_default
+        - probability_default
+        - true_default
+        features.list:
+        - age
+        - seniority_months
+        - monthly_income
+        - current_savings
+        - avg_savings_24m
+        - savings_std_24m
+        - savings_volatility
+        - savings_stability
+        - n_past_loans
+        - current_loan_request
+        - current_loan_duration
+        - loan_to_savings_ratio
+        - n_loans
+        - avg_loan_amount
+        - total_loan_amount
+        - avg_repayment_regularity
+        - min_repayment_regularity
+        - max_historical_dpd
+        - mean_historical_dpd
+        - n_defaults
+        - loan_to_income_ratio
+        - historical_default_rate
+        - savings_to_income_ratio
+        - seniority_years
+        - overall_payment_regularity
+    outs:
+    - path: data/processed/features_prepared_pipeline.csv
+      hash: md5
+      md5: 98f71a8c2680485232a973a32e3c761a
+      size: 2174589
+  train:
+    cmd: uv run cifci-run-train --features 
+      data/processed/features_prepared_pipeline.csv --out 
+      models/trained/pipeline_model.joblib
+    deps:
+    - path: data/processed/features_prepared_pipeline.csv
+      hash: md5
+      md5: 98f71a8c2680485232a973a32e3c761a
+      size: 2174589
+    - path: src/cifci/features/validate.py
+      hash: md5
+      md5: 4c522667a5a718f24c9bc7845d75f3bf
+      size: 3100
+    - path: src/cifci/models/train.py
+      hash: md5
+      md5: 3181abb80ff03595dd97d5abe381b0ad
+      size: 6277
+    params:
+      configs/params.yaml:
+        calibration.method: isotonic
+        model.algorithm: xgboost
+        model.colsample_bytree: 0.8
+        model.early_stopping_rounds: 30
+        model.eval_metric: aucpr
+        model.learning_rate: 0.03
+        model.max_depth: 4
+        model.n_estimators: 300
+        model.objective: binary:logistic
+        model.random_state: 42
+        model.subsample: 0.9
+    outs:
+    - path: models/trained/pipeline_model.joblib
+      hash: md5
+      md5: 0182e59fc438c5b61961fb67f4112b83
+      size: 235367
+  evaluate:
+    cmd: uv run cifci-evaluate --features 
+      data/processed/features_prepared_pipeline.csv --model 
+      models/trained/pipeline_model.joblib --out 
+      reports/metrics/pipeline_evaluation.json
+    deps:
+    - path: data/processed/features_prepared_pipeline.csv
+      hash: md5
+      md5: 98f71a8c2680485232a973a32e3c761a
+      size: 2174589
+    - path: models/trained/pipeline_model.joblib
+      hash: md5
+      md5: 0182e59fc438c5b61961fb67f4112b83
+      size: 235367
+    - path: src/cifci/evaluate/metrics.py
+      hash: md5
+      md5: a46d2e58ac45fc2a574e43623cebe4d1
+      size: 4024
+    params:
+      configs/params.yaml:
+        decision_engine.thresholds:
+          auto_approve: 0.05
+          human_review: 0.2
+          adjust: 0.3
+          hard_refuse: 0.5
+        evaluation.bootstrap_splits: 1000
+        evaluation.time_windows: 5
+    outs:
+    - path: reports/metrics/pipeline_evaluation.json
+      hash: md5
+      md5: b17ed38c7520bc926269cf160d999de8
+      size: 1130

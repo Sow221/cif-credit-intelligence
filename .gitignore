@@ -100,3 +100,13 @@ tmp/
 .tmp/
 *.bak
 *.tmp
+
+# ---------- DVC : pointeurs versionnés ----------
+# Les règles ci-dessus (data/*, *.csv, models/*) ignorent le contenu des
+# données. Les pointeurs .dvc (références vers le cache de contenu) DOIVENT
+# être versionnés pour garantir la reproductibilité — règles placées APRÈS
+# les ignores pour les surcharger.
+!*.dvc
+!data/**/*.dvc
+!models/**/*.dvc
+!**/*.dvc
