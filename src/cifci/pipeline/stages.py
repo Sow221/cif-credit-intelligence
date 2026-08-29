@@ -10,7 +10,7 @@ import argparse
 import json
 import sys
 
-from cifci.config import PROJECT_ROOT, get_config
+from cifci.config import get_config
 
 
 def _prepare_features(argv: list[str] | None = None) -> int:
@@ -45,7 +45,7 @@ def _train(argv: list[str] | None = None) -> int:
     import pandas as pd
 
     from cifci.features.validate import assert_no_leakage
-    from cifci.models.train import calibrate, evaluate_model, temporal_split, train_model
+    from cifci.models.train import calibrate, evaluate_model, train_model
 
     cfg = get_config()
     df = pd.read_csv(args.features)

@@ -1,0 +1,38 @@
+# =============================================================
+# Pre-commit — CIF Credit Intelligence
+# Gates locaux : formattage, lint, typecheck, tests avant chaque
+# commit. Installation :  uv run pre-commit install
+# =============================================================
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.6.9
+    hooks:
+      - id: ruff
+        args: [--fix]
+      - id: ruff-format
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.11.2
+    hooks:
+      - id: mypy
+        additional_dependencies: ["pydantic>=2.5", "pandas>=2.1", "numpy>=1.26"]
+        args: [src/cifci]
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+        exclude: "dvc\\.yaml$"
+      - id: check-added-large-files
+        args: ["--maxkb=500"]
+
+  - repo: local
+    hooks:
+      - id: pytest
+        name: pytest (tests + anti-leakage)
+        entry: uv run pytest tests -q
+        language: system
+        pass_filenames: false
+        always_run: true

@@ -1,0 +1,59 @@
+# =============================================================
+# CI — CIF Credit Intelligence
+# Exécute à chaque push / PR : lint (ruff), typecheck (mypy),
+# tests unitaires (pytest) et contrôle anti-leakage.
+# =============================================================
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint-typecheck:
+    name: Lint & typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.11"
+      - name: Install package (dev deps)
+        run: uv sync --extra dev
+      - name: Ruff lint
+        run: uv run ruff check src tests
+      - name: Ruff format check
+        run: uv run ruff format --check src tests
+      - name: Mypy typecheck
+        run: uv run mypy src/cifci
+
+  tests:
+    name: Tests (pytest)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.11"
+      - name: Install package (test deps)
+        run: uv sync --extra test
+      - name: Run tests + coverage
+        run: uv run pytest tests -v --cov=cifci --cov-report=term-missing
+      - name: Anti-leakage guard (fichiers contaminés)
+        run: uv run python -m pytest tests/test_anti_leakage.py -v
+
+  match-official-schema:
+    name: Contrat des 25 features officielles
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.11"
+      - name: Install package
+        run: uv sync --extra test
+      - name: Vérifie la construction des features contre params.yaml
+        run: uv run pytest tests/test_features_build.py -v

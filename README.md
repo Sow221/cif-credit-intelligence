@@ -54,7 +54,8 @@ jusqu'à un **protocole verrouillé pour la phase réelle**.
 3. **Pilotage économique** : fonction de coût (revue, faux positifs, faux
    négatifs) pour choisir le seuil et la capacité de revue humaine optimaux.
 4. **Explicabilité** : chaîne `DATA → INTELLIGENCE → RISK → DECISION`,
-   avec analyse des variables par importance et (à venir) SHAP.
+   avec importance globale et contributions **SHAP** locales par client
+   (exposées via l'API).
 
 ## Le point différenciant : la méthode
 
@@ -77,21 +78,23 @@ groupe, thin-file segmentés, coûts réels pour les seuils.
 ```
 .
 ├── src/cifci/          # Package principal (source de vérité)
-│   ├── data/          #   ingestion / génération
+│   ├── data/          #   ingestion / génération synthétique seedée
 │   ├── features/      #   feature engineering + GARDE ANTI-LEAKAGE
 │   ├── models/        #   entraînement, calibration, registre
-│   ├── evaluate/      #   métriques, bootstrap, fairness, drift, coût
+│   ├── evaluate/      #   métriques, bootstrap CI, segments CIF
 │   ├── decision/      #   moteur de décision
-│   ├── explain/       #   explicabilité (SHAP)
-│   └── api/           #   service de scoring (FastAPI)
-├── tests/             # pytest : anti-leakage, temporalité, calibration, API
-├── configs/params.yaml# Tous les paramètres centralisés
+│   ├── explain/       #   explicabilité (SHAP local + global)
+│   ├── pipeline/      #   étapes CLI appelées par DVC
+│   └── api/           #   service de scoring (FastAPI) + CLI
+├── tests/             # pytest : anti-leakage, temporalité, features, API
+├── configs/params.yaml# Tous les paramètres centralisés (source de vérité)
+├── dvc.yaml           # Pipeline reproductible (prepare → train → evaluate)
 ├── data/              # Données (DVC-tracked, hors git)
 ├── models/            # Modèles & registre (DVC-tracked, hors git)
-├── reports/           # Rapports d'audit A-F, figures, métriques
+├── reports/           # Audits A-F, figures, métriques (versionnées)
 ├── docs/              # Protocoles & documentation de validation
-├── dashboard/         # (à venir) interface de suivi
-└── notebooks/         # Exploration & démo (exécutées)
+├── .github/workflows/ # CI : ruff, mypy, pytest, garde anti-leakage
+└── dashboard/         # (à venir) interface de suivi
 ```
 
 ## Quickstart
@@ -106,13 +109,17 @@ uv sync --extra dev --extra test
 # 3. Vérifier la santé : le garde anti-leakage doit être VERT
 uv run pytest tests/ -q
 
-# 4. Lancer la pipeline complète (reproductible)
-# uv run dvc repro        # (nécessite le setup DVC décrit plus bas)
+# 4. Lancer la pipeline complète (reproductible — DVC)
+uv run dvc repro          # prepare → train → evaluate
+
+# 5. (Optionnel) Lancer l'API de scoring en local
+uv run uvicorn cifci.api.app:app --reload   # → http://127.0.0.1:8000/docs
 ```
 
->[!NOTE] Le jeu d'outils de CI/CD, DVC et l'API sont définis dans la roadmap ;
->les scripts d'exécution sont ajoutés incrémentalement. Contrairement à un
->notebook jetable, **chaque étape est versionnée et testable**.
+> [!NOTE] **Industrialisation livrée** : pipeline DVC rejouable, CI/CD
+> (GitHub Actions : ruff, mypy, pytest, garde anti-leakage), API FastAPI
+> (`/score`, `/explain`, `/health`), CLI de prédiction, SHAP et pre-commit.
+> Chaque étape est versionnée et testable — rien de jetable.
 
 ## Stack technique
 
@@ -131,12 +138,16 @@ uv run pytest tests/ -q
 > (taux de défaut cible ≈ 11.8%, seed contrôlé). À ne JAMAIS présenter comme
 > une performance réelle.
 
-| Métrique | Modèle officiel (synthétique) |
-|---|---|
-| ROC-AUC | ≈ 0.83 |
-| PR-AUC | ≈ 0.47 |
-| Brier (après calibration) | ≈ 0.084 |
-| Segmentation thin-file / riche | validée |
+| Métrique | Modèle officiel (synthétique) | Pipeline reproduit (DVC) |
+|---|---|---|
+| ROC-AUC | ≈ 0.83 | ≈ 0.87 |
+| PR-AUC | ≈ 0.47 | ≈ 0.49 |
+| Brier (après calibration) | ≈ 0.084 | ≈ 0.075 |
+| IC95 bootstrap (ROC-AUC) | — | [0.86, 0.88] |
+| Segmentation thin-file / riche | validée | thin-file 0.82 → historique 4+ 0.85 |
+
+Le pipeline reproduit les métriques du modèle officiel **à partir du code**
+(`dvc repro`), avec un léger gain lié à la reconstruction propre des features.
 
 Audits menés (`reports/audit/`) : multi-seed, sans-signal, facteur latent,
 bootstrap, robustesse, drift, fairness, matrice de généralisation
@@ -170,12 +181,14 @@ Alignement intentionnel avec les exigences d'un environnement réglementé
 
 ## Roadmap
 
-1. **Phase réelle CIF** : recevoir un échantillon anonymisé → exécuter
-   `CIF_DATA_AUDIT_V1.1` → GO/NO-GO.
-2. **Industrialisation** : pipeline DVC rejouable, CI/CD, API de scoring
-   conteneurisée, monitoring (drift/performance), Model Card & Data Card.
-3. **Extension produit** : early-warning, portfolio intelligence,
-   interopérabilité (TELQAN Connect).
+- [x] **Industrialisation** : pipeline DVC rejouable (`make`/`dvc repro`),
+  CI/CD GitHub Actions (ruff, mypy, pytest, anti-leakage), API FastAPI
+  conteneurisable, CLI de prédiction, SHAP local/global, pre-commit.
+- [ ] **Phase réelle CIF** : recevoir un échantillon anonymisé → exécuter
+  `CIF_DATA_AUDIT_V1.1` → GO/NO-GO.
+- [ ] **Extension produit** : early-warning, portfolio intelligence,
+  interopérabilité (TELQAN Connect), monitoring (drift/performance),
+  Model Card & Data Card, dashboard de suivi.
 
 ---
 
