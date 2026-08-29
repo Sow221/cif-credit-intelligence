@@ -41,7 +41,7 @@ mlartifacts/
 # ---------- Données & artefacts volumineux (gérés par DVC) ----------
 # data/ et models/ : les fichiers lourds (csv, joblib) sont versionnés par DVC, pas git.
 # Ré-inclusion des dossiers pour garder les références légères versionnées
-#   (feature_columns.json, model_registry.json, .gitkeep).
+#   (feature_columns.json, model_registry.json, .gitkeep, README d'archive).
 data/*
 !data/.gitkeep
 !data/raw/
@@ -49,6 +49,7 @@ data/*
 !data/external/
 !data/cif_real/
 !data/test_adversarial/
+!data/archived/
 # à l'intérieur des dossiers data ré-inclus, ignore les artefacts lourds
 data/**/*.csv
 data/**/*.joblib

@@ -1,0 +1,127 @@
+# =============================================================
+# CIF CREDIT INTELLIGENCE — Paramètres du projet (source de vérité)
+# Centralisation de tous les hyperparamètres et settings.
+# Toute exécution lit ces valeurs : pas de constantes dispersées.
+# =============================================================
+
+project:
+  name: CIF Credit Intelligence
+  version: 0.1.0
+  status: SYNTHETIC_PHASE_CLOSED   # phases: SYNTHETIC → REAL_DATA_AUDIT → PILOT
+  description: >
+    Scoring de crédit & infrastructure de décision pour les SFD
+    (institutions de microfinance) de l'UEMOA. Phase synthétique validée
+    méthodologiquement. En attente des données CIF réelles.
+
+data:
+  raw_dir: data/raw
+  processed_dir: data/processed
+  test_adversarial_dir: data/test_adversarial
+  random_seed: 42
+  # Taux de défaut cible calibré pour la phase synthétique
+  target_default_rate: 0.1183
+  # Split CORRIGE : toujours temporel, jamais aléatoire (protocole CIF)
+  split: temporal
+
+features:
+  # Liste des 25 features du modèle officiel (source: MODEL_OFFICIAL_CALIBRATED)
+  list:
+    - age
+    - seniority_months
+    - monthly_income
+    - current_savings
+    - avg_savings_24m
+    - savings_std_24m
+    - savings_volatility
+    - savings_stability
+    - n_past_loans
+    - current_loan_request
+    - current_loan_duration
+    - loan_to_savings_ratio
+    - n_loans
+    - avg_loan_amount
+    - total_loan_amount
+    - avg_repayment_regularity
+    - min_repayment_regularity
+    - max_historical_dpd
+    - mean_historical_dpd
+    - n_defaults
+    - loan_to_income_ratio
+    - historical_default_rate
+    - savings_to_income_ratio
+    - seniority_years
+    - overall_payment_regularity
+  target: is_default
+  # Variables FORMELLEMENT INTERDITES dans toute feature d'entraînement
+  # (leakage catégorique : `p_default_true` encode la cible par construction)
+  forbidden_variables:
+    - p_default_true
+    - p_default
+    - probability_default
+    - true_default
+
+model:
+  algorithm: xgboost
+  objective: binary:logistic
+  eval_metric: aucpr
+  n_estimators: 300
+  max_depth: 5
+  learning_rate: 0.05
+  subsample: 0.9
+  colsample_bytree: 0.8
+  random_state: 42
+  early_stopping_rounds: 30
+
+calibration:
+  method: isotonic   # isotonic | platt
+  # Métriques avant/après (phase synthétique) — à recalculer sur données réelles
+  metrics_before:
+    brier: 0.1438
+  metrics_after:
+    brier: 0.0842
+
+evaluation:
+  # Métriques verrouillées AVANT les données réelles (protocole CIF)
+  metrics:
+    - roc_auc
+    - pr_auc
+    - brier
+    - log_loss
+    - recall_at_threshold
+    - precision_at_threshold
+    - mcc
+  bootstrap_splits: 1000
+  confidence_level: 0.95
+  # Validation temporelle multi-fenêtres
+  time_windows: 5
+  # Segments obligatoires d'évaluation (protocole CIF)
+  segments:
+    - thin_file_0_loan
+    - thin_file_1_loan
+    - history_2_3
+    - history_4_plus
+  fairness:
+    groups: [gender, sector, location]
+    require_ci: true
+
+decision_engine:
+  # Seuils PROVISOIRES (valables uniquement en phase synthétique).
+  # À RECALCULER avec les coûts/target réels de la CIF (protocole, frontière).
+  thresholds:
+    auto_approve: 0.05      # probabilité de défaut sous laquelle → APPROBATION
+    human_review: 0.20      # entre approve et review → REVUE_HUMAINE
+    adjust: 0.30            # zone d'ajustement de montant
+    hard_refuse: 0.50       # au-dessus → REFUS
+  thin_file_boost_review: true   # les thin-file sont orientés revue humaine
+  decisions:
+    - APPROBATION
+    - REVUE_HUMAINE
+    - AJUSTEMENT
+    - REFUS
+
+cost_model:
+  # Hypothèses de coût simulées (FCFA) — à recalibrer sur données réelles
+  cost_review: 5000
+  cost_false_negative: 150000
+  cost_false_positive: 25000
+  sensitivity_grid: [0.5, 1.0, 2.0, 5.0]
