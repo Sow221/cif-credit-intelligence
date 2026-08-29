@@ -1,0 +1,48 @@
+{
+    "timestamp": "20260817_170924",
+    "audit_phase": "PHASE B - SYNTHÈSE",
+    "version": "1.0",
+    "tests_realises": [
+        {
+            "test": "B1 - Bootstrap et IC",
+            "resultat": "ROC-AUC = 0.829, IC 95% = [0.798, 0.855]",
+            "conclusion": "Estimation précise, intervalle étroit"
+        },
+        {
+            "test": "B2 - Calibration formelle",
+            "resultat": "ECE = 0.0035",
+            "conclusion": "Excellente calibration après isotonic regression"
+        },
+        {
+            "test": "B3 - Comparaison multi-algorithmes",
+            "resultat": "XGBoost ≈ Random Forest > LogReg > Baseline",
+            "conclusion": "XGBoost justifié par meilleur PR-AUC et Brier"
+        },
+        {
+            "test": "B4 - Robustesse",
+            "resultat": "ROC-AUC > 0.70 même à 50% de perturbation",
+            "conclusion": "Modèle robuste aux données dégradées"
+        },
+        {
+            "test": "B5 - Analyse de drift",
+            "resultat": "Pas de drift majeur ; effet de population récente",
+            "conclusion": "La baisse de performance des clients récents est due à moins d'historique"
+        }
+    ],
+    "validation_globale": {
+        "modele_statistiquement_valide": true,
+        "calibration_excellente": true,
+        "robustesse_bonne": true,
+        "drift_controle": true,
+        "limitation_principale": "Performance réduite pour les clients récents (ROC-AUC 0.83 vs 0.93)",
+        "decision_go_phase_C": true
+    },
+    "recommandations": [
+        "1. Le modèle XGBoost recalibré est validé pour le prototype",
+        "2. Implémenter un indicateur de confiance basé sur l'ancienneté du client",
+        "3. Pour les clients récents (< 2 ans d'ancienneté), recommander une revue humaine",
+        "4. Suivre en production le ROC-AUC par segment d'ancienneté",
+        "5. Mettre en place un monitoring de drift (PSI) sur les variables clés"
+    ],
+    "decision_finale": "GO POUR PHASE C - Audit du leakage structurel et Fairness"
+}

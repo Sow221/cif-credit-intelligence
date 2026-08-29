@@ -1,0 +1,276 @@
+{
+    "timestamp": "20260817_170804",
+    "audit_phase": "PHASE B - Étape 4",
+    "test": "Analyse de drift",
+    "n_vars_with_drift": 2,
+    "drift_results": [
+        {
+            "variable": "age",
+            "mean_old": 41.5975,
+            "mean_new": 41.6235,
+            "mean_change_pct": 0.06250375623535875,
+            "ks_statistic": 0.0215,
+            "ks_pvalue": 0.7445353818345306,
+            "has_drift": false
+        },
+        {
+            "variable": "seniority_months",
+            "mean_old": 61.138,
+            "mean_new": 62.404,
+            "mean_change_pct": 2.07072524452878,
+            "ks_statistic": 0.027,
+            "ks_pvalue": 0.4596372544037147,
+            "has_drift": false
+        },
+        {
+            "variable": "monthly_income",
+            "mean_old": 1863.59373,
+            "mean_new": 1902.99649,
+            "mean_change_pct": 2.1143428079681263,
+            "ks_statistic": 0.043,
+            "ks_pvalue": 0.04953464037142928,
+            "has_drift": true
+        },
+        {
+            "variable": "current_savings",
+            "mean_old": 40707.990509999996,
+            "mean_new": 38944.21630000001,
+            "mean_change_pct": -4.332746932243473,
+            "ks_statistic": 0.029,
+            "ks_pvalue": 0.36968362182350656,
+            "has_drift": false
+        },
+        {
+            "variable": "avg_savings_24m",
+            "mean_old": 39058.431735,
+            "mean_new": 37242.32021500001,
+            "mean_change_pct": -4.649729749319623,
+            "ks_statistic": 0.0315,
+            "ks_pvalue": 0.274233348575873,
+            "has_drift": false
+        },
+        {
+            "variable": "savings_std_24m",
+            "mean_old": 1617.48419,
+            "mean_new": 1663.1925099999999,
+            "mean_change_pct": 2.8258897541372545,
+            "ks_statistic": 0.0465,
+            "ks_pvalue": 0.02646763084206017,
+            "has_drift": true
+        },
+        {
+            "variable": "savings_volatility",
+            "mean_old": 0.08593560000000001,
+            "mean_new": 0.090298,
+            "mean_change_pct": 5.076359506421073,
+            "ks_statistic": 0.032,
+            "ks_pvalue": 0.2574754523872385,
+            "has_drift": false
+        },
+        {
+            "variable": "savings_stability",
+            "mean_old": 0.49608855,
+            "mean_new": 0.49783644999999993,
+            "mean_change_pct": 0.35233629157534746,
+            "ks_statistic": 0.021,
+            "ks_pvalue": 0.770029236885313,
+            "has_drift": false
+        },
+        {
+            "variable": "n_past_loans",
+            "mean_old": 2.5175,
+            "mean_new": 2.4755,
+            "mean_change_pct": -1.668321747765651,
+            "ks_statistic": 0.018,
+            "ks_pvalue": 0.9023552779223781,
+            "has_drift": false
+        },
+        {
+            "variable": "current_loan_request",
+            "mean_old": 5583.07472,
+            "mean_new": 5594.69754,
+            "mean_change_pct": 0.2081795530760961,
+            "ks_statistic": 0.022,
+            "ks_pvalue": 0.7185142568618185,
+            "has_drift": false
+        },
+        {
+            "variable": "current_loan_duration",
+            "mean_old": 15.015,
+            "mean_new": 14.952,
+            "mean_change_pct": -0.41958041958042364,
+            "ks_statistic": 0.0065,
+            "ks_pvalue": 0.9999999999976344,
+            "has_drift": false
+        },
+        {
+            "variable": "loan_to_savings_ratio",
+            "mean_old": 12.376215000000002,
+            "mean_new": 11.886755099999998,
+            "mean_change_pct": -3.9548432214534364,
+            "ks_statistic": 0.0245,
+            "ks_pvalue": 0.5858212770267918,
+            "has_drift": false
+        },
+        {
+            "variable": "n_loans",
+            "mean_old": 2.5175,
+            "mean_new": 2.4755,
+            "mean_change_pct": -1.668321747765651,
+            "ks_statistic": 0.018,
+            "ks_pvalue": 0.9023552779223781,
+            "has_drift": false
+        },
+        {
+            "variable": "avg_loan_amount",
+            "mean_old": 3039.1709435833004,
+            "mean_new": 3009.1670714998954,
+            "mean_change_pct": -0.987238712147901,
+            "ks_statistic": 0.0185,
+            "ks_pvalue": 0.8835917582147937,
+            "has_drift": false
+        },
+        {
+            "variable": "total_loan_amount",
+            "mean_old": 9089.458381126522,
+            "mean_new": 8887.659491950511,
+            "mean_change_pct": -2.2201420669357876,
+            "ks_statistic": 0.028,
+            "ks_pvalue": 0.4132324404768168,
+            "has_drift": false
+        },
+        {
+            "variable": "avg_repayment_regularity",
+            "mean_old": 0.7471236111111111,
+            "mean_new": 0.7458388888888889,
+            "mean_change_pct": -0.1719557785506981,
+            "ks_statistic": 0.0205,
+            "ks_pvalue": 0.7948265413398378,
+            "has_drift": false
+        },
+        {
+            "variable": "min_repayment_regularity",
+            "mean_old": 0.6697708333333332,
+            "mean_new": 0.6743125,
+            "mean_change_pct": 0.6780926311860567,
+            "ks_statistic": 0.025,
+            "ks_pvalue": 0.5596752163759332,
+            "has_drift": false
+        },
+        {
+            "variable": "max_historical_dpd",
+            "mean_old": 40.0585,
+            "mean_new": 39.614,
+            "mean_change_pct": -1.109627170263502,
+            "ks_statistic": 0.0135,
+            "ks_pvalue": 0.9932816255401182,
+            "has_drift": false
+        },
+        {
+            "variable": "mean_historical_dpd",
+            "mean_old": 24.524441666666664,
+            "mean_new": 24.207708333333336,
+            "mean_change_pct": -1.2915006899579224,
+            "ks_statistic": 0.0125,
+            "ks_pvalue": 0.9976509261145676,
+            "has_drift": false
+        },
+        {
+            "variable": "n_defaults",
+            "mean_old": 0.236,
+            "mean_new": 0.2285,
+            "mean_change_pct": -3.177966101694907,
+            "ks_statistic": 0.0125,
+            "ks_pvalue": 0.9976509261145676,
+            "has_drift": false
+        },
+        {
+            "variable": "loan_to_income_ratio",
+            "mean_old": 5.957606735576473,
+            "mean_new": 5.908987122567651,
+            "mean_change_pct": -0.816093024712168,
+            "ks_statistic": 0.0245,
+            "ks_pvalue": 0.5858212770267918,
+            "has_drift": false
+        },
+        {
+            "variable": "historical_default_rate",
+            "mean_old": 0.05581666666666666,
+            "mean_new": 0.05495833333333333,
+            "mean_change_pct": -1.5377724693938413,
+            "ks_statistic": 0.0125,
+            "ks_pvalue": 0.9976509261145676,
+            "has_drift": false
+        },
+        {
+            "variable": "savings_to_income_ratio",
+            "mean_old": 40.712243756433125,
+            "mean_new": 38.15610339131646,
+            "mean_change_pct": -6.27855438380932,
+            "ks_statistic": 0.025,
+            "ks_pvalue": 0.5596752163759332,
+            "has_drift": false
+        },
+        {
+            "variable": "seniority_years",
+            "mean_old": 5.094833333333334,
+            "mean_new": 5.200333333333334,
+            "mean_change_pct": 2.0707252445287736,
+            "ks_statistic": 0.027,
+            "ks_pvalue": 0.4596372544037147,
+            "has_drift": false
+        },
+        {
+            "variable": "overall_payment_regularity",
+            "mean_old": 0.5313819444444443,
+            "mean_new": 0.5287089120370371,
+            "mean_change_pct": -0.5030341048192507,
+            "ks_statistic": 0.0145,
+            "ks_pvalue": 0.9845773879670964,
+            "has_drift": false
+        }
+    ],
+    "performance_by_window": [
+        {
+            "window": 1,
+            "n_clients": 2000,
+            "default_rate": 0.122,
+            "roc_auc": 0.9281304847081668,
+            "pr_auc": 0.6265861676047066,
+            "brier": 0.06590508238291469
+        },
+        {
+            "window": 2,
+            "n_clients": 2000,
+            "default_rate": 0.1085,
+            "roc_auc": 0.9167353732512128,
+            "pr_auc": 0.5580326909389346,
+            "brier": 0.06506456448554129
+        },
+        {
+            "window": 3,
+            "n_clients": 2000,
+            "default_rate": 0.129,
+            "roc_auc": 0.9288063261509982,
+            "pr_auc": 0.6447172908234703,
+            "brier": 0.06762718147634868
+        },
+        {
+            "window": 4,
+            "n_clients": 2000,
+            "default_rate": 0.1115,
+            "roc_auc": 0.928982943490692,
+            "pr_auc": 0.659382278257067,
+            "brier": 0.05893537745605869
+        },
+        {
+            "window": 5,
+            "n_clients": 2000,
+            "default_rate": 0.1205,
+            "roc_auc": 0.829229168779885,
+            "pr_auc": 0.45343179517401216,
+            "brier": 0.08422045045413595
+        }
+    ],
+    "correlation_drift_perf": -0.4243091429542527
+}

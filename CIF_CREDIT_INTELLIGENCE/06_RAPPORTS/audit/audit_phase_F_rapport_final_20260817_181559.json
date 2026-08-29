@@ -1,0 +1,23 @@
+{
+    "timestamp": "20260817_181559",
+    "audit_phase": "PHASE F - RAPPORT FINAL",
+    "version": "1.0",
+    "question": "Combien coûte la revue Thin-File et ce coût est-il justifié ?",
+    "resultats_cles": {
+        "meilleure_politique": "C_revue_confiance (zone grise + Thin-File)",
+        "economie_vs_automatisation": "13-20% du coût total",
+        "n_revues_optimal": 590,
+        "n_faux_negatifs": 63,
+        "n_faux_positifs": 174,
+        "seuil_revue_optimal": 0.05,
+        "cout_par_client_optimal": 10385
+    },
+    "conclusion": "La revue humaine basée sur la confiance (zone grise + Thin-File) est économiquement justifiée. Elle réduit le coût total de 13-20% par rapport à l'automatisation complète dans tous les scénarios testés.",
+    "recommandations": [
+        "1. Implémenter la politique C (revue confiance) dans le Decision Engine",
+        "2. Calibrer les seuils de revue avec les coûts réels CIF",
+        "3. Le seuil optimal dépend du ratio coût_revue / coût_faux_negatif",
+        "4. Pour les Thin-File, la revue est justifiée par le manque d'information, pas par le risque élevé",
+        "5. Préparer le protocole de validation sur données réelles"
+    ]
+}

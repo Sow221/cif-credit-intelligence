@@ -1,0 +1,34 @@
+{
+    "timestamp": "20260817_180847",
+    "audit_phase": "PHASE E - RAPPORT FINAL",
+    "version": "1.0",
+    "question_centrale": "Le modèle conserve-t-il une qualité prédictive acceptable pour les clients Thin-File, et cette qualité varie-t-elle selon le temps et le groupe ?",
+    "tests_executes": {
+        "E1_IC95_comptages": {
+            "resultat": "F1 ROC-AUC 0.903 [0.852, 0.952] vs F5 ROC-AUC 0.644 [0.507, 0.770]",
+            "conclusion": "Dégradation statistiquement significative"
+        },
+        "E2_courbes_distributions": {
+            "resultat": "Séparation défauts/non-défauts : 0.085 (F1) → 0.004 (F5)",
+            "conclusion": "Le modèle ne discrimine plus en F5"
+        },
+        "E3_bootstrap_2000": {
+            "resultat": "Recall au seuil 0.15 : 0.089 (F1) → 0.000 (F5)",
+            "conclusion": "Aucun défaut détecté en F5"
+        },
+        "E4_modele_specialise": {
+            "resultat": "ROC-AUC spécialisé : 0.565 vs général : 0.636",
+            "conclusion": "Le modèle spécialisé est moins bon ; le manque d'information est la cause"
+        },
+        "E5_information_disponible": {
+            "resultat": "Thin-File : 14/25 features (56%) vs autres : 23-25/25 (92-100%)",
+            "conclusion": "Les Thin-File sont structurellement moins informatifs"
+        }
+    },
+    "conclusion_scientifique": "La dégradation est réelle, statistiquement significative et causée par le manque structurel de features informatives. Les Thin-File ne disposent d'aucune feature d'historique de crédit. Leur feature la plus discriminante est deux fois plus faible que les features d'historique des autres segments. Un modèle spécialisé ne résout pas le problème.",
+    "recommandation_architecture": {
+        "principe": "Risque + Confiance + Action",
+        "pour_thin_file": "Signal de confiance FAIBLE + revue humaine recommandée, non pas parce que le risque est élevé, mais parce que l'information est insuffisante",
+        "message_operateur": "« Nous disposons de moins d'informations pour prendre une décision automatisée fiable ; une analyse complémentaire est nécessaire. »"
+    }
+}

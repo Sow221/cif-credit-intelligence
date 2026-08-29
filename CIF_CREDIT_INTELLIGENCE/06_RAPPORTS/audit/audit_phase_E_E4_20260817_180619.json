@@ -1,0 +1,22 @@
+{
+    "timestamp": "20260817_180619",
+    "audit_phase": "PHASE E - E4",
+    "test": "Modèle spécialisé vs général",
+    "results": {
+        "Modèle général (recalibré)": {
+            "roc_auc": 0.6362250554323725,
+            "pr_auc": 0.04689266389315121,
+            "brier": 0.03367076165848436,
+            "recall_at_015": 0.0,
+            "precision_at_015": 0.0
+        },
+        "Modèle spécialisé Thin-File": {
+            "roc_auc": 0.5651330376940134,
+            "pr_auc": 0.041704608770981984,
+            "brier": 0.03475367572000958,
+            "recall_at_015": 0.0,
+            "precision_at_015": 0.0
+        }
+    },
+    "conclusion": "Le modèle spécialisé est moins bon. Le surentraînement sur peu de données est probable."
+}

@@ -1,0 +1,78 @@
+{
+    "timestamp": "20260817_140300",
+    "dataset": "features_prepared_20260817_140211.csv",
+    "n_rows": 10000,
+    "n_features": 34,
+    "target_distribution": {
+        "default_rate": 0.1907,
+        "n_defaults": 1907,
+        "n_non_defaults": 8093
+    },
+    "sector_default_rates": {
+        "agriculture": {
+            "taux_defaut": 0.1929664306919388,
+            "n_clients": 4379
+        },
+        "artisanat": {
+            "taux_defaut": 0.18802862719583605,
+            "n_clients": 1537
+        },
+        "commerce": {
+            "taux_defaut": 0.18442227228838107,
+            "n_clients": 3107
+        },
+        "services": {
+            "taux_defaut": 0.2047082906857728,
+            "n_clients": 977
+        }
+    },
+    "location_default_rates": {
+        "peri-urbain": {
+            "taux_defaut": 0.1884010484927916,
+            "n_clients": 3052
+        },
+        "rural": {
+            "taux_defaut": 0.19398856721371935,
+            "n_clients": 5423
+        },
+        "urbain": {
+            "taux_defaut": 0.18360655737704917,
+            "n_clients": 1525
+        }
+    },
+    "history_depth_default_rates": {
+        "limite": {
+            "taux_defaut": 0.16181606519208383,
+            "n_clients": 1718
+        },
+        "moyen": {
+            "taux_defaut": 0.20232629323538415,
+            "n_clients": 3267
+        },
+        "riche": {
+            "taux_defaut": 0.21344941459021316,
+            "n_clients": 3331
+        },
+        "thin_file": {
+            "taux_defaut": 0.15261282660332542,
+            "n_clients": 1684
+        }
+    },
+    "top_correlations": {
+        "max_historical_dpd": 0.0965543316145971,
+        "mean_historical_dpd": 0.08621559570444669,
+        "credit_history_depth_numeric": 0.06027530280304186,
+        "n_past_loans": 0.05961403216396733,
+        "n_loans_total": 0.05961403216396733,
+        "total_payments": 0.05762460040408559,
+        "n_defaults": 0.05542264360540804,
+        "min_historical_dpd": 0.0511031840453653,
+        "total_loan_amount": 0.049206724922808975,
+        "historical_default_rate": 0.048338421996140336,
+        "total_payments_on_time": 0.041089878937698665,
+        "max_loan_amount": 0.040537491272060085,
+        "avg_loan_duration": 0.03679330742691649,
+        "avg_loan_amount": 0.028865696085896772,
+        "exposure_risk": 0.02659364440282046
+    }
+}

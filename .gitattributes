@@ -1,0 +1,21 @@
+# Normalise les fins de ligne : toujours committer en LF
+* text=auto eol=lf
+
+# Fichiers binaires
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.pdf binary
+*.joblib binary
+*.docx binary
+
+# Fichiers où les fins de ligne sont significatives
+*.py text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.csv text eol=lf
+*.sh text eol=lf
+*.toml text eol=lf

@@ -1,0 +1,38 @@
+{
+    "timestamp": "20260817_163018",
+    "results": [
+        {
+            "model": "M0_BASELINE",
+            "description": "Profil démographique uniquement",
+            "n_features": 3,
+            "roc_auc": 0.4964745623574315,
+            "pr_auc": 0.1173657960389393,
+            "brier": 0.11366555809048347
+        },
+        {
+            "model": "M1_PROFIL_INCOME",
+            "description": "M0 + Revenu et demande",
+            "n_features": 7,
+            "roc_auc": 0.5150606601732878,
+            "pr_auc": 0.12461740592704983,
+            "brier": 0.12569397052294612
+        },
+        {
+            "model": "M2_SAVINGS",
+            "description": "M1 + Épargne",
+            "n_features": 14,
+            "roc_auc": 0.8032371750263612,
+            "pr_auc": 0.3664149974067608,
+            "brier": 0.09114525885571442
+        },
+        {
+            "model": "M3_HISTORY",
+            "description": "M2 + Historique de crédit",
+            "n_features": 25,
+            "roc_auc": 0.8311576032213701,
+            "pr_auc": 0.4536803100588411,
+            "brier": 0.08379697179505229
+        }
+    ],
+    "conclusion": "Analyse de la contribution marginale de chaque famille de features"
+}

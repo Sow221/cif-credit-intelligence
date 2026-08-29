@@ -1,0 +1,60 @@
+{
+    "timestamp": "20260817_165402",
+    "audit_phase": "PHASE A - Étape 2",
+    "test": "Multi-seeds",
+    "seeds_tested": [
+        42,
+        123,
+        456
+    ],
+    "results": [
+        {
+            "seed": 42,
+            "n_clients": 10000,
+            "n_loans": 24753,
+            "default_rate_pct": 11.83,
+            "p_default_mean_pct": 11.9849,
+            "age_mean": 41.66,
+            "income_mean": 1888.89,
+            "savings_mean": 39627.32,
+            "savings_stability_mean": 0.4976,
+            "raw_score_mean": 0.8639,
+            "raw_score_std": 0.8427,
+            "n_loans_mean": 2.4753
+        },
+        {
+            "seed": 123,
+            "n_clients": 10000,
+            "n_loans": 25000,
+            "default_rate_pct": 11.71,
+            "p_default_mean_pct": 11.9816,
+            "age_mean": 41.98,
+            "income_mean": 1913.56,
+            "savings_mean": 40134.2,
+            "savings_stability_mean": 0.505,
+            "raw_score_mean": 0.877,
+            "raw_score_std": 0.8394,
+            "n_loans_mean": 2.5
+        },
+        {
+            "seed": 456,
+            "n_clients": 10000,
+            "n_loans": 24810,
+            "default_rate_pct": 11.98,
+            "p_default_mean_pct": 11.9793,
+            "age_mean": 42.01,
+            "income_mean": 1908.15,
+            "savings_mean": 39689.48,
+            "savings_stability_mean": 0.5016,
+            "raw_score_mean": 0.871,
+            "raw_score_std": 0.843,
+            "n_loans_mean": 2.481
+        }
+    ],
+    "variability": {
+        "default_rate_std_pct": 0.13527749258468663,
+        "n_loans_std": 129.33032642552686,
+        "raw_score_mean_std": 0.006557692683660415
+    },
+    "conclusion": "EXCELLENTE - Le taux de défaut est stable entre seeds"
+}

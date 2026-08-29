@@ -1,0 +1,82 @@
+{
+    "updated_at": "20260817_162521",
+    "n_models": 5,
+    "best_model": "MODEL-best_model_v3_20260817_142425",
+    "models": [
+        {
+            "model_id": "MODEL-best_model_final_20260817_145043",
+            "date_entrainement": "final_20260817_145043",
+            "algorithme": "XGBClassifier",
+            "n_features": 25,
+            "roc_auc": 0.8316612371703085,
+            "pr_auc": 0.46814856171674457,
+            "brier_score": 0.1437640454913934,
+            "chemin_fichier": "/content/drive/MyDrive/CIF_CREDIT_INTELLIGENCE/02_MODELS/trained/best_model_final_20260817_145043.joblib",
+            "statut": "PROTOTYPE",
+            "is_best": false,
+            "composite_score": 0.6936
+        },
+        {
+            "model_id": "MODEL-best_model_final_20260817_143701",
+            "date_entrainement": "final_20260817_143701",
+            "algorithme": "XGBClassifier",
+            "n_features": 25,
+            "roc_auc": 0.8328642971888497,
+            "pr_auc": 0.44378391951508134,
+            "brier_score": 0.17118050086138767,
+            "chemin_fichier": "/content/drive/MyDrive/CIF_CREDIT_INTELLIGENCE/02_MODELS/trained/best_model_final_20260817_143701.joblib",
+            "statut": "PROTOTYPE",
+            "is_best": false,
+            "composite_score": 0.676
+        },
+        {
+            "model_id": "MODEL-best_model_v3_20260817_142425",
+            "date_entrainement": "v3_20260817_142425",
+            "algorithme": "XGBClassifier",
+            "n_features": 25,
+            "roc_auc": 0.8389432886943025,
+            "pr_auc": 0.4507245448843993,
+            "brier_score": 0.18826517164181444,
+            "chemin_fichier": "/content/drive/MyDrive/CIF_CREDIT_INTELLIGENCE/02_MODELS/trained/best_model_v3_20260817_142425.joblib",
+            "statut": "PROTOTYPE",
+            "is_best": true,
+            "composite_score": 0.6755
+        },
+        {
+            "model_id": "MODEL-best_model_final_20260817_142218",
+            "date_entrainement": "final_20260817_142218",
+            "algorithme": "XGBClassifier",
+            "n_features": 25,
+            "roc_auc": 0.8177505608382734,
+            "pr_auc": 0.3124679531891047,
+            "brier_score": 0.2285624729650289,
+            "chemin_fichier": "/content/drive/MyDrive/CIF_CREDIT_INTELLIGENCE/02_MODELS/trained/best_model_final_20260817_142218.joblib",
+            "statut": "PROTOTYPE",
+            "is_best": false,
+            "composite_score": 0.6017
+        },
+        {
+            "model_id": "MODEL-best_model_v2_20260817_141146",
+            "date_entrainement": "v2_20260817_141146",
+            "algorithme": "XGBClassifier",
+            "n_features": 25,
+            "roc_auc": 0.7733411335656104,
+            "pr_auc": 0.28207403226934336,
+            "brier_score": 0.2172778532343993,
+            "chemin_fichier": "/content/drive/MyDrive/CIF_CREDIT_INTELLIGENCE/02_MODELS/trained/best_model_v2_20260817_141146.joblib",
+            "statut": "PROTOTYPE",
+            "is_best": false,
+            "composite_score": 0.5796
+        }
+    ],
+    "official_model": {
+        "model_id": "MODEL-best_model_final_20260817_145043",
+        "selected_at": "20260817_162617",
+        "criteria": "Score composite (PR-AUC 40%, Brier inversé 30%, ROC-AUC 30%)",
+        "roc_auc": 0.8316612371703085,
+        "pr_auc": 0.46814856171674457,
+        "brier_score": 0.1437640454913934,
+        "composite_score": 0.6936,
+        "chemin_officiel": "/content/drive/MyDrive/CIF_CREDIT_INTELLIGENCE/02_MODELS/trained/MODEL_OFFICIAL.joblib"
+    }
+}

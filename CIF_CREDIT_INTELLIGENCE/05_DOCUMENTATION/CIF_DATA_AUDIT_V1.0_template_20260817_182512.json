@@ -1,0 +1,123 @@
+{
+    "titre": "CIF_DATA_AUDIT_V1.0",
+    "version": "1.0",
+    "date_creation": "20260817_182512",
+    "statut": "TEMPLATE — En attente des données CIF",
+    "objectif": "Répondre à la question : Les données CIF permettent-elles de construire une expérience de prédiction du défaut scientifiquement valide, sans fuite d'information et avec une définition temporelle correcte ?",
+    "question_centrale": "Les données CIF permettent-elles de construire une expérience de prédiction du défaut scientifiquement valide ?",
+    "structure_rapport": {
+        "A_population": {
+            "question": "Qui sont les observations ?",
+            "a_documenter": [
+                "Type d'unité (client, prêt, compte, décision)",
+                "Période couverte",
+                "Nombre total d'observations",
+                "Critères d'inclusion/exclusion",
+                "Représentativité du portefeuille"
+            ],
+            "statut": "À REMPLIR AVEC LES DONNÉES CIF"
+        },
+        "B_temporalite": {
+            "question": "Pour chaque variable : était-elle réellement disponible au moment de la décision ?",
+            "classification_obligatoire": [
+                "AVAILABLE_AT_DECISION : disponible avant la décision",
+                "POST_DECISION : connu seulement après la décision",
+                "UNKNOWN : temporalité incertaine"
+            ],
+            "regle": "Toute variable UNKNOWN doit être exclue du premier modèle jusqu'à clarification.",
+            "statut": "À REMPLIR AVEC LES DONNÉES CIF"
+        },
+        "C_target": {
+            "question": "Quelle est la définition opérationnelle du défaut ?",
+            "exemples_possibles": [
+                "Retard ≥ 90 jours sur une échéance",
+                "Défaut avéré (passage en perte)",
+                "Restructuration forcée",
+                "Autre définition CIF"
+            ],
+            "regle_importante": "L'équipe ne doit PAS choisir arbitrairement. La définition doit être fournie par CIF.",
+            "statut": "À OBTENIR DE LA CIF"
+        },
+        "D_missingness": {
+            "question": "Quel est le taux de valeurs manquantes et quelle information porte l'absence elle-même ?",
+            "a_documenter": [
+                "Taux global de valeurs manquantes",
+                "Missingness par segment (Thin-File, ancienneté, etc.)",
+                "Missingness par période",
+                "L'absence d'une variable est-elle informative ?",
+                "Pattern de missingness (MCAR, MAR, MNAR)"
+            ],
+            "statut": "À REMPLIR AVEC LES DONNÉES CIF"
+        },
+        "E_distributions": {
+            "question": "Quelles sont les distributions des variables clés ?",
+            "a_documenter": [
+                "Moyenne, médiane, quantiles",
+                "Dispersion (écart-type, IQR)",
+                "Valeurs extrêmes et outliers",
+                "Distribution par période",
+                "Changements de distribution dans le temps"
+            ],
+            "statut": "À REMPLIR AVEC LES DONNÉES CIF"
+        },
+        "F_qualite": {
+            "question": "Quels sont les problèmes de qualité détectés ?",
+            "a_detecter": [
+                "Doublons",
+                "Incohérences (dates impossibles, montants négatifs)",
+                "Valeurs impossibles",
+                "Ruptures de collecte",
+                "Erreurs de saisie systématiques"
+            ],
+            "statut": "À REMPLIR AVEC LES DONNÉES CIF"
+        },
+        "G_biais_selection": {
+            "question": "Les données représentent-elles TOUS les clients ou seulement les clients financés ?",
+            "points_critiques": [
+                "Le modèle entraîné sur les clients financés n'apprend que le risque PARMI les sélectionnés",
+                "Il ne permet pas de conclure sur le risque de l'ENSEMBLE des demandeurs",
+                "La distinction doit être explicitement documentée"
+            ],
+            "statut": "À ANALYSER AVEC LES DONNÉES CIF"
+        },
+        "H_documentation": {
+            "question": "Chaque variable est-elle documentée dans le Data Dictionary ?",
+            "format_table": {
+                "colonnes": [
+                    "Variable",
+                    "Type",
+                    "Source",
+                    "Disponible décision ?",
+                    "Missing %",
+                    "Période",
+                    "Risque leakage"
+                ]
+            },
+            "statut": "À REMPLIR AVEC LES DONNÉES CIF"
+        }
+    },
+    "conditions_prealables": {
+        "acces_donnees": "Accès sécurisé à un échantillon anonymisé/pseudonymisé",
+        "dictionnaire": "Dictionnaire de données fourni par CIF",
+        "definition_defaut": "Définition officielle du défaut validée par CIF",
+        "regles_qualite": "Règles de collecte et de qualité connues",
+        "gouvernance": "Data Access & Data Governance Record établi"
+    },
+    "sequence_obligatoire": [
+        "1. Accès sécurisé",
+        "2. Data Governance Record",
+        "3. Data Dictionary CIF",
+        "4. Audit qualité",
+        "5. Audit temporalité (A/B/C classification)",
+        "6. Définition du target",
+        "7. Audit leakage",
+        "8. Analyse de population",
+        "9. Construction de la cohorte",
+        "10. Baselines"
+    ],
+    "critere_validation": {
+        "question_finale": "Les données CIF permettent-elles une expérience de prédiction du défaut scientifiquement valide ?",
+        "si_oui": "Autorisation de passer à la modélisation",
+        "si_non": "Correction des données avant toute modélisation"
+    }
+}

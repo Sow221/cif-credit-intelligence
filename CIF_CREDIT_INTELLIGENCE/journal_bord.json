@@ -1,0 +1,683 @@
+{
+    "entries": [
+        {
+            "timestamp": "20260817_135945",
+            "action": "GÉNÉRATION DES DONNÉES SYNTHÉTIQUES",
+            "details": {
+                "n_customers": 10000,
+                "n_loans": 24952,
+                "n_savings_records": 240000,
+                "random_seed": 42,
+                "files_created": [
+                    "customers_raw_20260817_135945.csv",
+                    "loans_raw_20260817_135945.csv",
+                    "savings_raw_20260817_135945.csv"
+                ],
+                "data_dictionary": "02_data_dictionary.json",
+                "quality_report": "quality_report_20260817_135945.json"
+            },
+            "status": "SUCCESS"
+        },
+        {
+            "timestamp": "20260817_140055",
+            "action": "RÉGÉNÉRATION DES DONNÉES (CALIBRATION DU TAUX DE DÉFAUT)",
+            "details": {
+                "n_customers": 10000,
+                "n_loans": 24854,
+                "n_savings_records": 240000,
+                "taux_defaut_global": "19.07%",
+                "random_seed": 42,
+                "files_created": [
+                    "customers_calibrated_20260817_140055.csv",
+                    "loans_calibrated_20260817_140055.csv",
+                    "savings_calibrated_20260817_140055.csv"
+                ],
+                "version_precedente": "customers_raw_20260817_135945.csv"
+            },
+            "status": "SUCCESS"
+        },
+        {
+            "timestamp": "20260817_140415",
+            "action": "ENTRAÎNEMENT DU MODÈLE DE RISQUE",
+            "details": {
+                "meilleur_modele": "Régression Logistique",
+                "roc_auc": 0.5637,
+                "pr_auc": 0.23990652986841784,
+                "brier_score": 0.24959398770345592,
+                "n_features": 34,
+                "n_echantillons_entrainement": 8000,
+                "n_echantillons_test": 2000,
+                "modele_sauvegarde": "best_model_20260817_140415.joblib",
+                "registre": "model_registry.json"
+            },
+            "status": "SUCCESS"
+        },
+        {
+            "timestamp": "20260817_141146",
+            "action": "AMÉLIORATION DU MODÈLE (SIGNAL RENFORCÉ)",
+            "details": {
+                "meilleur_modele": "XGBoost",
+                "roc_auc": 0.7537403298788498,
+                "pr_auc": 0.775504987219818,
+                "amelioration_pct": "33.7%",
+                "modele_sauvegarde": "best_model_v2_20260817_141146.joblib"
+            },
+            "status": "SUCCESS"
+        },
+        {
+            "timestamp": "20260817_142218",
+            "action": "GÉNÉRATION FINALE CALIBRÉE",
+            "details": {
+                "taux_defaut": "53.50%",
+                "roc_auc_xgboost": 0.8053486197110422,
+                "pr_auc_xgboost": 0.7862528409099944,
+                "roc_auc_logistic": 0.7562010207043345,
+                "pr_auc_logistic": 0.7522506371200373,
+                "fichiers": [
+                    "customers_final_20260817_142218.csv",
+                    "loans_final_20260817_142218.csv",
+                    "best_model_final_20260817_142218.joblib"
+                ]
+            },
+            "status": "SUCCESS"
+        },
+        {
+            "timestamp": "20260817_143701",
+            "action": "CALIBRATION EXACTE FINALE",
+            "details": {
+                "taux_defaut": "19.44%",
+                "methode": "Logit inverse avec biais empirique",
+                "roc_auc_xgboost": 0.829810617780528,
+                "pr_auc_xgboost": 0.5655230848443819,
+                "fichiers": [
+                    "customers_final_20260817_143701.csv",
+                    "loans_final_20260817_143701.csv",
+                    "best_model_final_20260817_143701.joblib"
+                ]
+            },
+            "status": "SUCCESS"
+        },
+        {
+            "timestamp": "20260817_145043",
+            "action": "CALIBRATION DÉFINITIVE PAR RECHERCHE DICHOTOMIQUE",
+            "details": {
+                "taux_defaut": "11.83%",
+                "roc_auc_xgboost": 0.8316612371703085,
+                "pr_auc_xgboost": 0.46814856171674457,
+                "brier_xgboost": 0.1437640454913934,
+                "fichiers": [
+                    "customers_final_20260817_145043.csv",
+                    "loans_final_20260817_145043.csv",
+                    "best_model_final_20260817_145043.joblib"
+                ]
+            },
+            "status": "SUCCESS"
+        },
+        {
+            "timestamp": "20260817_162521",
+            "action": "AUDIT ET MISE À JOUR DU REGISTRE",
+            "details": {
+                "n_models_enregistres": 5,
+                "meilleur_modele": "MODEL-best_model_v3_20260817_142425",
+                "roc_auc_meilleur": 0.8389432886943025
+            },
+            "status": "SUCCESS"
+        },
+        {
+            "timestamp": "20260817_162617",
+            "action": "SÉLECTION OFFICIELLE DU MODÈLE",
+            "details": {
+                "modele_officiel": "MODEL-best_model_final_20260817_145043",
+                "roc_auc": 0.8316612371703085,
+                "pr_auc": 0.46814856171674457,
+                "brier": 0.1437640454913934,
+                "score_composite": 0.6936,
+                "critere": "Score composite pondéré"
+            },
+            "status": "SUCCESS"
+        },
+        {
+            "timestamp": "20260817_162710",
+            "action": "RECALIBRATION DU MODÈLE OFFICIEL",
+            "details": {
+                "methode": "Régression isotonique",
+                "prob_moyenne_avant": "32.12%",
+                "prob_moyenne_apres": "11.73%",
+                "taux_reel": "12.05%",
+                "brier_avant": 0.1437640454913934,
+                "brier_apres": 0.08422045045413595
+            },
+            "status": "SUCCESS"
+        },
+        {
+            "timestamp": "20260817_162807",
+            "action": "AUDIT ANTI-LEAKAGE FORMEL",
+            "details": {
+                "n_features_auditees": 25,
+                "n_high_risk": 0,
+                "split_clean": true,
+                "forbidden_vars_clean": true,
+                "conclusion": "AUCUN LEAKAGE DÉTECTÉ"
+            },
+            "status": "SUCCESS"
+        },
+        {
+            "timestamp": "20260817_162911",
+            "action": "VALIDATION TEMPORELLE MULTI-FENÊTRES",
+            "details": {
+                "n_fenetres": 5,
+                "roc_auc_mean": 0.8988720065789373,
+                "roc_auc_std": 0.04662154054927406,
+                "stabilite": "BONNE"
+            },
+            "status": "SUCCESS"
+        },
+        {
+            "timestamp": "20260817_163018",
+            "action": "ABLATION STUDY PAR FAMILLE DE FEATURES",
+            "details": {
+                "n_modeles": 4,
+                "modeles": [
+                    "M0_BASELINE",
+                    "M1_PROFIL_INCOME",
+                    "M2_SAVINGS",
+                    "M3_HISTORY"
+                ],
+                "roc_aucs": [
+                    0.4964745623574315,
+                    0.5150606601732878,
+                    0.8032371750263612,
+                    0.8311576032213701
+                ]
+            },
+            "status": "SUCCESS"
+        },
+        {
+            "timestamp": "20260817_163244",
+            "action": "SAUVEGARDE RAPPORT THIN-FILE (CORRIGÉ)",
+            "details": {
+                "hypothese": "VALIDÉE",
+                "taux_thin_file": "3.90%",
+                "taux_riche": "14.31%"
+            },
+            "status": "SUCCESS"
+        },
+        {
+            "timestamp": "20260817_163354",
+            "action": "CONSTRUCTION DU DECISION ENGINE",
+            "details": {
+                "version": "1.0",
+                "decisions_possibles": [
+                    "APPROBATION",
+                    "REVUE_HUMAINE",
+                    "AJUSTEMENT",
+                    "REFUS"
+                ],
+                "n_clients_testes": 2000,
+                "distribution": {
+                    "APPROBATION": 699,
+                    "AJUSTEMENT": 616,
+                    "REVUE_HUMAINE": 570,
+                    "REFUS": 115
+                }
+            },
+            "status": "SUCCESS"
+        },
+        {
+            "timestamp": "20260817_165402",
+            "action": "AUDIT PHASE A - TEST MULTI-SEEDS",
+            "details": {
+                "seeds_testes": [
+                    42,
+                    123,
+                    456
+                ],
+                "taux_defaut_par_seed": [
+                    11.83,
+                    11.71,
+                    11.98
+                ],
+                "variabilite_taux_defaut": "0.1353%",
+                "conclusion": "EXCELLENTE - Le taux de défaut est stable entre seeds"
+            },
+            "status": "SUCCESS"
+        },
+        {
+            "timestamp": "20260817_165817",
+            "action": "AUDIT PHASE A - TEST DATASET SANS SIGNAL",
+            "details": {
+                "roc_auc": 0.47761714285714285,
+                "pr_auc": 0.11964122063561393,
+                "interpretation": "TEST RÉUSSI"
+            },
+            "status": "SUCCESS"
+        },
+        {
+            "timestamp": "20260817_170016",
+            "action": "AUDIT PHASE A - SUPPRESSION DU FACTEUR LATENT",
+            "details": {
+                "n_experiences": 5,
+                "roc_aucs": {
+                    "A_CONTROLE": 0.6425900018393316,
+                    "B_SANS_LIEN_EPARGNE": 0.6551801217155548,
+                    "C_SANS_LIEN_HISTORIQUE": 0.64039888871401,
+                    "D_SANS_LIEN_DIRECT_TARGET": 0.5215435442929535,
+                    "E_SANS_AUCUN_LIEN": 0.5661423069419254
+                }
+            },
+            "status": "SUCCESS"
+        },
+        {
+            "timestamp": "20260817_170209",
+            "action": "AUDIT PHASE A - RAPPORT DE SYNTHÈSE",
+            "details": {
+                "tests": [
+                    "Reconstitution",
+                    "Multi-seeds",
+                    "Sans signal",
+                    "Facteur latent"
+                ],
+                "decision": "GO POUR PHASE B",
+                "limitations": 4
+            },
+            "status": "SUCCESS"
+        },
+        {
+            "timestamp": "20260817_170313",
+            "action": "AUDIT PHASE B - BOOTSTRAP ET IC",
+            "details": {
+                "n_bootstrap": 1000,
+                "roc_auc_mean": 0.8293208967782421,
+                "roc_auc_ci": [
+                    0.7980499850900158,
+                    0.8554486192217943
+                ],
+                "ece": 0.003524234049918596
+            },
+            "status": "SUCCESS"
+        },
+        {
+            "timestamp": "20260817_170439",
+            "action": "AUDIT PHASE B - COMPARAISON MULTI-ALGORITHMES",
+            "details": {
+                "n_modeles": 4,
+                "meilleur_modele": "RANDOM_FOREST",
+                "roc_auc_meilleur": 0.8327652216579111
+            },
+            "status": "SUCCESS"
+        },
+        {
+            "timestamp": "20260817_170638",
+            "action": "AUDIT PHASE B - ROBUSTESSE (CORRIGÉ)",
+            "details": {
+                "niveaux": [
+                    0.0,
+                    0.05,
+                    0.1,
+                    0.2,
+                    0.3,
+                    0.4,
+                    0.5
+                ],
+                "roc_aucs": [
+                    0.829229168779885,
+                    0.8145813233188416,
+                    0.8023903151309567,
+                    0.7831590468933922,
+                    0.7752518759479995,
+                    0.7506575548630752,
+                    0.7350366461517412
+                ],
+                "seuil_critique": null
+            },
+            "status": "SUCCESS"
+        },
+        {
+            "timestamp": "20260817_170804",
+            "action": "AUDIT PHASE B - ANALYSE DE DRIFT",
+            "details": {
+                "n_vars_drift": 2,
+                "correlation_drift_perf": -0.4243091429542527,
+                "roc_aucs_par_fenetre": [
+                    0.9281304847081668,
+                    0.9167353732512128,
+                    0.9288063261509982,
+                    0.928982943490692,
+                    0.829229168779885
+                ]
+            },
+            "status": "SUCCESS"
+        },
+        {
+            "timestamp": "20260817_170924",
+            "action": "AUDIT PHASE B - RAPPORT DE SYNTHÈSE",
+            "details": {
+                "tests": [
+                    "Bootstrap",
+                    "Calibration",
+                    "Comparaison",
+                    "Robustesse",
+                    "Drift"
+                ],
+                "decision": "GO POUR PHASE C"
+            },
+            "status": "SUCCESS"
+        },
+        {
+            "timestamp": "20260817_171333",
+            "action": "AUDIT PHASE C - TEST ORACLE",
+            "details": {
+                "roc_auc_oracle": 0.8476831658878229,
+                "roc_auc_complet": 0.829229168779885,
+                "delta": -0.018453997107937936,
+                "interpretation": "Le modèle récupère essentiellement le facteur latent"
+            },
+            "status": "SUCCESS"
+        },
+        {
+            "timestamp": "20260817_171426",
+            "action": "AUDIT PHASE C - ANALYSE FAIRNESS",
+            "details": {
+                "groupes": [
+                    "gender",
+                    "sector",
+                    "location"
+                ],
+                "n_clients_test": 2000
+            },
+            "status": "SUCCESS"
+        },
+        {
+            "timestamp": "20260817_171909",
+            "action": "AUDIT PHASE D - MULTI-SEEDS + PERTURBATION",
+            "details": {
+                "n_experiences": 9,
+                "roc_aucs": {
+                    "D1_SEED_42": 0.8188479872596387,
+                    "D1_SEED_123": 0.83673318264684,
+                    "D1_SEED_456": 0.8246179612280281,
+                    "D2_SAVINGS_PLUS30": 0.8286165526423886,
+                    "D2_SAVINGS_MOINS30": 0.825836531193674,
+                    "D2_RISK_DIRECT_PLUS30": 0.8208650264168048,
+                    "D2_RISK_DIRECT_MOINS30": 0.8275798859086977,
+                    "D3_SANS_LIEN_EPARGNE": 0.774427710401666,
+                    "D4_TARGET_INDEPENDANT": 0.5250546350687394
+                }
+            },
+            "status": "SUCCESS"
+        },
+        {
+            "timestamp": "20260817_172232",
+            "action": "AUDIT PHASE D - GÉNÉRATEUR ALTERNATIF",
+            "details": {
+                "roc_auc_generateur_B": 0.6514455467883353,
+                "pr_auc_generateur_B": 0.5992631218095027
+            },
+            "status": "SUCCESS"
+        },
+        {
+            "timestamp": "20260817_172454",
+            "action": "AUDIT PHASE D - GÉNÉRATEUR ALTERNATIF CORRIGÉ",
+            "details": {
+                "taux_defaut_B": "11.33%",
+                "roc_auc_B": 0.7965538544994273,
+                "pr_auc_B": 0.3577786610267284
+            },
+            "status": "SUCCESS"
+        },
+        {
+            "timestamp": "20260817_172605",
+            "action": "AUDIT PHASE D - RAPPORT DE SYNTHÈSE",
+            "details": {
+                "conclusion": "Le modèle apprend des relations générales",
+                "preuves": [
+                    "D1",
+                    "D2",
+                    "D3",
+                    "D4",
+                    "D5"
+                ]
+            },
+            "status": "SUCCESS"
+        },
+        {
+            "timestamp": "20260817_172944",
+            "action": "AUDIT PHASE E - MATRICE DE GÉNÉRALISATION",
+            "details": {
+                "A_to_A": 0.8188479872596387,
+                "A_to_B_sans_retrain": 0.5721211801579169,
+                "B_to_B": 0.7965538544994273,
+                "B_to_A_sans_retrain": 0.6436608452684549
+            },
+            "status": "SUCCESS"
+        },
+        {
+            "timestamp": "20260817_173121",
+            "action": "CORRECTION INTERPRÉTATION + MATRICE DE GÉNÉRALISATION",
+            "details": {
+                "pipeline_robuste": true,
+                "transfert_direct_demontre": false,
+                "performance_croisee_moyenne": 0.6079,
+                "performance_same_moyenne": 0.8077,
+                "ecart_same_moins_cross": 0.1998,
+                "interpretation": "Généralisation PARTIELLE. Environ 25% de la performance est spécifique au générateur d'entraînement."
+            }
+        },
+        {
+            "timestamp": "20260817_173334",
+            "action": "AUDIT PHASE D - CONTRÔLES D6-D7-D8",
+            "details": {
+                "A_to_B_ci": [
+                    0.5363894169556922,
+                    0.6095818991078968
+                ],
+                "delta_AA_AB_significatif": true,
+                "delta_BB_BA_significatif": true,
+                "spearman_importance": 0.4584615384615385
+            },
+            "status": "SUCCESS"
+        },
+        {
+            "timestamp": "20260817_173647",
+            "action": "AUDIT PHASE D - RAPPORT FINAL",
+            "details": {
+                "conclusion": "Généralisation partielle démontrée statistiquement",
+                "A_to_B_significatif": true,
+                "delta_significatif": true
+            },
+            "status": "SUCCESS"
+        },
+        {
+            "timestamp": "20260817_175418",
+            "action": "AUDIT PHASE E - MATRICE THIN-FILE × TEMPORALITÉ",
+            "details": {
+                "n_segments": 4,
+                "n_fenetres": 5,
+                "n_cellules": 20
+            },
+            "status": "SUCCESS"
+        },
+        {
+            "timestamp": "20260817_175845",
+            "action": "AUDIT PHASE E - E1 COMPTAGES + IC95%",
+            "details": {
+                "n_cellules": 20,
+                "thin_file_F1_defauts": 11,
+                "thin_file_F5_defauts": 11
+            },
+            "status": "SUCCESS"
+        },
+        {
+            "timestamp": "20260817_180058",
+            "action": "AUDIT PHASE E - E2 COURBES ROC + PR",
+            "details": {
+                "F1_roc_auc": 0.9049586776859504,
+                "F5_roc_auc": 0.6423482473639214,
+                "F1_pr_auc": 0.2386777123234488,
+                "F5_pr_auc": 0.04535592170784869
+            },
+            "status": "SUCCESS"
+        },
+        {
+            "timestamp": "20260817_180236",
+            "action": "AUDIT PHASE E - E3 BOOTSTRAP APPROFONDI",
+            "details": {
+                "n_replications": 2000,
+                "F1_roc_std": 0.025186074325566386,
+                "F5_roc_std": 0.07044217475155554
+            },
+            "status": "SUCCESS"
+        },
+        {
+            "timestamp": "20260817_180619",
+            "action": "AUDIT PHASE E - E4 MODÈLE SPÉCIALISÉ",
+            "details": {
+                "roc_general": 0.6362250554323725,
+                "roc_specialise": 0.5651330376940134,
+                "delta": -0.07109201773835916,
+                "conclusion": "Le modèle spécialisé est moins bon. Le surentraînement sur peu de données est probable."
+            },
+            "status": "SUCCESS"
+        },
+        {
+            "timestamp": "20260817_180741",
+            "action": "AUDIT PHASE E - E5 INFORMATION DISPONIBLE",
+            "details": {
+                "n_segments": 4
+            },
+            "status": "SUCCESS"
+        },
+        {
+            "timestamp": "20260817_180847",
+            "action": "AUDIT PHASE E - RAPPORT FINAL",
+            "details": {
+                "tests": [
+                    "E1",
+                    "E2",
+                    "E3",
+                    "E4",
+                    "E5"
+                ],
+                "conclusion": "Le manque d'information est la cause racine"
+            },
+            "status": "SUCCESS"
+        },
+        {
+            "timestamp": "20260817_181422",
+            "action": "AUDIT PHASE F - FONCTION DE COÛT",
+            "details": {
+                "n_scenarios": 3,
+                "n_politiques": 4,
+                "seuils_testes": [
+                    0.05,
+                    0.1,
+                    0.15,
+                    0.2,
+                    0.3,
+                    0.5
+                ]
+            },
+            "status": "SUCCESS"
+        },
+        {
+            "timestamp": "20260817_181559",
+            "action": "AUDIT PHASE F - RAPPORT FINAL",
+            "details": {
+                "meilleure_politique": "C_revue_confiance (zone grise + Thin-File)",
+                "economie_vs_automatisation": "13-20% du coût total",
+                "n_revues_optimal": 590,
+                "n_faux_negatifs": 63,
+                "n_faux_positifs": 174,
+                "seuil_revue_optimal": 0.05,
+                "cout_par_client_optimal": 10385
+            }
+        },
+        {
+            "timestamp": "20260817_181843",
+            "action": "AUDIT PHASE F - CORRECTIONS + SENSIBILITÉ + CAPACITÉ",
+            "details": {
+                "n_combinaisons_sensibilite": 48,
+                "n_capacites": 6,
+                "oracle_documente": true
+            },
+            "status": "SUCCESS"
+        },
+        {
+            "timestamp": "20260817_182002",
+            "action": "CRÉATION DU PROTOCOLE DE VALIDATION CIF",
+            "details": {
+                "version": "1.0",
+                "mode": "Shadow/pilote",
+                "critere_go_roc_auc": 0.65
+            },
+            "status": "SUCCESS"
+        },
+        {
+            "timestamp": "20260817_182512",
+            "action": "CRÉATION DU TEMPLATE DATA AUDIT CIF V1.0",
+            "details": {
+                "sections": [
+                    "A_population",
+                    "B_temporalite",
+                    "C_target",
+                    "D_missingness",
+                    "E_distributions",
+                    "F_qualite",
+                    "G_biais_selection",
+                    "H_documentation"
+                ],
+                "condition_prealable": "Accès aux données CIF requises"
+            },
+            "status": "SUCCESS"
+        },
+        {
+            "timestamp": "20260817_182642",
+            "action": "MISE À JOUR TEMPLATE DATA AUDIT V1.1",
+            "details": {
+                "version": "1.1",
+                "exigences_renforcees": true,
+                "sections_majorees": [
+                    "A_grain",
+                    "B_temporalite",
+                    "C_target",
+                    "G_biais_selection",
+                    "H_dictionary"
+                ]
+            },
+            "status": "SUCCESS"
+        },
+        {
+            "timestamp": "20260817_182858",
+            "action": "CLÔTURE DE LA PHASE SYNTHÉTIQUE",
+            "details": {
+                "statut_projet": "READY FOR REAL-DATA AUDIT",
+                "phase_synthetique": "VALIDÉE COMME ENVIRONNEMENT MÉTHODOLOGIQUE",
+                "phase_reelle": "EN ATTENTE DES DONNÉES CIF",
+                "formulation_officielle": "Le ROC-AUC de 0.83 est un résultat expérimental sur un environnement synthétique, pas un benchmark CIF.",
+                "prochaine_etape": "CIF DATA AUDIT V1.1 — PHASE RÉELLE",
+                "elements_attendus": [
+                    "Échantillon CIF anonymisé/pseudonymisé",
+                    "Data Dictionary CIF",
+                    "Définition officielle du défaut",
+                    "Informations population et réseau pilote"
+                ]
+            },
+            "status": "SUCCESS"
+        },
+        {
+            "timestamp": "20260817_185302",
+            "action": "CRÉATION DU CIF REAL-DATA READINESS PACK V1.0",
+            "details": {
+                "cinq_elements": [
+                    "1_DATA_INTAKE_PROTOCOL",
+                    "2_STATISTICAL_VALIDATION_PROTOCOL",
+                    "3_LEAKAGE_TEMPORAL_VALIDATION_PROTOCOL",
+                    "4_GO_NOGO_DECISION_GATE",
+                    "5_EVIDENCE_DECISION_REGISTRY"
+                ],
+                "statut": "GELÉ"
+            },
+            "status": "SUCCESS"
+        }
+    ]
+}

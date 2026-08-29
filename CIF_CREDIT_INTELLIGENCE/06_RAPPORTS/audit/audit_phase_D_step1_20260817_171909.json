@@ -1,0 +1,89 @@
+{
+    "timestamp": "20260817_171909",
+    "audit_phase": "PHASE D - Étape 1",
+    "test": "Multi-seeds + Perturbation des coefficients",
+    "results": [
+        {
+            "experiment": "D1_SEED_42",
+            "description": "Seed 42 (référence)",
+            "default_rate": 0.119875,
+            "n_clients": 8000,
+            "roc_auc": 0.8188479872596387,
+            "pr_auc": 0.3847361484012979,
+            "brier": 0.15065496397784175
+        },
+        {
+            "experiment": "D1_SEED_123",
+            "description": "Seed 123",
+            "default_rate": 0.12,
+            "n_clients": 8000,
+            "roc_auc": 0.83673318264684,
+            "pr_auc": 0.41685106229978297,
+            "brier": 0.14515505994339403
+        },
+        {
+            "experiment": "D1_SEED_456",
+            "description": "Seed 456",
+            "default_rate": 0.11925,
+            "n_clients": 8000,
+            "roc_auc": 0.8246179612280281,
+            "pr_auc": 0.41471909100059173,
+            "brier": 0.14149632491797587
+        },
+        {
+            "experiment": "D2_SAVINGS_PLUS30",
+            "description": "Coefficient épargne +30%",
+            "default_rate": 0.119125,
+            "n_clients": 8000,
+            "roc_auc": 0.8286165526423886,
+            "pr_auc": 0.4054919752250707,
+            "brier": 0.14806986167653047
+        },
+        {
+            "experiment": "D2_SAVINGS_MOINS30",
+            "description": "Coefficient épargne -30%",
+            "default_rate": 0.12075,
+            "n_clients": 8000,
+            "roc_auc": 0.825836531193674,
+            "pr_auc": 0.4066109160032802,
+            "brier": 0.15154078632555082
+        },
+        {
+            "experiment": "D2_RISK_DIRECT_PLUS30",
+            "description": "Coefficient risque direct +30%",
+            "default_rate": 0.120625,
+            "n_clients": 8000,
+            "roc_auc": 0.8208650264168048,
+            "pr_auc": 0.38415510379177514,
+            "brier": 0.14875923641273558
+        },
+        {
+            "experiment": "D2_RISK_DIRECT_MOINS30",
+            "description": "Coefficient risque direct -30%",
+            "default_rate": 0.11925,
+            "n_clients": 8000,
+            "roc_auc": 0.8275798859086977,
+            "pr_auc": 0.40842712907136663,
+            "brier": 0.14853451479304394
+        },
+        {
+            "experiment": "D3_SANS_LIEN_EPARGNE",
+            "description": "Suppression du lien risque→épargne",
+            "default_rate": 0.11825,
+            "n_clients": 8000,
+            "roc_auc": 0.774427710401666,
+            "pr_auc": 0.34290843984206315,
+            "brier": 0.15787373146738498
+        },
+        {
+            "experiment": "D4_TARGET_INDEPENDANT",
+            "description": "Target indépendant",
+            "default_rate": 0.119,
+            "n_clients": 8000,
+            "roc_auc": 0.5250546350687394,
+            "pr_auc": 0.11959035837938456,
+            "brier": 0.20522009268316488
+        }
+    ],
+    "base_roc_auc": 0.8188479872596387
+}

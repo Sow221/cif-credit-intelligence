@@ -1,0 +1,112 @@
+{
+    "timestamp": "20260817_171426",
+    "audit_phase": "PHASE C - Étape 2",
+    "test": "Analyse Fairness par groupe",
+    "groups_analysed": [
+        "gender",
+        "sector",
+        "location"
+    ],
+    "results": [
+        {
+            "group": "gender",
+            "value": "F",
+            "n_clients": 1124,
+            "default_rate": 0.12277580071174377,
+            "mean_predicted_pd": 0.11828895658254623,
+            "roc_auc": 0.8305222388805598,
+            "pr_auc": 0.48002928341584283,
+            "brier": 0.08416032752665085,
+            "approval_rate": 0.7722419928825622
+        },
+        {
+            "group": "gender",
+            "value": "M",
+            "n_clients": 876,
+            "default_rate": 0.11757990867579908,
+            "mean_predicted_pd": 0.11597499996423721,
+            "roc_auc": 0.8271957698539294,
+            "pr_auc": 0.43252864189537654,
+            "brier": 0.08429759448437937,
+            "approval_rate": 0.7557077625570776
+        },
+        {
+            "group": "sector",
+            "value": "agriculture",
+            "n_clients": 884,
+            "default_rate": 0.11990950226244344,
+            "mean_predicted_pd": 0.12107063829898834,
+            "roc_auc": 0.8293641169908328,
+            "pr_auc": 0.4454151925695039,
+            "brier": 0.08590703537842151,
+            "approval_rate": 0.7579185520361991
+        },
+        {
+            "group": "sector",
+            "value": "artisanat",
+            "n_clients": 284,
+            "default_rate": 0.13380281690140844,
+            "mean_predicted_pd": 0.11321677267551422,
+            "roc_auc": 0.7943410355156182,
+            "pr_auc": 0.412180574275697,
+            "brier": 0.09618516605210745,
+            "approval_rate": 0.7640845070422535
+        },
+        {
+            "group": "sector",
+            "value": "commerce",
+            "n_clients": 625,
+            "default_rate": 0.1136,
+            "mean_predicted_pd": 0.10820227116346359,
+            "roc_auc": 0.8161514211623531,
+            "pr_auc": 0.4550454498791619,
+            "brier": 0.08157301275837325,
+            "approval_rate": 0.7808
+        },
+        {
+            "group": "sector",
+            "value": "services",
+            "n_clients": 207,
+            "default_rate": 0.12560386473429952,
+            "mean_predicted_pd": 0.1340312510728836,
+            "roc_auc": 0.9161708457288569,
+            "pr_auc": 0.6320364129152796,
+            "brier": 0.06859594928002645,
+            "approval_rate": 0.748792270531401
+        },
+        {
+            "group": "location",
+            "value": "peri-urbain",
+            "n_clients": 593,
+            "default_rate": 0.11973018549747048,
+            "mean_predicted_pd": 0.11864037811756134,
+            "roc_auc": 0.8423047865738492,
+            "pr_auc": 0.47376632766709437,
+            "brier": 0.08150703953520655,
+            "approval_rate": 0.7740303541315345
+        },
+        {
+            "group": "location",
+            "value": "rural",
+            "n_clients": 1127,
+            "default_rate": 0.12156166814551908,
+            "mean_predicted_pd": 0.11141952872276306,
+            "roc_auc": 0.8223438767234388,
+            "pr_auc": 0.44972399737460206,
+            "brier": 0.08635595369033365,
+            "approval_rate": 0.771960958296362
+        },
+        {
+            "group": "location",
+            "value": "urbain",
+            "n_clients": 280,
+            "default_rate": 0.11785714285714285,
+            "mean_predicted_pd": 0.1379547417163849,
+            "roc_auc": 0.8352349404980984,
+            "pr_auc": 0.4608677476284894,
+            "brier": 0.08137166662460135,
+            "approval_rate": 0.7178571428571429
+        }
+    ],
+    "note": "Les résultats sont sur données synthétiques. La limitation du générateur (Test Oracle) doit être prise en compte."
+}

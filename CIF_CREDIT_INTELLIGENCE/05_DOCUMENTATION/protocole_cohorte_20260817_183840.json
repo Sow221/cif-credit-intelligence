@@ -1,0 +1,43 @@
+{
+    "titre": "PROTOCOLE DE COHORTE",
+    "version": "1.0",
+    "date": "20260817_183840",
+    "statut": "À VALIDER AVEC LA CIF",
+    "definition_cohorte": {
+        "population": "Tous les clients ayant déposé une demande de crédit sur la période d'étude",
+        "date_decision": "Date à laquelle la décision de crédit a été prise",
+        "fenetre_observation": "12-24 mois avant la décision (pour construire l'historique)",
+        "fenetre_performance": "6-12 mois après le décaissement (pour observer le défaut)",
+        "definition_defaut": "À fournir par la CIF (ex : retard ≥ 90 jours)",
+        "horizon_prediction": "À définir avec la CIF"
+    },
+    "criteres_inclusion": [
+        "Client ayant une demande de crédit documentée",
+        "Décision de crédit rendue (acceptée ou refusée)",
+        "Si acceptée : prêt décaissé",
+        "Historique disponible avant la date de décision"
+    ],
+    "criteres_exclusion": [
+        "Prêts encore actifs sans échéance atteinte (censurés)",
+        "Restructurations sans documentation claire",
+        "Clients avec données d'identité incomplètes",
+        "Remboursements anticipés (à documenter séparément)"
+    ],
+    "traitement_cas_particuliers": {
+        "restructurations": "À définir avec la CIF",
+        "remboursements_anticipes": "À exclure ou traiter séparément",
+        "prets_clotures": "À inclure si la performance est observable",
+        "clients_multiples_prets": "Un seul prêt par client pour éviter les corrélations",
+        "prets_actifs": "Exclus tant que la performance n'est pas observable"
+    },
+    "biais_selection": {
+        "question_centrale": "Les clients observés représentent-ils TOUS les demandeurs ?",
+        "a_documenter": [
+            "Combien de demandes ont été déposées ?",
+            "Combien ont été acceptées ?",
+            "Combien ont été financées ?",
+            "Combien sont observables avec target ?",
+            "Où et pourquoi des clients disparaissent-ils entre chaque étape ?"
+        ]
+    }
+}

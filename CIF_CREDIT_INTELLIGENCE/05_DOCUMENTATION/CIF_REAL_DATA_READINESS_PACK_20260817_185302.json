@@ -1,0 +1,165 @@
+{
+    "titre": "CIF REAL-DATA READINESS PACK V1.0",
+    "version": "1.0",
+    "date": "20260817_185302",
+    "statut": "GELÉ — En attente des données CIF",
+    "objectif": "Tout ce qui peut être préparé sans données réelles est préparé. Aucune décision méthodologique importante ne sera prise après avoir vu les résultats.",
+    "cinq_elements": {
+        "1_DATA_INTAKE_PROTOCOL": {
+            "description": "Séquence de réception des données CIF",
+            "sequence": [
+                "RÉCEPTION → enregistrement horodaté",
+                "Vérification du périmètre demandé",
+                "PII Gate (détection données personnelles)",
+                "Hash du fichier / identification unique",
+                "Data Dictionary reçu et vérifié",
+                "Inventaire des tables",
+                "Audit V1.3 (gelé)",
+                "Rapport d'anomalies",
+                "Validation du cabinet",
+                "Définition de la cohorte",
+                "Définition du target (validation CIF)",
+                "GO / NO-GO",
+                "SEULEMENT ALORS : BASELINES"
+            ],
+            "regle_absolue": "Aucune exploration opportuniste des données avant validation du protocole."
+        },
+        "2_STATISTICAL_VALIDATION_PROTOCOL": {
+            "description": "Métriques et méthodes de validation verrouillées avant les données",
+            "split": {
+                "methode": "Split temporel (pas de split aléatoire)",
+                "proportions": "À définir selon la période couverte",
+                "regle": "Aucune observation de test ne peut être antérieure à une observation d'entraînement"
+            },
+            "metriques": [
+                "ROC-AUC + IC95%",
+                "PR-AUC + IC95%",
+                "Brier Score + IC95%",
+                "Log Loss",
+                "Recall / Precision / F1 / MCC",
+                "Calibration (ECE, slope, intercept)",
+                "Confusion matrix"
+            ],
+            "bootstrap": {
+                "n_iterations": 1000,
+                "methode": "Stratifié (préserver la proportion de défauts)",
+                "ic95": "Percentiles 2.5 et 97.5"
+            },
+            "segments_obligatoires": [
+                "Thin-File (0 prêt)",
+                "1 prêt",
+                "2-3 prêts",
+                "4+ prêts"
+            ],
+            "fairness": {
+                "groupes": "À définir selon les données disponibles ET légitimes",
+                "metriques": [
+                    "ROC-AUC",
+                    "PR-AUC",
+                    "Brier",
+                    "FPR",
+                    "FNR",
+                    "Précision"
+                ],
+                "regle": "IC95% obligatoire pour chaque groupe. Les petits groupes sont marqués 'estimation instable'."
+            }
+        },
+        "3_LEAKAGE_TEMPORAL_VALIDATION_PROTOCOL": {
+            "description": "Chaque variable doit être classée par rapport à T_decision",
+            "classification": {
+                "AVAILABLE_AT_DECISION": "Disponible avant la décision → INCLUDE possible",
+                "POST_DECISION": "Connu seulement après la décision → EXCLUDE obligatoire",
+                "UNKNOWN": "Temporalité non démontrée → CLARIFY ou EXCLUDE"
+            },
+            "regle_stricte": "Une variable extrêmement prédictive mais connue après la décision doit être EXCLUE, même si elle augmente le ROC-AUC.",
+            "verification_par_variable": [
+                "Variable",
+                "Source",
+                "Date de création",
+                "Date de disponibilité",
+                "T_decision",
+                "Statut : AVAILABLE / POST / UNKNOWN",
+                "Décision : INCLUDE / EXCLUDE / CLARIFY"
+            ]
+        },
+        "4_GO_NOGO_DECISION_GATE": {
+            "description": "Critères de passage verrouillés avant les données",
+            "NO_GO": [
+                "Données insuffisamment documentées",
+                "Incohérences critiques non résolues",
+                "Temporalité non démontrée pour les variables clés",
+                "Target non validé par la CIF",
+                "Leakage suspecté non résolu",
+                "Population non définissable"
+            ],
+            "GO_CONDITIONNEL": [
+                "Données exploitables sous réserve de corrections X, Y, Z",
+                "Anomalies non bloquantes documentées",
+                "Target validé mais cas particuliers à traiter"
+            ],
+            "GO_DATASET": [
+                "Cohorte suffisamment documentée",
+                "Temporalité démontrée",
+                "Leakage exclu",
+                "Target validé",
+                "Population définie"
+            ],
+            "note": "GO Data Audit ≠ GO Modèle performant. Le premier autorise seulement l'expérimentation."
+        },
+        "5_EVIDENCE_DECISION_REGISTRY": {
+            "description": "Traçabilité complète de chaque décision",
+            "format": {
+                "ID": "D001, D002, ...",
+                "Décision": "INCLUDE / EXCLUDE / CLARIFY / DERIVED",
+                "Variable_ou_Test": "Nom",
+                "Preuve": "Source, timestamp, résultat",
+                "Responsable": "CIF / Équipe / Cabinet",
+                "Date": "Horodatage",
+                "Statut": "Validé / Ouvert / En attente"
+            },
+            "exemple": {
+                "ID": "D001",
+                "Décision": "EXCLUDE",
+                "Variable_ou_Test": "variable_X",
+                "Preuve": "Post-décision confirmée par timestamp",
+                "Responsable": "Cabinet",
+                "Date": "À remplir",
+                "Statut": "Validé"
+            }
+        }
+    },
+    "seuils_decision": {
+        "note_importante": "Les seuils 0.05 / 0.08 / 0.25 du prototype synthétique sont PROVISOIRES.",
+        "a_recalculer_avec": [
+            "Target CIF réel",
+            "Coûts CIF réels",
+            "Capacité réelle des analystes",
+            "Taux de défaut réel",
+            "Contraintes réglementaires",
+            "Calibration réelle"
+        ]
+    },
+    "frontiere_methodologique": {
+        "peut_etre_prepare": [
+            "Code",
+            "Tests",
+            "Protocoles",
+            "Documentation",
+            "Critères",
+            "Templates",
+            "Scénarios",
+            "Pipelines",
+            "Simulations",
+            "Procédures"
+        ],
+        "ne_doit_pas_etre_invente": [
+            "Définition CIF du défaut",
+            "Variables disponibles",
+            "Période couverte",
+            "Taux de défaut réel",
+            "ROC-AUC CIF",
+            "Seuils définitifs",
+            "Validation du modèle réel"
+        ]
+    }
+}

@@ -1,0 +1,283 @@
+{
+    "timestamp": "20260817_180741",
+    "audit_phase": "PHASE E - E5",
+    "test": "Audit de l'information disponible",
+    "information_by_segment": [
+        {
+            "segment": "0_prix",
+            "n_clients": 1693,
+            "families": {
+                "Profil": {
+                    "n_features_available": 3,
+                    "n_features_total": 3,
+                    "features": [
+                        "age",
+                        "seniority_months",
+                        "seniority_years"
+                    ]
+                },
+                "Revenu": {
+                    "n_features_available": 2,
+                    "n_features_total": 2,
+                    "features": [
+                        "monthly_income",
+                        "loan_to_income_ratio"
+                    ]
+                },
+                "Épargne": {
+                    "n_features_available": 6,
+                    "n_features_total": 6,
+                    "features": [
+                        "current_savings",
+                        "avg_savings_24m",
+                        "savings_std_24m",
+                        "savings_volatility",
+                        "savings_stability",
+                        "savings_to_income_ratio"
+                    ]
+                },
+                "Demande": {
+                    "n_features_available": 3,
+                    "n_features_total": 3,
+                    "features": [
+                        "current_loan_request",
+                        "current_loan_duration",
+                        "loan_to_savings_ratio"
+                    ]
+                },
+                "Historique": {
+                    "n_features_available": 0,
+                    "n_features_total": 11,
+                    "features": []
+                }
+            }
+        },
+        {
+            "segment": "1_pret",
+            "n_clients": 1664,
+            "families": {
+                "Profil": {
+                    "n_features_available": 3,
+                    "n_features_total": 3,
+                    "features": [
+                        "age",
+                        "seniority_months",
+                        "seniority_years"
+                    ]
+                },
+                "Revenu": {
+                    "n_features_available": 2,
+                    "n_features_total": 2,
+                    "features": [
+                        "monthly_income",
+                        "loan_to_income_ratio"
+                    ]
+                },
+                "Épargne": {
+                    "n_features_available": 6,
+                    "n_features_total": 6,
+                    "features": [
+                        "current_savings",
+                        "avg_savings_24m",
+                        "savings_std_24m",
+                        "savings_volatility",
+                        "savings_stability",
+                        "savings_to_income_ratio"
+                    ]
+                },
+                "Demande": {
+                    "n_features_available": 3,
+                    "n_features_total": 3,
+                    "features": [
+                        "current_loan_request",
+                        "current_loan_duration",
+                        "loan_to_savings_ratio"
+                    ]
+                },
+                "Historique": {
+                    "n_features_available": 9,
+                    "n_features_total": 11,
+                    "features": [
+                        "avg_loan_amount",
+                        "total_loan_amount",
+                        "avg_repayment_regularity",
+                        "min_repayment_regularity",
+                        "max_historical_dpd",
+                        "mean_historical_dpd",
+                        "n_defaults",
+                        "historical_default_rate",
+                        "overall_payment_regularity"
+                    ]
+                }
+            }
+        },
+        {
+            "segment": "2_3_prets",
+            "n_clients": 3373,
+            "families": {
+                "Profil": {
+                    "n_features_available": 3,
+                    "n_features_total": 3,
+                    "features": [
+                        "age",
+                        "seniority_months",
+                        "seniority_years"
+                    ]
+                },
+                "Revenu": {
+                    "n_features_available": 2,
+                    "n_features_total": 2,
+                    "features": [
+                        "monthly_income",
+                        "loan_to_income_ratio"
+                    ]
+                },
+                "Épargne": {
+                    "n_features_available": 6,
+                    "n_features_total": 6,
+                    "features": [
+                        "current_savings",
+                        "avg_savings_24m",
+                        "savings_std_24m",
+                        "savings_volatility",
+                        "savings_stability",
+                        "savings_to_income_ratio"
+                    ]
+                },
+                "Demande": {
+                    "n_features_available": 3,
+                    "n_features_total": 3,
+                    "features": [
+                        "current_loan_request",
+                        "current_loan_duration",
+                        "loan_to_savings_ratio"
+                    ]
+                },
+                "Historique": {
+                    "n_features_available": 11,
+                    "n_features_total": 11,
+                    "features": [
+                        "n_loans",
+                        "avg_loan_amount",
+                        "total_loan_amount",
+                        "avg_repayment_regularity",
+                        "min_repayment_regularity",
+                        "max_historical_dpd",
+                        "mean_historical_dpd",
+                        "n_defaults",
+                        "historical_default_rate",
+                        "overall_payment_regularity",
+                        "n_past_loans"
+                    ]
+                }
+            }
+        },
+        {
+            "segment": "4_plus_prets",
+            "n_clients": 3270,
+            "families": {
+                "Profil": {
+                    "n_features_available": 3,
+                    "n_features_total": 3,
+                    "features": [
+                        "age",
+                        "seniority_months",
+                        "seniority_years"
+                    ]
+                },
+                "Revenu": {
+                    "n_features_available": 2,
+                    "n_features_total": 2,
+                    "features": [
+                        "monthly_income",
+                        "loan_to_income_ratio"
+                    ]
+                },
+                "Épargne": {
+                    "n_features_available": 6,
+                    "n_features_total": 6,
+                    "features": [
+                        "current_savings",
+                        "avg_savings_24m",
+                        "savings_std_24m",
+                        "savings_volatility",
+                        "savings_stability",
+                        "savings_to_income_ratio"
+                    ]
+                },
+                "Demande": {
+                    "n_features_available": 3,
+                    "n_features_total": 3,
+                    "features": [
+                        "current_loan_request",
+                        "current_loan_duration",
+                        "loan_to_savings_ratio"
+                    ]
+                },
+                "Historique": {
+                    "n_features_available": 11,
+                    "n_features_total": 11,
+                    "features": [
+                        "n_loans",
+                        "avg_loan_amount",
+                        "total_loan_amount",
+                        "avg_repayment_regularity",
+                        "min_repayment_regularity",
+                        "max_historical_dpd",
+                        "mean_historical_dpd",
+                        "n_defaults",
+                        "historical_default_rate",
+                        "overall_payment_regularity",
+                        "n_past_loans"
+                    ]
+                }
+            }
+        }
+    ],
+    "target_correlations": [
+        {
+            "segment": "0_prix",
+            "correlations": {
+                "current_savings": 0.0345,
+                "avg_savings_24m": 0.0318,
+                "savings_stability": 0.1765,
+                "monthly_income": 0.0001,
+                "max_historical_dpd": null,
+                "avg_repayment_regularity": null
+            }
+        },
+        {
+            "segment": "1_pret",
+            "correlations": {
+                "current_savings": 0.0444,
+                "avg_savings_24m": 0.0392,
+                "savings_stability": 0.3875,
+                "monthly_income": -0.03,
+                "max_historical_dpd": 0.3813,
+                "avg_repayment_regularity": -0.3768
+            }
+        },
+        {
+            "segment": "2_3_prets",
+            "correlations": {
+                "current_savings": 0.0207,
+                "avg_savings_24m": 0.0124,
+                "savings_stability": 0.3732,
+                "monthly_income": 0.0253,
+                "max_historical_dpd": 0.3105,
+                "avg_repayment_regularity": -0.3776
+            }
+        },
+        {
+            "segment": "4_plus_prets",
+            "correlations": {
+                "current_savings": 0.0062,
+                "avg_savings_24m": 0.0005,
+                "savings_stability": 0.3754,
+                "monthly_income": -0.0039,
+                "max_historical_dpd": 0.2647,
+                "avg_repayment_regularity": -0.404
+            }
+        }
+    ]
+}

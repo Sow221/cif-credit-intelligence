@@ -1,0 +1,57 @@
+{
+    "timestamp": "20260817_170209",
+    "audit_phase": "PHASE A - SYNTHÈSE",
+    "version": "1.0",
+    "tests_realises": [
+        {
+            "test": "A1 - Reconstitution du générateur",
+            "resultat": "FIDÈLE",
+            "preuve": "Statistiques identiques sur 6 métriques clés",
+            "conclusion": "Le générateur a été reconstitué fidèlement"
+        },
+        {
+            "test": "A2 - Test multi-seeds (42, 123, 456)",
+            "resultat": "STABLE",
+            "preuve": "Écart-type du taux de défaut : 0.135%",
+            "conclusion": "Les résultats ne dépendent pas de la seed"
+        },
+        {
+            "test": "A3 - Test dataset sans signal",
+            "resultat": "RÉUSSI",
+            "preuve": "ROC-AUC = 0.4776 (proche du hasard)",
+            "conclusion": "Aucune fuite structurelle dans le générateur"
+        },
+        {
+            "test": "A4 - Test suppression du facteur latent",
+            "resultat": "LIMITATION IDENTIFIÉE",
+            "preuve": "Le lien direct risk_factor → target contribue à 0.12 de ROC-AUC",
+            "conclusion": "Le générateur repose en partie sur un facteur de risque latent directement lié à la cible"
+        }
+    ],
+    "validation_globale": {
+        "generateur_fidele": true,
+        "stable_entre_seeds": true,
+        "pas_de_leakage_structurel": true,
+        "limitation_identifiee": "Facteur de risque latent directement lié à la cible",
+        "decision_go_phase_B": true,
+        "conditions_go": [
+            "Les résultats de la Phase A sont documentés",
+            "La limitation du facteur latent est reconnue",
+            "La Phase B pourra utiliser le dataset existant avec cette réserve"
+        ]
+    },
+    "limitations_documentees": [
+        "Le code original du générateur n'a pas été sauvegardé comme fichier .py sur Drive",
+        "La reconstitution est basée sur le code exécuté dans les cellules Colab",
+        "Le générateur utilise un risk_factor directement lié à la cible, ce qui est une simplification artificielle",
+        "Les taux de défaut dans le test de suppression du facteur latent (30-33%) diffèrent du dataset officiel (11.83%) car la formule de calibration simplifiée a été utilisée"
+    ],
+    "recommandations": [
+        "1. Documenter la limitation du facteur latent dans le rapport final",
+        "2. Pour les versions futures du générateur, supprimer le lien direct risk_factor → target",
+        "3. Utiliser un générateur qui crée le risque à partir des comportements observables uniquement",
+        "4. Valider les résultats avec un bootstrap des métriques (Phase B)",
+        "5. Tester avec un second générateur indépendant pour confirmer les conclusions"
+    ],
+    "decision_finale": "GO POUR PHASE B - Contre-expertise du modèle"
+}

@@ -1,0 +1,15 @@
+{
+    "timestamp": "20260817_164543",
+    "audit_phase": "PHASE A - Étape 1",
+    "generator_reconstructed": true,
+    "seed_used": 42,
+    "comparison": {
+        "n_clients": {
+            "existant": 10000,
+            "regenere": 10000,
+            "match": true
+        },
+        "age_mean": {
+            "existant": 41.6605,
+            "regenere": 41.6605,
+            "match": 

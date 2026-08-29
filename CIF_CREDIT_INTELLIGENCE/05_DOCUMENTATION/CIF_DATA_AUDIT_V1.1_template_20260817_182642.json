@@ -1,0 +1,107 @@
+{
+    "titre": "CIF_DATA_AUDIT_V1.1",
+    "version": "1.1",
+    "date": "20260817_182642",
+    "statut": "TEMPLATE RENFORCÉ — En attente des données CIF",
+    "basé_sur": "V1.0 + exigences renforcées du cabinet",
+    "niveaux_de_preuve": {
+        "OBSERVÉ": "Constaté directement dans les données",
+        "FOURNI_PAR_CIF": "Information fournie par les équipes CIF",
+        "DÉDUIT": "Inféré statistiquement",
+        "INCONNU": "Information non disponible",
+        "HYPOTHÈSE": "Supposition à valider"
+    },
+    "section_A_population_renforcee": {
+        "unite_analyse": "À déterminer : Client / Demande / Prêt / Échéance / Paiement",
+        "relation_hierarchique": "Client → Demande → Prêt → Échéance → Paiement → Observation temporelle",
+        "points_a_eviter": [
+            "Double comptage d'un client",
+            "Contamination d'une observation par plusieurs prêts",
+            "Utilisation d'informations futures",
+            "Mélange entre niveau client et niveau prêt"
+        ],
+        "sous_sections_obligatoires": {
+            "grain": "Quelle ligne représente quelle unité statistique ?",
+            "hierarchie": "Comment les unités s'emboîtent-elles ?",
+            "clefs_jointure": "Comment relier les tables sans duplication ?",
+            "deduplication": "Comment identifier et traiter les doublons ?"
+        }
+    },
+    "section_B_temporalite_renforcee": {
+        "table_obligatoire_par_variable": {
+            "colonnes": [
+                "Variable",
+                "Date de création",
+                "Date de disponibilité",
+                "Date de décision",
+                "Statut"
+            ],
+            "statuts_possibles": [
+                "AVAILABLE_AT_DECISION",
+                "POST_DECISION",
+                "UNKNOWN"
+            ],
+            "regle_stricte": "Si nous ne pouvons pas démontrer qu'une information était disponible au moment de la décision, elle ne pourra pas entrer dans le premier modèle."
+        }
+    },
+    "section_C_target_renforcee": {
+        "definition_officielle": "À fournir par la CIF",
+        "cas_particuliers_a_etudier": [
+            "Horizon de prédiction",
+            "Date d'origine du défaut",
+            "Restructurations",
+            "Remboursements anticipés",
+            "Prêts clôturés",
+            "Prêts encore actifs",
+            "Observations censurées"
+        ],
+        "avertissement": "Un target mal défini invaliderait toute la modélisation ultérieure, même avec un excellent ROC-AUC."
+    },
+    "section_G_biais_selection_renforce": {
+        "chaine_population": [
+            "Population des demandeurs",
+            "Clients acceptés",
+            "Clients financés",
+            "Clients observables suffisamment longtemps",
+            "Clients avec target observable"
+        ],
+        "question": "Où et pourquoi des populations disparaissent-elles entre ces étapes ?"
+    },
+    "section_H_data_dictionary_enrichi": {
+        "colonnes_obligatoires": [
+            "Variable",
+            "Niveau de granularité",
+            "Unité",
+            "Définition métier",
+            "Source système",
+            "Date de disponibilité",
+            "Fréquence de mise à jour",
+            "Règles de calcul",
+            "Taux de missing",
+            "Valeurs possibles",
+            "Risque de leakage",
+            "Statut d'utilisation : INCLURE / EXCLURE / À CLARIFIER"
+        ]
+    },
+    "criteres_go_modelisation": {
+        "cinq_questions_obligatoires": [
+            "1. La population est-elle correctement définie ?",
+            "2. La temporalité de l'information est-elle démontrée ?",
+            "3. Le target est-il métierement et statistiquement valide ?",
+            "4. Le leakage est-il raisonnablement exclu ?",
+            "5. La cohorte permet-elle une évaluation hors échantillon crédible ?"
+        ],
+        "regle": "Si une réponse est négative ou UNKNOWN sur un point critique, le projet restera en DATA AUDIT — NO GO MODELING."
+    },
+    "sequence_officielle": [
+        "OBTENIR LES DONNÉES",
+        "ÉTABLIR LE DATA GOVERNANCE RECORD",
+        "AUDITER LE GRAIN",
+        "AUDITER LA TEMPORALITÉ",
+        "DÉFINIR LE TARGET",
+        "AUDITER LA QUALITÉ",
+        "CONSTRUIRE LA COHORTE",
+        "SEULEMENT ENSUITE : BASELINES"
+    ],
+    "question_finale": "Les données réelles CIF contiennent-elles suffisamment d'information valide, disponible au bon moment et correctement étiquetée pour qu'une prédiction de risque puisse être scientifiquement défendable ?"
+}

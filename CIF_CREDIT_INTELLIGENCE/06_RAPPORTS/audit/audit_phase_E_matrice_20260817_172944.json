@@ -1,0 +1,28 @@
+{
+    "timestamp": "20260817_172944",
+    "audit_phase": "PHASE E - Étape 0",
+    "test": "Matrice de généralisation",
+    "matrix": {
+        "A_to_A": {
+            "roc_auc": 0.8188479872596387,
+            "pr_auc": 0.3847361484012979,
+            "brier": 0.15065496397784175
+        },
+        "A_to_B_sans_retrain": {
+            "roc_auc": 0.5721211801579169,
+            "pr_auc": 0.14073132756746853,
+            "brier": 0.18396820850739393
+        },
+        "B_to_B": {
+            "roc_auc": 0.7965538544994273,
+            "pr_auc": 0.3577786610267284,
+            "brier": 0.15784252409129923
+        },
+        "B_to_A_sans_retrain": {
+            "roc_auc": 0.6436608452684549,
+            "pr_auc": 0.16816995009568314,
+            "brier": 0.15708976877979808
+        }
+    },
+    "interpretation": "GÉNÉRALISATION PARTIELLE"
+}

@@ -1,0 +1,21 @@
+{
+    "timestamp": "20260817_171333",
+    "audit_phase": "PHASE C - Étape 1",
+    "test": "Test Oracle",
+    "oracle_metrics": {
+        "roc_auc": 0.8476831658878229,
+        "pr_auc": 0.4903106663772858,
+        "brier": 0.07949550067914478
+    },
+    "full_model_metrics": {
+        "roc_auc": 0.829229168779885,
+        "pr_auc": 0.45343179517401216,
+        "brier": 0.08422045045413595
+    },
+    "delta": {
+        "roc_auc": -0.018453997107937936,
+        "pr_auc": -0.036878871203273655,
+        "brier": -0.0047249497749911745
+    },
+    "interpretation": "Le modèle récupère essentiellement le facteur latent"
+}

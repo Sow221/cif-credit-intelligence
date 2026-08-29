@@ -1,0 +1,195 @@
+{
+    "timestamp": "20260817_181422",
+    "audit_phase": "PHASE F - Étape 1",
+    "test": "Fonction de coût et optimisation",
+    "scenarios": [
+        {
+            "politique": "A_automatisation_complete",
+            "n_total": 2000,
+            "n_revues": 0,
+            "n_faux_negatifs": 75,
+            "n_faux_positifs": 304,
+            "n_vrais_negatifs": 1455,
+            "n_vrais_positifs": 166,
+            "cout_total": 24120000,
+            "cout_par_client": 12060.0,
+            "scenario": "S1_CONservateur"
+        },
+        {
+            "politique": "B_revue_thin_file",
+            "n_total": 2000,
+            "n_revues": 330,
+            "n_faux_negatifs": 64,
+            "n_faux_positifs": 293,
+            "n_vrais_negatifs": 1147,
+            "n_vrais_positifs": 166,
+            "cout_total": 23240000,
+            "cout_par_client": 11620.0,
+            "scenario": "S1_CONservateur"
+        },
+        {
+            "politique": "C_revue_confiance",
+            "n_total": 2000,
+            "n_revues": 590,
+            "n_faux_negatifs": 63,
+            "n_faux_positifs": 174,
+            "n_vrais_negatifs": 1043,
+            "n_vrais_positifs": 130,
+            "cout_total": 20770000,
+            "cout_par_client": 10385.0,
+            "scenario": "S1_CONservateur"
+        },
+        {
+            "politique": "D_oracle",
+            "n_total": 2000,
+            "n_revues": 0,
+            "n_faux_negatifs": 0,
+            "n_faux_positifs": 0,
+            "n_vrais_negatifs": 1759,
+            "n_vrais_positifs": 241,
+            "cout_total": 0,
+            "cout_par_client": 0.0,
+            "scenario": "S1_CONservateur"
+        },
+        {
+            "politique": "A_automatisation_complete",
+            "n_total": 2000,
+            "n_revues": 0,
+            "n_faux_negatifs": 75,
+            "n_faux_positifs": 304,
+            "n_vrais_negatifs": 1455,
+            "n_vrais_positifs": 166,
+            "cout_total": 37700000,
+            "cout_par_client": 18850.0,
+            "scenario": "S2_CENTRAL"
+        },
+        {
+            "politique": "B_revue_thin_file",
+            "n_total": 2000,
+            "n_revues": 330,
+            "n_faux_negatifs": 64,
+            "n_faux_positifs": 293,
+            "n_vrais_negatifs": 1147,
+            "n_vrais_positifs": 166,
+            "cout_total": 37150000,
+            "cout_par_client": 18575.0,
+            "scenario": "S2_CENTRAL"
+        },
+        {
+            "politique": "C_revue_confiance",
+            "n_total": 2000,
+            "n_revues": 590,
+            "n_faux_negatifs": 63,
+            "n_faux_positifs": 174,
+            "n_vrais_negatifs": 1043,
+            "n_vrais_positifs": 130,
+            "cout_total": 33500000,
+            "cout_par_client": 16750.0,
+            "scenario": "S2_CENTRAL"
+        },
+        {
+            "politique": "D_oracle",
+            "n_total": 2000,
+            "n_revues": 0,
+            "n_faux_negatifs": 0,
+            "n_faux_positifs": 0,
+            "n_vrais_negatifs": 1759,
+            "n_vrais_positifs": 241,
+            "cout_total": 0,
+            "cout_par_client": 0.0,
+            "scenario": "S2_CENTRAL"
+        },
+        {
+            "politique": "A_automatisation_complete",
+            "n_total": 2000,
+            "n_revues": 0,
+            "n_faux_negatifs": 75,
+            "n_faux_positifs": 304,
+            "n_vrais_negatifs": 1455,
+            "n_vrais_positifs": 166,
+            "cout_total": 35570000,
+            "cout_par_client": 17785.0,
+            "scenario": "S3_AGRESSIF"
+        },
+        {
+            "politique": "B_revue_thin_file",
+            "n_total": 2000,
+            "n_revues": 330,
+            "n_faux_negatifs": 64,
+            "n_faux_positifs": 293,
+            "n_vrais_negatifs": 1147,
+            "n_vrais_positifs": 166,
+            "cout_total": 39640000,
+            "cout_par_client": 19820.0,
+            "scenario": "S3_AGRESSIF"
+        },
+        {
+            "politique": "C_revue_confiance",
+            "n_total": 2000,
+            "n_revues": 590,
+            "n_faux_negatifs": 63,
+            "n_faux_positifs": 174,
+            "n_vrais_negatifs": 1043,
+            "n_vrais_positifs": 130,
+            "cout_total": 35170000,
+            "cout_par_client": 17585.0,
+            "scenario": "S3_AGRESSIF"
+        },
+        {
+            "politique": "D_oracle",
+            "n_total": 2000,
+            "n_revues": 0,
+            "n_faux_negatifs": 0,
+            "n_faux_positifs": 0,
+            "n_vrais_negatifs": 1759,
+            "n_vrais_positifs": 241,
+            "cout_total": 0,
+            "cout_par_client": 0.0,
+            "scenario": "S3_AGRESSIF"
+        }
+    ],
+    "optimisation_seuils": [
+        {
+            "seuil_revue": 0.05,
+            "n_revues": 431,
+            "n_fn": 45,
+            "n_fp": 174,
+            "cout_total": 26510000
+        },
+        {
+            "seuil_revue": 0.1,
+            "n_revues": 375,
+            "n_fn": 51,
+            "n_fp": 174,
+            "cout_total": 27750000
+        },
+        {
+            "seuil_revue": 0.15,
+            "n_revues": 166,
+            "n_fn": 75,
+            "n_fp": 174,
+            "cout_total": 32860000
+        },
+        {
+            "seuil_revue": 0.2,
+            "n_revues": 116,
+            "n_fn": 82,
+            "n_fp": 174,
+            "cout_total": 34460000
+        },
+        {
+            "seuil_revue": 0.3,
+            "n_revues": 0,
+            "n_fn": 111,
+            "n_fp": 174,
+            "cout_total": 42000000
+        },
+        {
+            "seuil_revue": 0.5,
+            "n_revues": 0,
+            "n_fn": 174,
+            "n_fp": 39,
+            "cout_total": 54150000
+        }
+    ]
+}

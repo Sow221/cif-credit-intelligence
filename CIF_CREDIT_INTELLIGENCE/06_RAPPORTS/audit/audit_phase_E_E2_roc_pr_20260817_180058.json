@@ -1,0 +1,23 @@
+{
+    "timestamp": "20260817_180058",
+    "audit_phase": "PHASE E - E2",
+    "test": "Courbes ROC + PR + Distributions Thin-File F1 vs F5",
+    "results": {
+        "F1": {
+            "n": 330,
+            "n_defaults": 11,
+            "roc_auc": 0.9049586776859504,
+            "pr_auc": 0.2386777123234488,
+            "non_default_mean": 0.017903275787830353,
+            "default_mean": 0.10292176902294159
+        },
+        "F5": {
+            "n": 330,
+            "n_defaults": 11,
+            "roc_auc": 0.6423482473639214,
+            "pr_auc": 0.04535592170784869,
+            "non_default_mean": 0.025623172521591187,
+            "default_mean": 0.029942644760012627
+        }
+    }
+}

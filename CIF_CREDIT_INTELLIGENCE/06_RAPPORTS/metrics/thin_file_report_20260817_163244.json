@@ -1,0 +1,53 @@
+{
+    "timestamp": "20260817_163244",
+    "hypothesis": "VALIDÉE",
+    "default_rates_by_segment": {
+        "THIN-FILE (0 prêt)": 0.039,
+        "LIMITÉ (1 prêt)": 0.1214,
+        "MOYEN (2-3 prêts)": 0.1325,
+        "RICHE (4+ prêts)": 0.1431
+    },
+    "performance_by_segment": [
+        {
+            "segment": "LIMITÉ (1 prêt)",
+            "n_clients": 334,
+            "default_rate": 0.1377,
+            "mean_predicted_pd": 0.1061,
+            "roc_auc": 0.8298,
+            "pr_auc": 0.5239,
+            "brier": 0.0894
+        },
+        {
+            "segment": "MOYEN (2-3 prêts)",
+            "n_clients": 695,
+            "default_rate": 0.1367,
+            "mean_predicted_pd": 0.1285,
+            "roc_auc": 0.8153,
+            "pr_auc": 0.4501,
+            "brier": 0.0963
+        },
+        {
+            "segment": "RICHE (4+ prêts)",
+            "n_clients": 641,
+            "default_rate": 0.1388,
+            "mean_predicted_pd": 0.1581,
+            "roc_auc": 0.8459,
+            "pr_auc": 0.4877,
+            "brier": 0.0941
+        },
+        {
+            "segment": "THIN-FILE (0 prêt)",
+            "n_clients": 330,
+            "default_rate": 0.0333,
+            "mean_predicted_pd": 0.0258,
+            "roc_auc": 0.6423,
+            "pr_auc": 0.0492,
+            "brier": 0.0345
+        }
+    ],
+    "key_findings": [
+        "Les clients thin-file ont un taux de défaut de 3.90%, contre 14.31% pour les clients riches en historique.",
+        "Le modèle est moins discriminant pour les thin-file (ROC-AUC 0.64) mais reste bien calibré (Brier 0.0345).",
+        "L'hypothèse fondatrice est VALIDÉE : le manque d'historique ne doit pas être assimilé à un mauvais risque."
+    ]
+}

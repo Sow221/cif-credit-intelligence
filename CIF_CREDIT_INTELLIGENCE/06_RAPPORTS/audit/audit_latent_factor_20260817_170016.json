@@ -1,0 +1,53 @@
+{
+    "timestamp": "20260817_170016",
+    "audit_phase": "PHASE A - Étape 4",
+    "test": "Suppression du facteur latent",
+    "results": [
+        {
+            "experiment": "A_CONTROLE",
+            "description": "Dataset actuel (tous les liens actifs)",
+            "n_clients": 8000,
+            "default_rate": 0.31,
+            "roc_auc": 0.6425900018393316,
+            "pr_auc": 0.4272712928195514,
+            "brier": 0.2014527524965864
+        },
+        {
+            "experiment": "B_SANS_LIEN_EPARGNE",
+            "description": "Sans lien risk_factor → savings",
+            "n_clients": 8000,
+            "default_rate": 0.32925,
+            "roc_auc": 0.6551801217155548,
+            "pr_auc": 0.48901076948020017,
+            "brier": 0.20091223147538906
+        },
+        {
+            "experiment": "C_SANS_LIEN_HISTORIQUE",
+            "description": "Sans lien risk_factor → historique",
+            "n_clients": 8000,
+            "default_rate": 0.315875,
+            "roc_auc": 0.64039888871401,
+            "pr_auc": 0.47615155523246555,
+            "brier": 0.20849640751493628
+        },
+        {
+            "experiment": "D_SANS_LIEN_DIRECT_TARGET",
+            "description": "Sans lien direct risk_factor → target",
+            "n_clients": 8000,
+            "default_rate": 0.30075,
+            "roc_auc": 0.5215435442929535,
+            "pr_auc": 0.33225879631206046,
+            "brier": 0.21253708731038748
+        },
+        {
+            "experiment": "E_SANS_AUCUN_LIEN",
+            "description": "Target complètement indépendant",
+            "n_clients": 8000,
+            "default_rate": 0.305375,
+            "roc_auc": 0.5661423069419254,
+            "pr_auc": 0.35791761496613944,
+            "brier": 0.21602517161137494
+        }
+    ],
+    "interpretation": "Analyse de la dépendance du modèle aux liens artificiels"
+}

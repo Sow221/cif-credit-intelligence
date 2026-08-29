@@ -1,0 +1,68 @@
+{
+    "timestamp": "20260817_173647",
+    "audit_phase": "PHASE D - RAPPORT FINAL",
+    "version": "2.0",
+    "matrice_generalisation": {
+        "A_to_A": {
+            "roc_auc": 0.8187,
+            "ci95": [
+                0.7942,
+                0.843
+            ]
+        },
+        "A_to_B": {
+            "roc_auc": 0.5729,
+            "ci95": [
+                0.5364,
+                0.6096
+            ]
+        },
+        "B_to_B": {
+            "roc_auc": 0.7968,
+            "ci95": [
+                0.7674,
+                0.8287
+            ]
+        },
+        "B_to_A": {
+            "roc_auc": 0.6436,
+            "ci95": [
+                0.6047,
+                0.6791
+            ]
+        }
+    },
+    "test_difference": {
+        "delta_AA_minus_AB": {
+            "valeur": 0.2476,
+            "ic95": [
+                0.1961,
+                0.2992
+            ],
+            "p_value": 0.0,
+            "significatif": true
+        },
+        "delta_BB_minus_BA": {
+            "valeur": 0.1522,
+            "ic95": [
+                0.1015,
+                0.2015
+            ],
+            "p_value": 0.0,
+            "significatif": true
+        }
+    },
+    "features_transferables": {
+        "spearman_corr": 0.4585,
+        "p_value": 0.0212,
+        "famille_dominante": "Historique de crédit (57-63% de l'importance)",
+        "famille_specifique": "Épargne (ratio B/A = 0.71)"
+    },
+    "conclusion_scientifique": {
+        "niveau_1_demontre": "Le pipeline apprend un signal prédictif sur deux générateurs distincts",
+        "niveau_2_compatible": "L'historique de crédit est une source de signal transférable",
+        "niveau_3_a_valider": "La performance sur données CIF réelles",
+        "formulation_officielle": "Les expériences synthétiques démontrent l'existence d'un signal prédictif reproductible, mais également une dépendance substantielle au mécanisme de génération des données. La généralisation inter-générateurs étant partielle, les performances obtenues sur le générateur de référence ne peuvent être considérées comme une estimation de la performance future sur les données CIF."
+    },
+    "decision_demandee": "GO pour Phase E (Thin-file × temporalité × Fairness avec IC95%)"
+}

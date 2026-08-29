@@ -1,0 +1,10 @@
+{
+    "timestamp": "20260817_172232",
+    "audit_phase": "PHASE D - Étape 2",
+    "test": "Générateur alternatif",
+    "result": {
+        "roc_auc_generator_B": 0.6514455467883353,
+        "pr_auc_generator_B": 0.5992631218095027,
+        "brier_generator_B": 0.23487113230561282
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "timestamp": "20260817_163130",
+    "default_rates_by_segment": {
+        "LIMITÉ (1 prêt)": 0.12139423076923077,
+        "MOYEN (2-3 prêts)": 0.13252297657871331,
+        "RICHE (4+ prêts)": 0.14311926605504588,
+        "THIN-FILE (0 prêt)": 0.03898405197873597
+    },
+    "performance_by_segment": [
+        {
+            "segment": "LIMITÉ (1 prêt)",
+            "n_clients": 334,
+            "default_rate": 0.1377245508982036,
+            "mean_predicted_pd": 

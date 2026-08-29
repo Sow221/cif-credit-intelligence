@@ -1,0 +1,21 @@
+{
+    "timestamp": "20260817_173121",
+    "objet": "Correction de l'interprétation D5 + Matrice de généralisation",
+    "erreur_precedente": "Nous avions écrit que le modèle 'se transfère' au générateur B, alors qu'il s'agissait d'un modèle réentraîné sur B.",
+    "correction": "La matrice de généralisation complète A→A / A→B / B→A / B→B a été exécutée.",
+    "resultats_matrice": {
+        "A_to_A": 0.8188,
+        "A_to_B_sans_retrain": 0.5721,
+        "B_to_B": 0.7966,
+        "B_to_A_sans_retrain": 0.6437
+    },
+    "conclusion_honnete": {
+        "pipeline_robuste": true,
+        "transfert_direct_demontre": false,
+        "performance_croisee_moyenne": 0.6079,
+        "performance_same_moyenne": 0.8077,
+        "ecart_same_moins_cross": 0.1998,
+        "interpretation": "Généralisation PARTIELLE. Environ 25% de la performance est spécifique au générateur d'entraînement."
+    },
+    "formulation_retenue": "Le modèle apprend un mélange de relations générales et de spécificités du générateur. La généralisation inter-générateurs est partielle, pas totale."
+}

@@ -1,0 +1,51 @@
+{
+    "timestamp": "20260817_170638",
+    "audit_phase": "PHASE B - Étape 3",
+    "test": "Robustesse par perturbation (corrigé)",
+    "results": [
+        {
+            "perturbation_rate": 0.0,
+            "roc_auc": 0.829229168779885,
+            "pr_auc": 0.45343179517401216,
+            "brier": 0.08422045045413595
+        },
+        {
+            "perturbation_rate": 0.05,
+            "roc_auc": 0.8145813233188416,
+            "pr_auc": 0.3921787440808946,
+            "brier": 0.08928286407689877
+        },
+        {
+            "perturbation_rate": 0.1,
+            "roc_auc": 0.8023903151309567,
+            "pr_auc": 0.3691480850228829,
+            "brier": 0.09220204535196518
+        },
+        {
+            "perturbation_rate": 0.2,
+            "roc_auc": 0.7831590468933922,
+            "pr_auc": 0.35508980157609193,
+            "brier": 0.0948061666823186
+        },
+        {
+            "perturbation_rate": 0.3,
+            "roc_auc": 0.7752518759479995,
+            "pr_auc": 0.35407768978504855,
+            "brier": 0.09646909418935266
+        },
+        {
+            "perturbation_rate": 0.4,
+            "roc_auc": 0.7506575548630752,
+            "pr_auc": 0.3276561038770683,
+            "brier": 0.09912438150013782
+        },
+        {
+            "perturbation_rate": 0.5,
+            "roc_auc": 0.7350366461517412,
+            "pr_auc": 0.3298908276412888,
+            "brier": 0.10107997687656155
+        }
+    ],
+    "base_roc_auc": 0.829229168779885,
+    "seuil_critique": null
+}

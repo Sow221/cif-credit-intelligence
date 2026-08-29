@@ -1,0 +1,41 @@
+{
+    "timestamp": "20260817_172605",
+    "audit_phase": "PHASE D - SYNTHÈSE COMPLÈTE",
+    "version": "1.0",
+    "question_centrale": "Le modèle apprend-il des relations générales ou la signature du générateur ?",
+    "reponse": "Le modèle apprend des relations GÉNÉRALES et économiquement plausibles.",
+    "preuves": [
+        {
+            "test": "D1 - Multi-seeds",
+            "resultat": "ROC-AUC de 0.819 à 0.837 (écart-type ≈ 0.009)",
+            "interpretation": "Stable entre seeds"
+        },
+        {
+            "test": "D2 - Perturbation coefficients ±30%",
+            "resultat": "Variation < 1% du ROC-AUC",
+            "interpretation": "Robuste aux changements de paramètres"
+        },
+        {
+            "test": "D3 - Suppression lien risque→épargne",
+            "resultat": "ROC-AUC : 0.819 → 0.774 (perte -0.044)",
+            "interpretation": "Perte modérée, pas d'effondrement"
+        },
+        {
+            "test": "D4 - Target indépendant",
+            "resultat": "ROC-AUC = 0.525",
+            "interpretation": "Proche du hasard, pas de fuite structurelle"
+        },
+        {
+            "test": "D5 - Générateur alternatif",
+            "resultat": "ROC-AUC = 0.797 sur un mécanisme différent",
+            "interpretation": "Transférabilité démontrée"
+        }
+    ],
+    "limitations_residuelles": [
+        "Le Test Oracle (Phase C) a montré que raw_score seul obtient 0.848, supérieur au modèle complet (0.829)",
+        "La performance sur données réelles CIF reste inconnue",
+        "Le générateur alternatif utilise un mécanisme différent mais reste une simplification"
+    ],
+    "conclusion_generale": "Le modèle XGBoost apprend des relations économiquement plausibles entre le comportement financier (épargne, remboursements) et le risque de défaut. Les performances observées ne sont pas des artefacts fragiles du générateur.",
+    "decision": "GO POUR PHASE E - Analyse thin-file × fenêtre temporelle et Fairness approfondie"
+}

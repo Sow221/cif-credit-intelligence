@@ -1,0 +1,228 @@
+{
+    "timestamp": "20260817_175418",
+    "audit_phase": "PHASE E - Étape 1",
+    "test": "Matrice Thin-File × Temporalité",
+    "matrix": [
+        {
+            "segment": "0_prix",
+            "window": 1,
+            "n_clients": 330,
+            "n_defaults": 11,
+            "default_rate": 0.03333333333333333,
+            "roc_auc": 0.9049586776859504,
+            "pr_auc": 0.24933119315141786,
+            "brier": 0.028790239323750483,
+            "note": null
+        },
+        {
+            "segment": "0_prix",
+            "window": 2,
+            "n_clients": 358,
+            "n_defaults": 18,
+            "default_rate": 0.05027932960893855,
+            "roc_auc": 0.9368464052287582,
+            "pr_auc": 0.4837628002533989,
+            "brier": 0.03879359588271608,
+            "note": null
+        },
+        {
+            "segment": "0_prix",
+            "window": 3,
+            "n_clients": 348,
+            "n_defaults": 18,
+            "default_rate": 0.05172413793103448,
+            "roc_auc": 0.9470538720538719,
+            "pr_auc": 0.5568914956011731,
+            "brier": 0.03795684021594007,
+            "note": null
+        },
+        {
+            "segment": "0_prix",
+            "window": 4,
+            "n_clients": 327,
+            "n_defaults": 8,
+            "default_rate": 0.024464831804281346,
+            "roc_auc": 0.9171238244514106,
+            "pr_auc": 0.37013797864712866,
+            "brier": 0.020071146738276,
+            "note": null
+        },
+        {
+            "segment": "0_prix",
+            "window": 5,
+            "n_clients": 330,
+            "n_defaults": 11,
+            "default_rate": 0.03333333333333333,
+            "roc_auc": 0.6423482473639214,
+            "pr_auc": 0.049183068879203984,
+            "brier": 0.03448403535424558,
+            "note": null
+        },
+        {
+            "segment": "1_pret",
+            "window": 1,
+            "n_clients": 327,
+            "n_defaults": 40,
+            "default_rate": 0.12232415902140673,
+            "roc_auc": 0.9445993031358886,
+            "pr_auc": 0.721608652102648,
+            "brier": 0.05899513665308679,
+            "note": null
+        },
+        {
+            "segment": "1_pret",
+            "window": 2,
+            "n_clients": 329,
+            "n_defaults": 36,
+            "default_rate": 0.1094224924012158,
+            "roc_auc": 0.9219283276450512,
+            "pr_auc": 0.6090956972600702,
+            "brier": 0.06281293568538102,
+            "note": null
+        },
+        {
+            "segment": "1_pret",
+            "window": 3,
+            "n_clients": 341,
+            "n_defaults": 41,
+            "default_rate": 0.12023460410557185,
+            "roc_auc": 0.9458130081300813,
+            "pr_auc": 0.6870325505539112,
+            "brier": 0.05986089383699759,
+            "note": null
+        },
+        {
+            "segment": "1_pret",
+            "window": 4,
+            "n_clients": 333,
+            "n_defaults": 39,
+            "default_rate": 0.11711711711711711,
+            "roc_auc": 0.9462323390894819,
+            "pr_auc": 0.7436536562487186,
+            "brier": 0.05487417959553657,
+            "note": null
+        },
+        {
+            "segment": "1_pret",
+            "window": 5,
+            "n_clients": 334,
+            "n_defaults": 46,
+            "default_rate": 0.1377245508982036,
+            "roc_auc": 0.8297856280193238,
+            "pr_auc": 0.5239252984675353,
+            "brier": 0.0893744440143601,
+            "note": null
+        },
+        {
+            "segment": "2_3_prets",
+            "window": 1,
+            "n_clients": 668,
+            "n_defaults": 84,
+            "default_rate": 0.12574850299401197,
+            "roc_auc": 0.9262679386823223,
+            "pr_auc": 0.6419328426611749,
+            "brier": 0.067607118479427,
+            "note": null
+        },
+        {
+            "segment": "2_3_prets",
+            "window": 2,
+            "n_clients": 678,
+            "n_defaults": 81,
+            "default_rate": 0.11946902654867257,
+            "roc_auc": 0.908679198461443,
+            "pr_auc": 0.5596748068294086,
+            "brier": 0.07145249293146379,
+            "note": null
+        },
+        {
+            "segment": "2_3_prets",
+            "window": 3,
+            "n_clients": 654,
+            "n_defaults": 90,
+            "default_rate": 0.13761467889908258,
+            "roc_auc": 0.9168045705279748,
+            "pr_auc": 0.5977122054040369,
+            "brier": 0.07621593830217423,
+            "note": null
+        },
+        {
+            "segment": "2_3_prets",
+            "window": 4,
+            "n_clients": 678,
+            "n_defaults": 97,
+            "default_rate": 0.1430678466076696,
+            "roc_auc": 0.9280124917933885,
+            "pr_auc": 0.689164250106447,
+            "brier": 0.0703109945582572,
+            "note": null
+        },
+        {
+            "segment": "2_3_prets",
+            "window": 5,
+            "n_clients": 695,
+            "n_defaults": 95,
+            "default_rate": 0.1366906474820144,
+            "roc_auc": 0.8153333333333332,
+            "pr_auc": 0.4500804415668773,
+            "brier": 0.0962501274380148,
+            "note": null
+        },
+        {
+            "segment": "4_plus_prets",
+            "window": 1,
+            "n_clients": 675,
+            "n_defaults": 109,
+            "default_rate": 0.16148148148148148,
+            "roc_auc": 0.9173663565338607,
+            "pr_auc": 0.6303233197750279,
+            "brier": 0.08571321623581496,
+            "note": null
+        },
+        {
+            "segment": "4_plus_prets",
+            "window": 2,
+            "n_clients": 635,
+            "n_defaults": 82,
+            "default_rate": 0.12913385826771653,
+            "roc_auc": 0.91435848806951,
+            "pr_auc": 0.5861414381678334,
+            "brier": 0.07422169385361803,
+            "note": null
+        },
+        {
+            "segment": "4_plus_prets",
+            "window": 3,
+            "n_clients": 657,
+            "n_defaults": 109,
+            "default_rate": 0.1659056316590563,
+            "roc_auc": 0.921147793477533,
+            "pr_auc": 0.7031804494894236,
+            "brier": 0.07882434415450851,
+            "note": null
+        },
+        {
+            "segment": "4_plus_prets",
+            "window": 4,
+            "n_clients": 662,
+            "n_defaults": 79,
+            "default_rate": 0.11933534743202417,
+            "roc_auc": 0.905085003365395,
+            "pr_auc": 0.630284882969962,
+            "brier": 0.0685249755481708,
+            "note": null
+        },
+        {
+            "segment": "4_plus_prets",
+            "window": 5,
+            "n_clients": 641,
+            "n_defaults": 89,
+            "default_rate": 0.13884555382215288,
+            "roc_auc": 0.8458516528252727,
+            "pr_auc": 0.4877188246589291,
+            "brier": 0.09409713942457769,
+            "note": null
+        }
+    ],
+    "question": "La baisse de performance de la fenêtre 5 est-elle liée à la profondeur d'historique ?"
+}

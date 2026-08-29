@@ -1,0 +1,82 @@
+{
+    "timestamp": "20260817_184938",
+    "test": "Kit V1.3 — Test de résistance avec chaîne temporelle",
+    "n_anomalies_injectees": 120,
+    "n_anomalies_detectees": 14,
+    "taux_couverture_pct": 11.7,
+    "detections": {
+        "PII": [
+            {
+                "table": "customers",
+                "colonne": "nom"
+            },
+            {
+                "table": "customers",
+                "colonne": "telephone"
+            }
+        ],
+        "doublons": [
+            {
+                "n": 1
+            }
+        ],
+        "dates_invalides": [
+            {
+                "table": "applications",
+                "colonne": "application_date",
+                "n": 1
+            }
+        ],
+        "cles_orphelines": [
+            {
+                "table": "loans",
+                "n": 1
+            }
+        ],
+        "valeurs_negatives": [
+            {
+                "table": "applications",
+                "colonne": "montant_demande",
+                "n": 1
+            }
+        ],
+        "missing": [
+            {
+                "table": "customers",
+                "n": 48
+            },
+            {
+                "table": "applications",
+                "n": 30
+            }
+        ],
+        "leakage_temporel": [
+            {
+                "colonne": "statut_final_client"
+            },
+            {
+                "colonne": "max_dpd_apres_decision"
+            }
+        ],
+        "C1_decision_avant_demande": [
+            {
+                "n": 19
+            }
+        ],
+        "C2_decaissement_avant_decision": [
+            {
+                "n": 206
+            }
+        ],
+        "C3_paiement_avant_decaissement": [
+            {
+                "n": 1069
+            }
+        ],
+        "C4_client_sans_application": [
+            {
+                "n": 155
+            }
+        ]
+    }
+}

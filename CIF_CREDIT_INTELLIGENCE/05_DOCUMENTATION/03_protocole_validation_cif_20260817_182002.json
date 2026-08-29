@@ -1,0 +1,90 @@
+{
+    "titre": "Protocole de Validation sur Données Réelles CIF",
+    "version": "1.0",
+    "date": "20260817_182002",
+    "statut": "PROJET - À soumettre à la CIF",
+    "objectif": "Évaluer la performance de CIF Credit Intelligence sur les données réelles des réseaux de la CIF, en mode shadow/pilote, sans modifier les décisions de crédit existantes.",
+    "prerequis": [
+        "Accord formel de la CIF et du réseau pilote",
+        "Accès à un échantillon de données anonymisées",
+        "Validation du cadre réglementaire (BCEAO, protection des données)",
+        "Infrastructure technique de test"
+    ],
+    "donnees_requises": {
+        "population": "Clients ayant fait une demande de crédit sur une période définie",
+        "periode_observation": "12 à 24 mois recommandés",
+        "periode_performance": "6 à 12 mois après décaissement",
+        "definition_defaut": "À convenir avec la CIF (ex : retard > 90 jours, défaut avéré, etc.)",
+        "unite_observation": "Demande de crédit (pas client, car un client peut avoir plusieurs demandes)",
+        "traitement_prets_actifs": "Exclure les prêts actifs non arrivés à échéance",
+        "anonymisation": "Pseudonymisation complète avant transfert"
+    },
+    "validation": {
+        "split_temporel": "Entraînement sur période ancienne, test sur période récente",
+        "bootstrap_ic95": "1 000 réplications minimum",
+        "performance_globale": [
+            "ROC-AUC",
+            "PR-AUC",
+            "Brier",
+            "Log Loss"
+        ],
+        "performance_par_segment": [
+            "Ancienneté",
+            "Thin-File",
+            "Secteur",
+            "Zone"
+        ],
+        "calibration": [
+            "ECE",
+            "Reliability diagram",
+            "Calibration slope/intercept"
+        ],
+        "fairness": [
+            "Par genre",
+            "Par zone",
+            "Par secteur",
+            "Par profondeur d'historique"
+        ],
+        "stabilite": [
+            "Multi-fenêtres",
+            "Drift PSI"
+        ]
+    },
+    "mode_shadow": {
+        "description": "Le système produit ses prédictions en PARALLÈLE du processus existant.",
+        "regles": [
+            "Les prédictions ne modifient PAS les décisions de crédit",
+            "Les agents de crédit ne voient PAS les scores pendant la phase initiale",
+            "Les performances sont mesurées par comparaison rétrospective",
+            "La durée recommandée est de 3 à 6 mois minimum"
+        ]
+    },
+    "criteres_go_nogo": {
+        "go": [
+            "ROC-AUC > 0.65 sur données réelles",
+            "Calibration acceptable (ECE < 0.10)",
+            "Pas de biais de genre significatif",
+            "Le système identifie correctement les Thin-File",
+            "La revue humaine est économiquement justifiée"
+        ],
+        "nogo": [
+            "ROC-AUC < 0.55",
+            "Calibration catastrophique (ECE > 0.20)",
+            "Biais majeur détecté",
+            "Le système rejette massivement les Thin-File",
+            "Coût opérationnel excessif"
+        ]
+    },
+    "livrables_attendus": {
+        "rapport_performance": "Métriques complètes avec IC95%",
+        "rapport_fairness": "Analyse par groupe avec IC95%",
+        "rapport_calibration": "Reliability diagrams et ECE",
+        "rapport_economique": "Analyse coût/bénéfice de la revue humaine",
+        "recommandation": "GO / NO-GO pour le déploiement pilote"
+    },
+    "gouvernance": {
+        "comite_validation": "CIF + réseau pilote + cabinet de supervision",
+        "frequence_rapport": "Mensuel pendant la phase shadow",
+        "escalade": "Toute anomalie majeure doit être signalée immédiatement"
+    }
+}

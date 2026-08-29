@@ -1,0 +1,67 @@
+{
+    "timestamp": "20260817_184608",
+    "test": "Résistance kit V1.2 sur dataset piégé",
+    "n_anomalies_introduites": 15,
+    "n_anomalies_detectees": 11,
+    "detections": {
+        "PII": [
+            {
+                "table": "customers",
+                "colonne": "nom"
+            },
+            {
+                "table": "customers",
+                "colonne": "telephone"
+            }
+        ],
+        "doublons": [
+            {
+                "table": "customers",
+                "n": 1
+            }
+        ],
+        "dates_invalides": [
+            {
+                "table": "applications",
+                "colonne": "application_date",
+                "n": 1
+            }
+        ],
+        "cles_orphelines": [
+            {
+                "n": 1
+            }
+        ],
+        "valeurs_negatives": [
+            {
+                "table": "applications",
+                "colonne": "montant_demande",
+                "n": 1
+            }
+        ],
+        "missing": [
+            {
+                "table": "customers",
+                "n": 108
+            },
+            {
+                "table": "applications",
+                "n": 41
+            }
+        ],
+        "leakage_temporel": [
+            {
+                "colonne": "statut_final_client"
+            },
+            {
+                "colonne": "max_dpd_apres_decision"
+            }
+        ],
+        "coherence_temporelle": [
+            {
+                "type": "decaissement_avant_decision",
+                "n": 285
+            }
+        ]
+    }
+}

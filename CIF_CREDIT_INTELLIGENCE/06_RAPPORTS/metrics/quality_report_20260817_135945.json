@@ -1,0 +1,31 @@
+{
+    "timestamp": "20260817_135945",
+    "dataset": "Synth\u00e9tique",
+    "random_seed": 42,
+    "tables": {
+        "customers": {
+            "n_rows": 10000,
+            "n_columns": 20,
+            "n_missing_values": 0,
+            "pct_missing": 0.0,
+            "n_duplicates": 0,
+            "memory_usage_kb": 4414.39
+        },
+        "loans": {
+            "n_rows": 24952,
+            "n_columns": 11,
+            "n_missing_values": 0,
+            "pct_missing": 0.0,
+            "n_duplicates": 0,
+            "memory_usage_kb": 7789.46
+        },
+        "savings": {
+            "n_rows": 240000,
+            "n_columns": 5,
+            "n_missing_values": 0,
+            "pct_missing": 0.0,
+            "n_duplicates": 0,
+            "memory_usage_kb": 21328.25
+        }
+    }
+}

@@ -1,0 +1,15 @@
+{
+    "timestamp": "20260817_165817",
+    "audit_phase": "PHASE A - Étape 3",
+    "test": "Dataset sans signal",
+    "description": "La cible est indépendante des features. Le modèle ne devrait pas trouver de signal.",
+    "results": {
+        "roc_auc": 0.47761714285714285,
+        "pr_auc": 0.11964122063561393,
+        "brier": 0.111489004280449,
+        "default_rate_test": 0.125,
+        "mean_predicted_probability": 0.1221233382821083
+    },
+    "interpretation": "TEST RÉUSSI",
+    "conclusion": "Le générateur ne contient pas de fuite structurelle"
+}

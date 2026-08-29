@@ -1,0 +1,65 @@
+{
+    "titre": "CIF_DATA_AUDIT_V1.3_REPORT_GENERATOR",
+    "version": "1.0",
+    "date": "20260817_185042",
+    "statut": "PRÊT — En attente des données CIF",
+    "structure_rapport": {
+        "1_executive_summary": {
+            "contenu": "Résumé de l'audit en une page : données reçues, qualité globale, anomalies bloquantes, décision GO/NO-GO"
+        },
+        "2_perimetre_population": {
+            "contenu": "Tables reçues, volumes, périodes couvertes, population étudiée"
+        },
+        "3_grain_tables": {
+            "contenu": "Pour chaque table : grain, clés candidates, relations avec les autres tables"
+        },
+        "4_qualite_donnees": {
+            "contenu": "Doublons, valeurs impossibles, dates invalides, valeurs négatives"
+        },
+        "5_missingness": {
+            "contenu": "Taux de valeurs manquantes par variable, par segment, par période"
+        },
+        "6_coherence_relationnelle": {
+            "contenu": "Clés orphelines, relations entre tables, intégrité référentielle"
+        },
+        "7_coherence_temporelle": {
+            "contenu": "C1 à C5 : chaîne temporelle complète Demande→Décision→Décaissement→Paiement"
+        },
+        "8_pii_confidentialite": {
+            "contenu": "Détection PII, gate status, actions requises"
+        },
+        "9_data_dictionary": {
+            "contenu": "Matrice complète par variable avec statut INCLUDE/EXCLUDE/CLARIFY"
+        },
+        "10_leakage_audit": {
+            "contenu": "Classification temporelle de chaque variable, risque de leakage"
+        },
+        "11_biais_selection": {
+            "contenu": "Chaîne des transitions demandes→décisions→décaissements→targets"
+        },
+        "12_definition_target": {
+            "contenu": "Définition officielle CIF, horizon, cas particuliers"
+        },
+        "13_cohorte_candidate": {
+            "contenu": "Critères d'inclusion/exclusion, population finale"
+        },
+        "14_registre_decisions": {
+            "contenu": "Chaque variable avec décision, justification, preuve, validateur"
+        },
+        "15_anomalies_bloquantes": {
+            "contenu": "Liste des problèmes qui empêchent la modélisation"
+        },
+        "16_conditions_go_nogo": {
+            "contenu": "GO DATASET / GO CONDITIONNEL / NO-GO avec justification"
+        },
+        "17_annexes": {
+            "contenu": "Graphiques, distributions, matrices de corrélation, scripts"
+        }
+    },
+    "regles_go_nogo": {
+        "NO_GO": "Données insuffisamment documentées / incohérences critiques / temporalité non démontrée / target non validé",
+        "GO_CONDITIONNEL": "Données exploitables sous réserve de corrections X, Y, Z",
+        "GO_DATASET": "Cohorte suffisamment documentée pour commencer les baselines"
+    },
+    "note_importante": "GO Data Audit ≠ GO Modèle performant. Le premier autorise seulement l'expérimentation statistique."
+}

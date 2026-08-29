@@ -1,0 +1,37 @@
+{
+    "timestamp": "20260817_170439",
+    "audit_phase": "PHASE B - Étape 2",
+    "test": "Comparaison multi-algorithmes",
+    "results": [
+        {
+            "model": "BASELINE_NAIVE",
+            "description": "Prédiction constante (taux de base)",
+            "roc_auc": 0.5,
+            "pr_auc": 0.1205,
+            "brier": 0.10598731249999999
+        },
+        {
+            "model": "LOGISTIC_REGRESSION",
+            "description": "Régression logistique régularisée",
+            "roc_auc": 0.8069772763192968,
+            "pr_auc": 0.3495450754490443,
+            "brier": 0.18707659096742893
+        },
+        {
+            "model": "RANDOM_FOREST",
+            "description": "Random Forest (100 arbres)",
+            "roc_auc": 0.8327652216579111,
+            "pr_auc": 0.46531089131376996,
+            "brier": 0.14747926104129896
+        },
+        {
+            "model": "XGBOOST",
+            "description": "XGBoost (300 arbres, profondeur 4)",
+            "roc_auc": 0.8316612371703085,
+            "pr_auc": 0.46814856171674457,
+            "brier": 0.1437640454913934
+        }
+    ],
+    "best_model": "RANDOM_FOREST",
+    "best_roc_auc": 0.8327652216579111
+}

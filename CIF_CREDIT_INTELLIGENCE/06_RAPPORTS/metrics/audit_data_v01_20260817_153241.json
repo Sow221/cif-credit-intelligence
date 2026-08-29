@@ -1,0 +1,173 @@
+{
+    "timestamp": "2026-08-17T15:32:41.201385",
+    "file_audited": "customers_final_20260817_145043.csv",
+    "n_rows": 10000,
+    "n_columns": 20,
+    "variables": [
+        {
+            "variable": "customer_id",
+            "type": "int64",
+            "n_missing": 0,
+            "pct_missing": 0.0,
+            "n_unique": 10000,
+            "leakage_risk": "❌ IDENTIFIANT - Ne pas utiliser"
+        },
+        {
+            "variable": "age",
+            "type": "int64",
+            "n_missing": 0,
+            "pct_missing": 0.0,
+            "n_unique": 45,
+            "leakage_risk": "Inconnu"
+        },
+        {
+            "variable": "gender",
+            "type": "object",
+            "n_missing": 0,
+            "pct_missing": 0.0,
+            "n_unique": 2,
+            "leakage_risk": "Inconnu"
+        },
+        {
+            "variable": "sector",
+            "type": "object",
+            "n_missing": 0,
+            "pct_missing": 0.0,
+            "n_unique": 4,
+            "leakage_risk": "Inconnu"
+        },
+        {
+            "variable": "location",
+            "type": "object",
+            "n_missing": 0,
+            "pct_missing": 0.0,
+            "n_unique": 3,
+            "leakage_risk": "Inconnu"
+        },
+        {
+            "variable": "seniority_months",
+            "type": "int64",
+            "n_missing": 0,
+            "pct_missing": 0.0,
+            "n_unique": 114,
+            "leakage_risk": "Inconnu"
+        },
+        {
+            "variable": "monthly_income",
+            "type": "float64",
+            "n_missing": 0,
+            "pct_missing": 0.0,
+            "n_unique": 9834,
+            "leakage_risk": "Inconnu"
+        },
+        {
+            "variable": "current_savings",
+            "type": "float64",
+            "n_missing": 0,
+            "pct_missing": 0.0,
+            "n_unique": 9979,
+            "leakage_risk": "Inconnu"
+        },
+        {
+            "variable": "avg_savings_24m",
+            "type": "float64",
+            "n_missing": 0,
+            "pct_missing": 0.0,
+            "n_unique": 9987,
+            "leakage_risk": "Inconnu"
+        },
+        {
+            "variable": "savings_std_24m",
+            "type": "float64",
+            "n_missing": 0,
+            "pct_missing": 0.0,
+            "n_unique": 9837,
+            "leakage_risk": "Inconnu"
+        },
+        {
+            "variable": "savings_volatility",
+            "type": "float64",
+            "n_missing": 0,
+            "pct_missing": 0.0,
+            "n_unique": 2693,
+            "leakage_risk": "Inconnu"
+        },
+        {
+            "variable": "savings_stability",
+            "type": "float64",
+            "n_missing": 0,
+            "pct_missing": 0.0,
+            "n_unique": 5273,
+            "leakage_risk": "Inconnu"
+        },
+        {
+            "variable": "n_past_loans",
+            "type": "int64",
+            "n_missing": 0,
+            "pct_missing": 0.0,
+            "n_unique": 6,
+            "leakage_risk": "Inconnu"
+        },
+        {
+            "variable": "current_loan_request",
+            "type": "float64",
+            "n_missing": 0,
+            "pct_missing": 0.0,
+            "n_unique": 9933,
+            "leakage_risk": "Inconnu"
+        },
+        {
+            "variable": "current_loan_duration",
+            "type": "int64",
+            "n_missing": 0,
+            "pct_missing": 0.0,
+            "n_unique": 4,
+            "leakage_risk": "Inconnu"
+        },
+        {
+            "variable": "current_loan_purpose",
+            "type": "object",
+            "n_missing": 0,
+            "pct_missing": 0.0,
+            "n_unique": 4,
+            "leakage_risk": "Inconnu"
+        },
+        {
+            "variable": "loan_to_savings_ratio",
+            "type": "float64",
+            "n_missing": 0,
+            "pct_missing": 0.0,
+            "n_unique": 5157,
+            "leakage_risk": "Inconnu"
+        },
+        {
+            "variable": "raw_score",
+            "type": "float64",
+            "n_missing": 0,
+            "pct_missing": 0.0,
+            "n_unique": 8499,
+            "leakage_risk": "⚠️ POTENTIEL - Variable intermédiaire"
+        },
+        {
+            "variable": "p_default_true",
+            "type": "float64",
+            "n_missing": 0,
+            "pct_missing": 0.0,
+            "n_unique": 3247,
+            "leakage_risk": "⚠️ POTENTIEL - Variable cible ou dérivée"
+        },
+        {
+            "variable": "is_default",
+            "type": "int64",
+            "n_missing": 0,
+            "pct_missing": 0.0,
+            "n_unique": 2,
+            "leakage_risk": "⚠️ POTENTIEL - Variable cible ou dérivée"
+        }
+    ],
+    "synthese": {
+        "n_vars_with_missing": 0,
+        "n_vars_leakage_risk": 4,
+        "n_vars_zero_variance": 0
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "titre": "DATA DICTIONARY AUDIT MATRIX",
+    "version": "1.1",
+    "date": "20260817_183628",
+    "statut": "TEMPLATE — À remplir avec le Data Dictionary CIF",
+    "instructions": "Pour chaque variable du dataset CIF, remplir les colonnes suivantes.",
+    "colonnes": [
+        "variable",
+        "type",
+        "source",
+        "grain",
+        "definition_metier",
+        "disponible_decision",
+        "post_decision",
+        "date_disponibilite",
+        "missing_pct",
+        "periode",
+        "risque_leakage",
+        "decision"
+    ],
+    "regles": {
+        "regle_1": "Toute variable POST_DECISION ou UNKNOWN est exclue du premier modèle.",
+        "regle_2": "Toute variable avec risque_leakage = ÉLEVÉ nécessite une validation avant inclusion.",
+        "regle_3": "Les identifiants ne sont jamais utilisés comme features.",
+        "regle_4": "Les variables DÉRIVÉES doivent être documentées avec leur formule exacte.",
+        "regle_5": "Aucune variable ne peut passer de À CLARIFIER à INCLURE sans justification."
+    }
+}

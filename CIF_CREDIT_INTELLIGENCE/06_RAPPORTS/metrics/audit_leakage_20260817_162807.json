@@ -1,0 +1,125 @@
+{
+    "timestamp": "20260817_162807",
+    "model": "MODEL_OFFICIAL_CALIBRATED",
+    "n_features": 25,
+    "variable_classification": {
+        "age": {
+            "category": "STATIQUE - Connu avant la décision",
+            "risk": "FAIBLE"
+        },
+        "seniority_months": {
+            "category": "STATIQUE - Connu avant la décision",
+            "risk": "FAIBLE"
+        },
+        "monthly_income": {
+            "category": "ACTUEL - Connu au moment de la décision",
+            "risk": "FAIBLE"
+        },
+        "current_savings": {
+            "category": "ACTUEL - Connu au moment de la décision",
+            "risk": "FAIBLE"
+        },
+        "avg_savings_24m": {
+            "category": "ACTUEL - Connu au moment de la décision",
+            "risk": "FAIBLE"
+        },
+        "savings_std_24m": {
+            "category": "ACTUEL - Connu au moment de la décision",
+            "risk": "FAIBLE"
+        },
+        "savings_volatility": {
+            "category": "ACTUEL - Connu au moment de la décision",
+            "risk": "FAIBLE"
+        },
+        "savings_stability": {
+            "category": "ACTUEL - Connu au moment de la décision",
+            "risk": "FAIBLE"
+        },
+        "n_past_loans": {
+            "category": "HISTORIQUE - Passé uniquement",
+            "risk": "FAIBLE"
+        },
+        "current_loan_request": {
+            "category": "ACTUEL - Connu au moment de la décision",
+            "risk": "FAIBLE"
+        },
+        "current_loan_duration": {
+            "category": "ACTUEL - Connu au moment de la décision",
+            "risk": "FAIBLE"
+        },
+        "loan_to_savings_ratio": {
+            "category": "ACTUEL - Connu au moment de la décision",
+            "risk": "FAIBLE"
+        },
+        "n_loans": {
+            "category": "HISTORIQUE - Passé uniquement",
+            "risk": "FAIBLE"
+        },
+        "avg_loan_amount": {
+            "category": "HISTORIQUE - Passé uniquement",
+            "risk": "FAIBLE"
+        },
+        "total_loan_amount": {
+            "category": "HISTORIQUE - Passé uniquement",
+            "risk": "FAIBLE"
+        },
+        "avg_repayment_regularity": {
+            "category": "HISTORIQUE - Passé uniquement",
+            "risk": "FAIBLE"
+        },
+        "min_repayment_regularity": {
+            "category": "HISTORIQUE - Passé uniquement",
+            "risk": "FAIBLE"
+        },
+        "max_historical_dpd": {
+            "category": "HISTORIQUE - Passé uniquement",
+            "risk": "FAIBLE"
+        },
+        "mean_historical_dpd": {
+            "category": "HISTORIQUE - Passé uniquement",
+            "risk": "FAIBLE"
+        },
+        "n_defaults": {
+            "category": "HISTORIQUE - Passé uniquement",
+            "risk": "FAIBLE"
+        },
+        "loan_to_income_ratio": {
+            "category": "ACTUEL - Connu au moment de la décision",
+            "risk": "FAIBLE"
+        },
+        "historical_default_rate": {
+            "category": "HISTORIQUE - Passé uniquement",
+            "risk": "FAIBLE"
+        },
+        "savings_to_income_ratio": {
+            "category": "ACTUEL - Connu au moment de la décision",
+            "risk": "FAIBLE"
+        },
+        "seniority_years": {
+            "category": "STATIQUE - Connu avant la décision",
+            "risk": "FAIBLE"
+        },
+        "overall_payment_regularity": {
+            "category": "HISTORIQUE - Passé uniquement",
+            "risk": "FAIBLE"
+        }
+    },
+    "n_high_risk_vars": 0,
+    "high_risk_vars": [],
+    "split_integrity": {
+        "train_size": 8000,
+        "test_size": 2000,
+        "overlap": 0,
+        "is_clean": true
+    },
+    "forbidden_vars_check": {
+        "checked": [
+            "p_default_true",
+            "is_default",
+            "raw_score"
+        ],
+        "found": [],
+        "is_clean": true
+    },
+    "conclusion": "AUCUN LEAKAGE DÉTECTÉ"
+}

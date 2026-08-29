@@ -1,0 +1,248 @@
+{
+    "project": "CIF Credit Intelligence",
+    "version": "1.1",
+    "created_at": "20260817_135945",
+    "description": "Dictionnaire des données du jeu de données synthétiques",
+    "tables": {
+        "customers": {
+            "file": "customers_raw_20260817_135945.csv",
+            "description": "Table des clients et de leurs caractéristiques",
+            "n_rows": 10000,
+            "n_columns": 20,
+            "variables": {
+                "customer_id": {
+                    "type": "int64",
+                    "description": "Variable customer_id",
+                    "non_null": 10000,
+                    "unique_values": 10000
+                },
+                "age": {
+                    "type": "int64",
+                    "description": "Variable age",
+                    "non_null": 10000,
+                    "unique_values": 45
+                },
+                "gender": {
+                    "type": "object",
+                    "description": "Variable gender",
+                    "non_null": 10000,
+                    "unique_values": 2
+                },
+                "sector": {
+                    "type": "object",
+                    "description": "Variable sector",
+                    "non_null": 10000,
+                    "unique_values": 4
+                },
+                "location": {
+                    "type": "object",
+                    "description": "Variable location",
+                    "non_null": 10000,
+                    "unique_values": 3
+                },
+                "seniority_months": {
+                    "type": "int64",
+                    "description": "Variable seniority_months",
+                    "non_null": 10000,
+                    "unique_values": 114
+                },
+                "monthly_income": {
+                    "type": "float64",
+                    "description": "Variable monthly_income",
+                    "non_null": 10000,
+                    "unique_values": 9858
+                },
+                "income_volatility": {
+                    "type": "float64",
+                    "description": "Variable income_volatility",
+                    "non_null": 10000,
+                    "unique_values": 4
+                },
+                "current_savings": {
+                    "type": "float64",
+                    "description": "Variable current_savings",
+                    "non_null": 10000,
+                    "unique_values": 9985
+                },
+                "avg_savings_24m": {
+                    "type": "float64",
+                    "description": "Variable avg_savings_24m",
+                    "non_null": 10000,
+                    "unique_values": 9994
+                },
+                "savings_std_24m": {
+                    "type": "float64",
+                    "description": "Variable savings_std_24m",
+                    "non_null": 10000,
+                    "unique_values": 9809
+                },
+                "savings_volatility": {
+                    "type": "float64",
+                    "description": "Variable savings_volatility",
+                    "non_null": 10000,
+                    "unique_values": 2465
+                },
+                "savings_stability": {
+                    "type": "float64",
+                    "description": "Variable savings_stability",
+                    "non_null": 10000,
+                    "unique_values": 5464
+                },
+                "n_past_loans": {
+                    "type": "int64",
+                    "description": "Variable n_past_loans",
+                    "non_null": 10000,
+                    "unique_values": 6
+                },
+                "current_loan_request": {
+                    "type": "float64",
+                    "description": "Variable current_loan_request",
+                    "non_null": 10000,
+                    "unique_values": 9577
+                },
+                "current_loan_duration": {
+                    "type": "int64",
+                    "description": "Variable current_loan_duration",
+                    "non_null": 10000,
+                    "unique_values": 4
+                },
+                "current_loan_purpose": {
+                    "type": "object",
+                    "description": "Variable current_loan_purpose",
+                    "non_null": 10000,
+                    "unique_values": 4
+                },
+                "loan_to_savings_ratio": {
+                    "type": "float64",
+                    "description": "Variable loan_to_savings_ratio",
+                    "non_null": 10000,
+                    "unique_values": 1566
+                },
+                "p_default_true": {
+                    "type": "float64",
+                    "description": "Variable p_default_true",
+                    "non_null": 10000,
+                    "unique_values": 3286
+                },
+                "is_default": {
+                    "type": "int64",
+                    "description": "Variable is_default",
+                    "non_null": 10000,
+                    "unique_values": 2
+                }
+            }
+        },
+        "loans": {
+            "file": "loans_raw_20260817_135945.csv",
+            "description": "Table de l'historique des prêts",
+            "n_rows": 24952,
+            "n_columns": 11,
+            "variables": {
+                "customer_id": {
+                    "type": "int64",
+                    "description": "Variable customer_id",
+                    "non_null": 24952,
+                    "unique_values": 8304
+                },
+                "loan_id": {
+                    "type": "object",
+                    "description": "Variable loan_id",
+                    "non_null": 24952,
+                    "unique_values": 24952
+                },
+                "loan_amount": {
+                    "type": "float64",
+                    "description": "Variable loan_amount",
+                    "non_null": 24952,
+                    "unique_values": 24952
+                },
+                "loan_duration": {
+                    "type": "int64",
+                    "description": "Variable loan_duration",
+                    "non_null": 24952,
+                    "unique_values": 4
+                },
+                "loan_purpose": {
+                    "type": "object",
+                    "description": "Variable loan_purpose",
+                    "non_null": 24952,
+                    "unique_values": 4
+                },
+                "loan_status": {
+                    "type": "object",
+                    "description": "Variable loan_status",
+                    "non_null": 24952,
+                    "unique_values": 2
+                },
+                "loan_start_date": {
+                    "type": "object",
+                    "description": "Variable loan_start_date",
+                    "non_null": 24952,
+                    "unique_values": 1095
+                },
+                "repayment_regularity": {
+                    "type": "float64",
+                    "description": "Variable repayment_regularity",
+                    "non_null": 24952,
+                    "unique_values": 37
+                },
+                "max_dpd": {
+                    "type": "int64",
+                    "description": "Variable max_dpd",
+                    "non_null": 24952,
+                    "unique_values": 91
+                },
+                "n_payments": {
+                    "type": "int64",
+                    "description": "Variable n_payments",
+                    "non_null": 24952,
+                    "unique_values": 4
+                },
+                "payments_on_time": {
+                    "type": "int64",
+                    "description": "Variable payments_on_time",
+                    "non_null": 24952,
+                    "unique_values": 25
+                }
+            }
+        },
+        "savings": {
+            "file": "savings_raw_20260817_135945.csv",
+            "description": "Table de l'historique d'épargne mensuel",
+            "n_rows": 240000,
+            "n_columns": 5,
+            "variables": {
+                "customer_id": {
+                    "type": "int64",
+                    "description": "Variable customer_id",
+                    "non_null": 240000,
+                    "unique_values": 10000
+                },
+                "month": {
+                    "type": "int64",
+                    "description": "Variable month",
+                    "non_null": 240000,
+                    "unique_values": 24
+                },
+                "date": {
+                    "type": "object",
+                    "description": "Variable date",
+                    "non_null": 240000,
+                    "unique_values": 24
+                },
+                "savings_balance": {
+                    "type": "float64",
+                    "description": "Variable savings_balance",
+                    "non_null": 240000,
+                    "unique_values": 239844
+                },
+                "transaction_amount": {
+                    "type": "float64",
+                    "description": "Variable transaction_amount",
+                    "non_null": 240000,
+                    "unique_values": 240000
+                }
+            }
+        }
+    }
+}

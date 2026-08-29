@@ -1,0 +1,11 @@
+{
+    "timestamp": "20260817_172454",
+    "audit_phase": "PHASE D - Étape 2 corrigée",
+    "test": "Générateur alternatif calibré",
+    "result": {
+        "default_rate_B": 0.11325,
+        "roc_auc_B": 0.7965538544994273,
+        "pr_auc_B": 0.3577786610267284,
+        "brier_B": 0.15784252409129923
+    }
+}
