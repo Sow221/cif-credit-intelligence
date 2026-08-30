@@ -1,0 +1,96 @@
+name: deploy
+
+# Declaration de deploiement. Construit et publie les images conteneur
+# (backend, frontend) sur GitHub Container Registry, puis applique les
+# manifestes Kubernetes dans le cluster cible.
+#
+# Prerequis secrets GitHub (a definir au niveau du repositoire / organisation):
+#   - GHCR_PAT           : jeton d'acces au GitHub Container Registry
+#   - KUBE_CONFIG_BASE64 : kubeconfig base64 du cluster cible
+#   - ARTIFACTS_BASE64   : modele ML (backend)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "backend/**"
+      - "frontend/**"
+      - "infrastructure/**"
+      - ".github/workflows/deploy.yml"
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_BACKEND: ${{ github.repository }}-backend
+  IMAGE_FRONTEND: ${{ github.repository }}-frontend
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Connexion au GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GHCR_PAT }}
+
+      - name: Restaurer les artefacts ML pour le build backend
+        env:
+          ARTIFACTS_BASE64: ${{ secrets.ARTIFACTS_BASE64 }}
+        run: |
+          mkdir -p mlops/artifacts
+          if [ -n "$ARTIFACTS_BASE64" ]; then
+            echo "$ARTIFACTS_BASE64" | base64 -d > mlops/artifacts/MODEL_OFFICIAL.joblib
+          fi
+
+      - name: Build et push image backend
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: backend/Dockerfile.api
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_BACKEND }}:latest,${{ env.REGISTRY }}/${{ env.IMAGE_BACKEND }}:${{ github.sha }}
+
+      - name: Build et push image frontend
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: frontend/Dockerfile.frontend
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_FRONTEND }}:latest,${{ env.REGISTRY }}/${{ env.IMAGE_FRONTEND }}:${{ github.sha }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build-and-push
+    environment: production
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Preparer kubeconfig
+        env:
+          KUBE_CONFIG_BASE64: ${{ secrets.KUBE_CONFIG_BASE64 }}
+        run: |
+          mkdir -p $HOME/.kube
+          echo "$KUBE_CONFIG_BASE64" | base64 -d > $HOME/.kube/config
+
+      - name: Appliquer les manifestes Kubernetes
+        run: |
+          kubectl apply -f infrastructure/k8s/namespace.yaml
+          kubectl apply -f infrastructure/k8s/configmap.yaml
+          kubectl -n cif apply -f infrastructure/k8s/backend-deployment.yaml
+          kubectl -n cif apply -f infrastructure/k8s/backend-service.yaml
+          kubectl -n cif apply -f infrastructure/k8s/frontend-deployment.yaml
+          kubectl -n cif apply -f infrastructure/k8s/frontend-service.yaml
+          kubectl -n cif apply -f infrastructure/k8s/ingress.yaml
+
+      - name: Verifier le rollback
+        run: kubectl -n cif rollout status deployment/backend --timeout=180s
