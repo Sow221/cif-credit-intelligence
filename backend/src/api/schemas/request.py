@@ -8,6 +8,18 @@ des entrees fiables avant tout traitement.
 from pydantic import BaseModel, ConfigDict, Field
 
 
+class OverrideRequest(BaseModel):
+    """Corps de l'override humain d'une decision automate."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    agent_id: str = Field(..., min_length=1, max_length=50)
+    decision: str = Field(
+        ..., pattern="^(APPROBATION|REVUE_HUMAINE|AJUSTEMENT|REFUS)$"
+    )
+    justification: str = Field(..., min_length=1, max_length=2000)
+
+
 class SavingsEntry(BaseModel):
     model_config = ConfigDict(extra="forbid")
 

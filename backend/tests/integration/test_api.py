@@ -84,7 +84,7 @@ def minimal_payload() -> dict:
 def test_health_returns_200(client):
     response = client.get("/health")
     assert response.status_code == 200
-    assert response.json()["status"] in ("ok", "degraded")
+    assert response.json()["status"] == "healthy"
 
 
 def test_predict_with_full_history_returns_pd(client):

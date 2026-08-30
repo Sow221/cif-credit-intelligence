@@ -26,8 +26,12 @@ class Settings(BaseSettings):
     jwt_expiry_minutes: int = 60
 
     # --- Base de donnees ---
-    database_url: str = "postgresql+psycopg2://cif:cif@localhost:5432/cif"
+    database_url: str = "postgresql+psycopg://cif:cif@localhost:5440/cif"
     redis_url: str = "redis://localhost:6379/0"
+
+    @property
+    def app_version(self) -> str:
+        return "1.0.0"
 
     # --- Rate limits ---
     rate_predict: int = 60

@@ -14,7 +14,14 @@ from starlette.middleware.base import BaseHTTPMiddleware
 
 from src.config.settings import Settings
 
-PUBLIC_PATHS = {"/health", "/docs", "/redoc", "/openapi.json"}
+PUBLIC_PATHS = {
+    "/health",
+    "/health/live",
+    "/health/ready",
+    "/docs",
+    "/redoc",
+    "/openapi.json",
+}
 
 settings = Settings()
 

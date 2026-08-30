@@ -1,13 +1,16 @@
 """Route de prediction de defaut (POST /v1/predict).
 
 Enchainement : schema -> detection thin-file -> features -> PD -> confiance
--> decision -> audit. Un client thin-file ne declenche JAMAIS l'appel au
-modele et aboutit systematiquement a REVUE_HUMAINE.
+-> decision -> audit -> persistance des decisions dans la base
+(consommee par /v1/decisions et /v1/audit).
 """
 
+import uuid
 from datetime import UTC, datetime
+from typing import Annotated
 
-from fastapi import APIRouter, HTTPException, Request
+from fastapi import APIRouter, Depends, HTTPException, Request
+from sqlalchemy.orm import Session
 
 from src.api.schemas.request import PredictionRequest
 from src.api.schemas.response import (
@@ -16,6 +19,8 @@ from src.api.schemas.response import (
     Recommendation,
 )
 from src.config.settings import Settings
+from src.db.models import Customer, Prediction
+from src.db.session import get_db
 from src.models.predictor import ModelUnavailableError, Predictor
 from src.services.audit_service import AuditService
 from src.services.confidence import ConfidenceService
@@ -23,6 +28,8 @@ from src.services.decision_engine import DecisionEngine
 from src.services.feature_service import FeatureService, FeatureServiceError
 
 router = APIRouter(tags=["prediction"])
+
+DbSession = Annotated[Session, Depends(get_db)]
 
 settings = Settings()
 audit = AuditService()
@@ -34,8 +41,58 @@ except ModelUnavailableError:
     predictor = None
 
 
+def _persist_prediction(
+    db: Session,
+    customer_id: int,
+    age: int,
+    seniority_months: int,
+    pd_score: float,
+    confidence_level: str,
+    confidence_score: float,
+    recommendation: str,
+    model_version: str,
+    features_used: dict,
+    request_id: str,
+) -> None:
+    """Upsert du client puis insertion de la prediction en base."""
+    customer = db.get(Customer, customer_id)
+    if customer is None:
+        customer = Customer(
+            customer_id=customer_id,
+            age=age,
+            seniority_months=seniority_months,
+        )
+        db.add(customer)
+    else:
+        customer.age = age
+        customer.seniority_months = seniority_months
+
+    prediction = Prediction(
+        customer_id=customer_id,
+        pd_score=pd_score,
+        confidence_level=confidence_level,
+        confidence_score=confidence_score,
+        recommendation=recommendation,
+        model_version=model_version,
+        features_used=features_used or None,
+        request_id=uuid.UUID(request_id) if _is_uuid(request_id) else None,
+    )
+    db.add(prediction)
+    db.commit()
+
+
+def _is_uuid(value: str) -> bool:
+    try:
+        uuid.UUID(value)
+        return True
+    except (ValueError, AttributeError):
+        return False
+
+
 @router.post("/v1/predict", response_model=PredictionResponse)
-async def predict(request: PredictionRequest, req: Request) -> PredictionResponse:
+async def predict(
+    request: PredictionRequest, req: Request, db: DbSession
+) -> PredictionResponse:
     request_id = req.state.request_id
     payload = request.model_dump()
 
@@ -96,5 +153,21 @@ async def predict(request: PredictionRequest, req: Request) -> PredictionRespons
         confidence_level=confidence["level"],
         is_thin_file=False,
         model_version=predictor.model_version,
+    )
+
+    # Persistance pour /v1/decisions, /v1/audit et la tracabilite reglementaire.
+    features_used = predictor.feature_vector(payload)
+    _persist_prediction(
+        db=db,
+        customer_id=request.customer_id,
+        age=request.age,
+        seniority_months=request.seniority_months,
+        pd_score=pd_score,
+        confidence_level=confidence["level"],
+        confidence_score=confidence["score"],
+        recommendation=response.recommendation.decision,
+        model_version=predictor.model_version,
+        features_used=features_used,
+        request_id=request_id,
     )
     return response

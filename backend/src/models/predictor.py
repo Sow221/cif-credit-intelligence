@@ -50,6 +50,10 @@ class Predictor:
             raise ModelUnavailableError("Modele non charge")
         return self._model
 
+    def is_loaded(self) -> bool:
+        """Indique si le modele est effectivement charge en memoire."""
+        return self._model is not None
+
     @property
     def model_version(self) -> str:
         return f"MODEL_OFFICIAL-{len(FeatureRegistry.all_features())}f"
