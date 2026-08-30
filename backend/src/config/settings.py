@@ -12,9 +12,11 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
     # --- Modele ---
-    model_path: str = (
-        "C:/Users/MS/Desktop/DEV/CIF_CREDIT_INTELLIGENCE-20260817T205307Z-1-001/"
-        "CIF_CREDIT_INTELLIGENCE/02_MODELS/trained/MODEL_OFFICIAL.joblib"
+    model_path: str = str(
+        Path(__file__).resolve().parents[3]
+        / "mlops"
+        / "artifacts"
+        / "MODEL_OFFICIAL.joblib"
     )
     isocal_path: Optional[str] = None
 

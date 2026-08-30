@@ -23,12 +23,13 @@ coverage/
 .env.*
 !.env.example
 
-# Données volumineuses et modèles
-*.joblib
-*.csv
-!01_DATA/processed/feature_columns.json
-02_MODELS/trained/*.joblib
-!02_MODELS/registry/*.json
+# Modèles ML (fichiers binaires lourds)
+mlops/artifacts/*.joblib
+mlops/artifacts/*.pkl
+
+# Données
+01_DATA/raw/*.csv
+01_DATA/processed/*.csv
 
 # Infrastructure
 terraform/.terraform/
