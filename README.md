@@ -1,43 +1,104 @@
-# CIF Credit Intelligence
+<div align="center">
 
-Système de décision et de suivi du risque de crédit pour les institutions
-financières — **Standard Production Élite**.
+# 💳 CIF Credit Intelligence
 
-## Vue d'ensemble
+**Système de décision et de suivi du risque de crédit pour les institutions financières**  
+*Standard Production Élite*
 
-- **Modèle** : XGBoost (25 features), PD = probabilité de défaut (classe 1).
-- **Feature Service** : transforme le payload client (bruts + historiques) en
-  25 features. Les Thin-File sont signalés (jamais de zéros artificiels).
-- **Decision Engine** : PD + confiance + Thin-File → APPROBATION / REVUE_HUMAINE
-  / AJUSTEMENT / REFUS.
+[![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![XGBoost](https://img.shields.io/badge/XGBoost-ML-EC9A29?style=for-the-badge&logo=xgboost&logoColor=white)](https://xgboost.readthedocs.io/)
+[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 
-## Stack
+</div>
 
-- Backend : FastAPI (Python 3.11)
-- Frontend : React 18 + TypeScript + Vite
-- ML : XGBoost, MLflow, Evidently
-- Infra : Docker, Kubernetes, GitHub Actions
+---
 
-## Démarrage
+## 📌 Vue d'ensemble
 
+* **🤖 Modèle ML** : XGBoost (ex : 20–30 features) prédisant la probabilité de défaut (PD).  
+* **⚡ Feature Service** : Transformations reproductibles du payload client (données brutes & historiques). Traitement dédié des *thin-files* sans injection de zéros artificiels.  
+* **🎯 Decision Engine** : Combinaison PD + Confiance + Thin-File → décisions : `APPROBATION`, `REVUE_HUMAINE`, `AJUSTEMENT`, `REFUS`.  
+* **♻️ MLOps** : Enregistrement des modèles et métriques (MLflow), monitoring de performances & drift (Evidently).
+
+---
+
+## 🛠️ Stack Technique (exemple)
+
+| Composant | Technologie | Rôle |
+| :--- | :--- | :--- |
+| **Backend** | Python 3.11, FastAPI | APIs haute performance, Feature Service |
+| **Machine Learning** | XGBoost, scikit-learn, MLflow | Modélisation, validation, tracking |
+| **Monitoring** | Evidently, Prometheus, Grafana | Drift, data quality, métriques opérationnelles |
+| **Infra & CI/CD** | Docker, GitHub Actions, (Kubernetes) | Conteneurisation & déploiement |
+| **Tests** | pytest, coverage | Qualité, tests unitaires & intégration |
+
+---
+
+## 🚀 Démarrage rapide
+
+1) Cloner le dépôt
 ```bash
+git clone https://github.com/Sow221/cif-credit-intelligence.git
+cd cif-credit-intelligence
+```
+
+2) Installation (utilise le Makefile présent)
+```bash
+# créer venv + installer dépendances
 make install
-make backend-dev
-make frontend-dev
 ```
 
-## Tests
-
+3) Lancer en dev
 ```bash
-make test-backend   # pytest >= 90% de couverture
-make test-frontend  # Vitest >= 80%
+# backend en mode développement (FastAPI + hot reload)
+make backend-dev
 ```
 
-## Branches
+4) Tests
+```bash
+# Tests backend (objectif couverture >= 90%)
+make test-backend
+```
 
-- `main` : version stable
-- `develop` : intégration continue (branche de travail par défaut)
+---
 
-## Documentation
+## 🧪 Qualité & Tests
 
-Voir `docs/` (ADR, model card) et l'API Swagger à `/docs`.
+- Couverture minimale souhaitée : Backend >= 90%.  
+- Tests d'intégration pour le Feature Service et le Decision Engine.  
+- Linting & format : black, isort, ruff.
+
+---
+
+## 🌿 Stratégie de branches
+
+- `main` : production stable.  
+- `develop` : intégration continue / pré-prod.  
+- Feature branches : `feature/<ticket>-desc`.
+
+---
+
+## 📚 Documentation
+
+- docs/ — ADRs, Model Card, schémas d'API et guide d'intégration.  
+- API interactive : /docs (Swagger UI) lorsqu'elle est lancée localement.
+
+---
+
+## ✅ Checklist pour atteindre le niveau "Top Level / Élite"
+
+- [ ] README riche + badges fonctionnels (coverage, license, CI).  
+- [ ] Model Card complète (dataset, features, performance, fairness).  
+- [ ] ADRs pour décisions d'architecture critiques.  
+- [ ] Tests unitaires & d'intégration avec seuils de coverage.  
+- [ ] CI enforcement (checks qui bloquent merges si couverture insuffisante).  
+- [ ] Dockerfile multi-stage + Compose / Helm chart pour déploiement.  
+- [ ] Observabilité (logs structurés, traces, métriques & alerting).
+
+---
+
+## ✍️ Personnalisation
+
+Les sections ci‑dessus contiennent des placeholders (ex. XGBoost, FastAPI). Dites-moi si vous voulez que j'adapte le README à l'état exact du repo (par ex. remplacer FastAPI par Flask, ajouter les badges CI/coverage réels, lister les dépendances clés à partir du fichier requirements.txt).
