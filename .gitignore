@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.log
+
+# Node / Frontend
+node_modules/
+dist/
+.vite/
+coverage/
+
+# Env / Secrets
+.env
+.env.*
+!.env.example
+
+# Données volumineuses et modèles
+*.joblib
+*.csv
+!01_DATA/processed/feature_columns.json
+02_MODELS/trained/*.joblib
+!02_MODELS/registry/*.json
+
+# Infrastructure
+terraform/.terraform/
+*.tfstate
+*.tfstate.*
+
+# IDE
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# MLflow
+mlruns/
