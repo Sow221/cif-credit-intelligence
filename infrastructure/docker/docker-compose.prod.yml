@@ -1,0 +1,73 @@
+name: cif-credit-intelligence-prod
+
+# Classe en service production : restrictions de ressources, redemarrage,
+# secrets via fichier .env, et services ML (MLflow + monitoring).
+# Usage : docker-compose -f docker-compose.prod.yml up -d
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: cif-prod-postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-cif}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-cif}
+      POSTGRES_DB: ${POSTGRES_DB:-cif}
+    volumes:
+      - cif_prod_pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-cif} -d ${POSTGRES_DB:-cif}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build:
+      context: ../..
+      dockerfile: backend/Dockerfile.api
+    container_name: cif-prod-api
+    environment:
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-cif}:${POSTGRES_PASSWORD:-cif}@db:5432/${POSTGRES_DB:-cif}
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY:?JWT_SECRET_KEY requis}
+      MODEL_PATH: /app/mlops/artifacts/MODEL_OFFICIAL.joblib
+      MLFLOW_TRACKING_URI: http://mlflow:5001
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import urllib.request;urllib.request.urlopen('http://localhost:8000/health/ready')\""]
+      interval: 10s
+      timeout: 5s
+      retries: 8
+
+  frontend:
+    build:
+      context: ../..
+      dockerfile: frontend/Dockerfile.frontend
+    container_name: cif-prod-frontend
+    ports:
+      - "${FRONTEND_PORT:-8080}:80"
+    restart: unless-stopped
+    depends_on:
+      - api
+
+  mlflow:
+    build:
+      context: ../..
+      dockerfile: mlops/mlflow/Dockerfile.mlflow
+    container_name: cif-prod-mlflow
+    environment:
+      MLFLOW_BACKEND_STORE_URI: sqlite:////mlflow/mlflow.db
+      MLFLOW_DEFAULT_ARTIFACT_ROOT: /mlflow/artifacts
+    ports:
+      - "5001:5000"
+    restart: unless-stopped
+    volumes:
+      - cif_mlflow:/mlflow
+
+volumes:
+  cif_prod_pgdata:
+  cif_mlflow:

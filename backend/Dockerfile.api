@@ -1,0 +1,39 @@
+# Stage 1 : dependances
+FROM python:3.11-slim AS deps
+ENV PIP_NO_CACHE_DIR=1
+
+WORKDIR /app
+
+# Dependances systeme pour psycopg (libpq) et xgboost (libgomp)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libpq5 libgomp1 \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY backend/pyproject.toml backend/README* ./
+COPY backend/src ./src
+
+# Installation du paquet (dependances + package)
+RUN pip install --no-cache-dir . && pip install --no-cache-dir "uvicorn[standard]==0.30.1"
+
+# Stage 2 : image finale legere
+FROM python:3.11-slim AS runtime
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PIP_NO_CACHE_DIR=1
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libpq5 libgomp1 \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY --from=deps /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
+COPY backend/src /app/src
+COPY backend/migrations /app/migrations
+COPY backend/alembic.ini /app/alembic.ini
+COPY mlops/artifacts /app/mlops/artifacts
+
+EXPOSE 8000
+
+# Application de la migration Alembic puis demarrage de l'API
+CMD ["sh", "-c", "alembic upgrade head && uvicorn src.main:app --host 0.0.0.0 --port 8000"]

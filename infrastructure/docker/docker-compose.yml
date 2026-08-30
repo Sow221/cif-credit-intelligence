@@ -1,0 +1,52 @@
+name: cif-credit-intelligence
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: cif-postgres
+    environment:
+      POSTGRES_USER: cif
+      POSTGRES_PASSWORD: cif
+      POSTGRES_DB: cif
+    ports:
+      - "5440:5432"
+    volumes:
+      - cif_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cif -d cif"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build:
+      context: ../..
+      dockerfile: backend/Dockerfile.api
+    container_name: cif-api
+    environment:
+      DATABASE_URL: postgresql+psycopg://cif:cif@db:5432/cif
+      JWT_SECRET_KEY: changez-moi-en-production
+      MODEL_PATH: /app/mlops/artifacts/MODEL_OFFICIAL.joblib
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import urllib.request;urllib.request.urlopen('http://localhost:8000/health/live')\""]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  frontend:
+    build:
+      context: ../..
+      dockerfile: frontend/Dockerfile.frontend
+    container_name: cif-frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - api
+
+volumes:
+  cif_pgdata:
