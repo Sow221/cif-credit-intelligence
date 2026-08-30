@@ -9,7 +9,9 @@
 [![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 [![XGBoost](https://img.shields.io/badge/XGBoost-ML-EC9A29?style=for-the-badge&logo=xgboost&logoColor=white)](https://xgboost.readthedocs.io/)
 [![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
+[![Dependabot](https://img.shields.io/badge/Dependabot-enabled-brightgreen?style=flat-square)](#)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
+[![Coverage](https://img.shields.io/badge/Coverage-%E2%89%A590%25-brightgreen?style=flat-square)](#)
 
 </div>
 
@@ -28,11 +30,11 @@
 
 | Composant | Technologie | Rôle |
 | :--- | :--- | :--- |
-| **Backend** | Python 3.11, FastAPI | APIs haute performance, Feature Service |
-| **Machine Learning** | XGBoost, scikit-learn, MLflow | Modélisation, validation, tracking |
-| **Monitoring** | Evidently, Prometheus, Grafana | Drift, data quality, métriques opérationnelles |
-| **Infra & CI/CD** | Docker, GitHub Actions, (Kubernetes) | Conteneurisation & déploiement |
-| **Tests** | pytest, coverage | Qualité, tests unitaires & intégration |
+| 🖥️ **Backend** | Python 3.11, FastAPI | API & Feature Service |
+| 🤖 **Machine Learning** | XGBoost, scikit-learn, MLflow | Modélisation & tracking |
+| 📊 **Monitoring** | Evidently, Prometheus, Grafana | Drift & data quality |
+| 🧩 **Infra** | Docker, GitHub Actions | Conteneurisation & CI |
+| ✅ **Tests** | pytest, coverage | Qualité, tests unitaires & intégration |
 
 ---
 
