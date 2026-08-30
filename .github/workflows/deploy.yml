@@ -86,6 +86,7 @@ jobs:
         run: |
           kubectl apply -f infrastructure/k8s/namespace.yaml
           kubectl apply -f infrastructure/k8s/configmap.yaml
+          kubectl apply -f infrastructure/k8s/secret.yaml
           kubectl -n cif apply -f infrastructure/k8s/backend-deployment.yaml
           kubectl -n cif apply -f infrastructure/k8s/backend-service.yaml
           kubectl -n cif apply -f infrastructure/k8s/frontend-deployment.yaml

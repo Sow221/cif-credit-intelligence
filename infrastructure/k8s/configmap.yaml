@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cif-config
+  namespace: cif
+data:
+  DATABASE_HOST: postgres
+  DATABASE_PORT: "5432"
+  DATABASE_NAME: cif
+  MODEL_PATH: /app/mlops/artifacts/MODEL_OFFICIAL.joblib
+  MLFLOW_TRACKING_URI: http://mlflow:5000
+  APP_ENV: production
