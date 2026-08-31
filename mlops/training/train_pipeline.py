@@ -60,6 +60,23 @@ FEATURES = [
 ]
 
 
+def _logit_intercept(logit: np.ndarray, target: float = 0.2) -> float:
+    """Trouve l'intercept tel que mean(sigmoid(logit + b)) == target.
+
+    Bisection sans dependance (scipy optionnel). Sert a calibrer un taux de
+    defaut cible dans le jeu synthetique.
+    """
+    lo, hi = -20.0, 20.0
+    for _ in range(60):
+        mid = (lo + hi) / 2.0
+        prob = (1 / (1 + np.exp(-(logit + mid)))).mean()
+        if prob > target:
+            hi = mid
+        else:
+            lo = mid
+    return (lo + hi) / 2.0
+
+
 def generate_synthetic(n: int = 5000, seed: int = 42) -> pd.DataFrame:
     """Genere un jeu synthetique respectant le contrat des 25 features."""
     rng = np.random.default_rng(seed)
@@ -95,14 +112,23 @@ def generate_synthetic(n: int = 5000, seed: int = 42) -> pd.DataFrame:
         df["n_loans"] * df["avg_repayment_regularity"] / (df["n_loans"] + 1)
     )
 
-    # Cible : risque augmente avec le ratio d'endettement et les retards
-    risk = (
-        0.15 * df["loan_to_income_ratio"]
-        + 0.3 * df["max_historical_dpd"] / 90
-        + 0.3 * df["historical_default_rate"]
-        + 0.2 * df["n_defaults"] / 5
+    # Cible probabiliste avec bruit. Un score de risque latent z (standardise),
+    # amplifie puis bruit, produit une AUC realiste (~0.83) au lieu d'une AUC
+    # quasi-parfaite (leakage = 0.99 avec une fonction deterministe). L'intercept
+    # force un taux de defaut d'environ 20 % (realiste).
+    z = (
+        1.5 * (df["loan_to_income_ratio"].clip(0, 8) / 8)
+        + 2.0 * (df["max_historical_dpd"] / 90)
+        + 1.5 * df["n_defaults"]
+        - 1.2 * (df["savings_to_income_ratio"].clip(0, 8) / 8)
+        + 0.8 * df["historical_default_rate"]
     )
-    df["default"] = (risk > rng.uniform(0.35, 0.5)).astype(int)
+    z = (z - z.mean()) / z.std()
+    noise = rng.normal(0.0, 1.5, n)
+    logit = 2.5 * z + noise
+    intercept = _logit_intercept(logit, target=0.2)
+    prob_default = 1 / (1 + np.exp(-(logit + intercept)))
+    df["default"] = rng.binomial(1, prob_default).astype(int)
 
     return df[FEATURES + ["default"]]
 
@@ -139,9 +165,13 @@ def main() -> int:
         print("[error] Le jeu de donnees ne respecte pas le contrat des 25 features.", file=sys.stderr)
         return 1
 
-    train_cut = int(len(X) * 0.8)
-    X_train, X_test = X.iloc[:train_cut], X.iloc[train_cut:]
-    y_train, y_test = y.iloc[:train_cut], y.iloc[train_cut:]
+    # Split stratifie + shuffle : evite tout leakage d'ordre et preserve la
+    # repartition des classes entre train et test.
+    from sklearn.model_selection import train_test_split
+
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, random_state=42, stratify=y
+    )
 
     import xgboost as xgb
     from sklearn.metrics import (
@@ -185,9 +215,15 @@ def main() -> int:
         learning_rate=0.08,
         subsample=0.9,
         colsample_bytree=0.9,
-        eval_metric="auc",
+        eval_metric=["auc", "logloss"],
     )
-    model.fit(X_train, y_train, eval_set=[(X_test, y_test)], verbose=False)
+    model.fit(
+        X_train,
+        y_train,
+        eval_set=[(X_test, y_test)],
+        verbose=False,
+    )
+    evals_result = model.evals_result()
 
     y_pred = model.predict(X_test)
     y_proba = model.predict_proba(X_test)[:, 1]
@@ -207,7 +243,17 @@ def main() -> int:
         mlflow.log_param("registry_name", args.registry_name)
         mlflow.log_param("registry_alias", args.alias)
 
+    # W&B : courbes d'apprentissage (AUC / logloss par boosting round) puis
+    # metriques finales. Un seul `wandb_run.log(...)` ne produirait que des
+    # barres ; on boucle sur `evals_result` pour obtenir de vraies courbes.
     if wandb_run is not None:
+        eval_auc = evals_result["validation_0"]["auc"]
+        eval_logloss = evals_result["validation_0"]["logloss"]
+        for i in range(len(eval_auc)):
+            wandb_run.log(
+                {"eval_auc": eval_auc[i], "eval_logloss": eval_logloss[i]},
+                step=i + 1,
+            )
         wandb_run.log(metrics)
         wandb_run.log({"n_features": len(FEATURES)})
 
