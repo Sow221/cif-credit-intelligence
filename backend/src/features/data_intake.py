@@ -19,8 +19,10 @@ from src.features.data_quality import (
     DataQualityConfig,
     DataQualityField,
     DataQualityResult,
+    DataQualityStatus,
     DataSourceStatus,
 )
+from src.governance.consent import ConsentGuard, ConsentStatus
 from src.repositories.application_data_repository import ApplicationDataRepository
 from src.repositories.application_repository import ApplicationRepository
 from src.schemas.application_data import (
@@ -143,10 +145,28 @@ class DataIntakeService:
         sources = {
             str(s.source_id): s for s in self._repo.list_active_sources()
         }
+        guard = ConsentGuard(self._db)
+        consent_blocked: list[str] = []
 
         fields: list[DataQualityField] = []
         for entry in entries:
             source = sources.get(str(entry.source_id)) if entry.source_id else None
+            # Guard CONSENT (etape 6) : toute donnee dont le consentement
+            # obligatoire n'est pas valide est inutilisable.
+            if entry.source_id is not None:
+                check = guard.check(
+                    client_id=application.client_id,
+                    institution_id=institution_id,
+                    source_id=entry.source_id,
+                )
+                if not check.allowed:
+                    self._repo.update_quality_status(
+                        entry,
+                        quality_status="PENDING",
+                        availability_status="CONSENT_BLOCKED",
+                    )
+                    consent_blocked.append(entry.field_name)
+                    continue
             fields.append(
                 DataQualityField(
                     field_name=entry.field_name,
@@ -165,6 +185,12 @@ class DataIntakeService:
             application_timestamp=application.application_timestamp,
         )
         result = DataQualityChecker(config).evaluate(fields)
+        result.consent_blocked = consent_blocked
+        # Consentement invalide => donnees inutilisables => pas de scoring auto
+        # (scenario CONSENT FAILURE : DATA NOT USED, NO AUTOMATIC DECISION).
+        if consent_blocked:
+            result.checks["consent"] = DataQualityStatus.FAIL
+            result.data_ready_for_auto_scoring = False
 
         # Met a jour le quality_status de chaque entree du perimeter.
         by_name = {e.field_name: e for e in entries}
@@ -192,6 +218,7 @@ class DataIntakeService:
                 "status": result.status.value,
                 "checks": {k: v.value for k, v in result.checks.items()},
                 "rejected_fields": result.rejected_fields,
+                "consent_blocked": consent_blocked,
             },
         )
         self._db.commit()

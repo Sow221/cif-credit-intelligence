@@ -19,6 +19,7 @@ from src.api.routes import (
     applications,
     audit,
     clients,
+    consents,
     decisions,
     eligibility,
     health,
@@ -61,3 +62,4 @@ app.include_router(clients.router)
 app.include_router(applications.router)
 app.include_router(application_data.router)
 app.include_router(eligibility.router)
+app.include_router(consents.router)

@@ -77,6 +77,7 @@ class DataQualityResult(BaseModel):
     checks: Dict[str, DataQualityStatus] = Field(default_factory=dict)
     data_ready_for_auto_scoring: bool = False
     rejected_fields: List[str] = Field(default_factory=list)
+    consent_blocked: List[str] = Field(default_factory=list)
 
 
 class DataQualityChecker:

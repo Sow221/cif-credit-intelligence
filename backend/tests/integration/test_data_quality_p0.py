@@ -30,6 +30,7 @@ _TRUNCATE_TABLES = (
     "applications",
     "application_data",
     "data_sources",
+    "consents",
     "audit_events",
 )
 
@@ -84,7 +85,7 @@ def _create_application(client) -> tuple[str, str]:
               "requested_amount": 500000.0, "requested_term": 12},
         headers=admin_headers(),
     ).json()
-    return app["application_id"]
+    return app["application_id"], client_id
 
 
 def _ingest(client, app_id, observed_at: str | None = None):
@@ -103,8 +104,19 @@ def _ingest(client, app_id, observed_at: str | None = None):
     assert response.status_code == 201
 
 
+def _grant_consent(client, client_id):
+    response = client.post(
+        "/v1/consents",
+        json={"client_id": client_id, "status": "GRANTED",
+              "source_id": str(SOURCE_ID), "purpose": "credit"},
+        headers=admin_headers(),
+    )
+    assert response.status_code == 201
+
+
 def test_validate_pass(client):
-    app_id = _create_application(client)
+    app_id, client_id = _create_application(client)
+    _grant_consent(client, client_id)
     _ingest(client, app_id)
     response = client.post(f"/v1/applications/{app_id}/data/validate", headers=admin_headers())
     assert response.status_code == 200
@@ -115,7 +127,8 @@ def test_validate_pass(client):
 
 
 def test_validate_fail_when_source_inactive(client):
-    app_id = _create_application(client)
+    app_id, client_id = _create_application(client)
+    _grant_consent(client, client_id)
     _ingest(client, app_id)
     db = SessionLocal()
     try:
@@ -132,7 +145,8 @@ def test_validate_fail_when_source_inactive(client):
 
 
 def test_validate_temporal_rejects_future_data(client):
-    app_id = _create_application(client)
+    app_id, client_id = _create_application(client)
+    _grant_consent(client, client_id)
     _ingest(client, app_id, observed_at="2026-12-01T00:00:00")
     # Fixe le timestamp d'octroi de l'application avant la donnee observee.
     db = SessionLocal()
@@ -150,3 +164,33 @@ def test_validate_temporal_rejects_future_data(client):
     assert body["status"] == "FAIL"
     assert body["data_ready_for_auto_scoring"] is False
     assert "monthly_income" in body["rejected_fields"]
+
+
+def test_validate_consent_blocked_without_consent(client):
+    app_id, client_id = _create_application(client)
+    _ingest(client, app_id)
+    response = client.post(f"/v1/applications/{app_id}/data/validate", headers=admin_headers())
+    assert response.status_code == 200
+    body = response.json()
+    # Consentement obligatoire absent => donnee inutilisable (CONSENT FAILURE).
+    assert body["data_ready_for_auto_scoring"] is False
+    assert body["checks"]["consent"] == "FAIL"
+    assert "monthly_income" in body["consent_blocked"]
+
+
+def test_validate_consent_granted_allows(client):
+    app_id, client_id = _create_application(client)
+    _ingest(client, app_id)
+    # Le client consent a utiliser la source BANK_STATEMENT.
+    consent = client.post(
+        "/v1/consents",
+        json={"client_id": client_id, "status": "GRANTED", "source_id": str(SOURCE_ID),
+              "purpose": "credit"},
+        headers=admin_headers(),
+    )
+    assert consent.status_code == 201
+    response = client.post(f"/v1/applications/{app_id}/data/validate", headers=admin_headers())
+    assert response.status_code == 200
+    body = response.json()
+    assert body["data_ready_for_auto_scoring"] is True
+    assert body["consent_blocked"] == []
