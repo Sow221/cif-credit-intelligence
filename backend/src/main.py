@@ -10,11 +10,15 @@ from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 from slowapi.middleware import SlowAPIMiddleware
 
+from src.api.errors import register_exception_handlers
 from src.api.middleware.auth import AuthMiddleware
 from src.api.middleware.rate_limit import limiter
 from src.api.middleware.request_id import RequestIDMiddleware
 from src.api.routes import (
+    application_data,
+    applications,
     audit,
+    clients,
     decisions,
     health,
     metrics,
@@ -31,6 +35,9 @@ app = FastAPI(
         "defaut (PD), confiance et recommandation reglementee."
     ),
 )
+
+# Conversion des erreurs metier en contrat d'erreur standard (P0).
+register_exception_handlers(app)
 
 # Application du rate limiting (slowapi).
 app.state.limiter = limiter
@@ -49,3 +56,6 @@ app.include_router(decisions.router)
 app.include_router(audit.router)
 app.include_router(models.router)
 app.include_router(reports.router)
+app.include_router(clients.router)
+app.include_router(applications.router)
+app.include_router(application_data.router)
