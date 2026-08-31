@@ -32,17 +32,27 @@ def create_access_token(
     secret: str | None = None,
     algorithm: str | None = None,
     expires_minutes: int | None = None,
+    *,
+    role: str | None = None,
+    institution_id: str | None = None,
 ) -> str:
-    """Cree un jeton JWT signe pour le sujet donne."""
+    """Cree un jeton JWT signe pour le sujet donne.
+
+    Claims optionnels : role et institution_id (multi-tenancy / RBAC P0).
+    """
     secret = secret or settings.jwt_secret
     algorithm = algorithm or settings.jwt_algorithm
     expires_minutes = expires_minutes or settings.jwt_expiry_minutes
     now = datetime.now(UTC)
-    payload = {
+    payload: dict = {
         "sub": subject,
         "iat": now,
         "exp": now + timedelta(minutes=expires_minutes),
     }
+    if role is not None:
+        payload["role"] = role
+    if institution_id is not None:
+        payload["institution_id"] = institution_id
     return jwt.encode(payload, secret, algorithm=algorithm)
 
 
