@@ -7,7 +7,8 @@ dans Weights & Biases (optionnel).
 
 Usage :
     python mlops/training/train_pipeline.py [--data chemin.csv] [--experiment cif]
-    python mlops/training/train_pipeline.py --no-mlflow --no-wandb
+    python mlops/training/train_pipeline.py --data chemin.csv --experiment cif
+    python mlops/training/train_pipeline.py --mlflow --no-wandb
 
 Si `--data` est absent, un jeu synthetique documente est genere (meme
 contrat de 25 features) pour valider le pipeline de bout en bout.
@@ -116,8 +117,11 @@ def main() -> int:
                         help="Alias a attribuer dans le Registry")
     parser.add_argument("--mlflow-uri", type=str, default="http://localhost:5001",
                         help="URI du serveur MLflow")
-    parser.add_argument("--no-mlflow", action="store_true", help="Desactiver MLflow")
-    parser.add_argument("--no-wandb", action="store_true", help="Desactiver W&B")
+    parser.add_argument("--mlflow", action="store_true",
+                        help="Activer MLflow (opt-in : reserve a un serveur plus "
+                             "puissant, MLflow est en code de repli par defaut)")
+    parser.add_argument("--no-wandb", action="store_true",
+                        help="Desactiver W&B (W&B Cloud est le tracking actif par defaut)")
     args = parser.parse_args()
 
     if args.data:
@@ -148,8 +152,10 @@ def main() -> int:
         roc_auc_score,
     )
 
+    # MLflow : code de repli (opt-in via --mlflow), reserve a un serveur
+    # suffisamment puissant. W&B Cloud est le tracking actif par defaut.
     mlflow = None
-    if not args.no_mlflow:
+    if args.mlflow:
         try:
             import mlflow as _mlflow
 
