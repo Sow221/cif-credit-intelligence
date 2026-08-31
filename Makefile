@@ -1,4 +1,5 @@
-.PHONY: install test test-backend test-frontend lint format build deploy
+.PHONY: install test test-backend test-frontend lint format build migrate db-up \
+        artifacts-init deploy
 
 install:
 	cd backend && pip install -e ".[dev]"
@@ -28,15 +29,20 @@ lint:
 format:
 	cd backend && black src/ && ruff --fix src/
 
+artifacts-init:
+	python mlops/scripts/init_artifacts.py
+
+migrate:
+	cd backend && alembic upgrade head
+
+db-up:
+	docker compose -f infrastructure/docker/docker-compose.yml up -d db
+
 build:
-	docker build -t cif-credit-backend backend/
-	docker build -t cif-credit-frontend frontend/
+	# Contexte = racine du repo (les Dockerfiles y referent backend/, mlops/)
+	docker build -f backend/Dockerfile.api -t cif-credit-backend .
+	docker build -f frontend/Dockerfile.frontend -t cif-credit-frontend .
 
 deploy:
-	kubectl apply -f infrastructure/k8s/
-
-logs-backend:
-	kubectl logs -f deployment/cif-credit-backend
-
-logs-frontend:
-	kubectl logs -f deployment/cif-credit-frontend
+	# Deploiement Docker Compose sur le serveur cible (AWS EC2 / VPS)
+	docker compose -f infrastructure/docker/docker-compose.prod.yml up -d --build
