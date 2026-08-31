@@ -1,0 +1,5 @@
+# Cache et artefacts DVC a ignorer
+.dvc/cache
+.dvc/tmp
+**/.dvc/tmp
+*.dvc.lock

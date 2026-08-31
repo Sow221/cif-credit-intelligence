@@ -21,7 +21,11 @@ settings = Settings()
 # Le predictor n'est pas charge ici si le modele est indisponible :
 # le readiness probe signale `model_loaded=False` au lieu de crasher.
 try:
-    _predictor = Predictor(settings.model_path)
+    _predictor = Predictor(
+        model_path=settings.model_path,
+        model_uri=settings.model_uri,
+        mlflow_tracking_uri=settings.mlflow_tracking_uri,
+    )
 except Exception:  # noqa: BLE001 - pragma: no cover - environnement sans modele
     _predictor = None
 

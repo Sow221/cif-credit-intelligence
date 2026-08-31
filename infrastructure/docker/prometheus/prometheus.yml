@@ -1,0 +1,26 @@
+# Configuration Prometheus - CIF Credit Intelligence
+# Scrape l'API (metriques /metrics) et le serveur MLflow.
+
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: "cif-api"
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["api:8000"]
+
+  - job_name: "mlflow"
+    static_configs:
+      - targets: ["mlflow:5000"]
+
+# --- Grafana Cloud (remote write) ---
+# Deduplicate de commentaire pour activer l'aiguillage vers Grafana Cloud.
+# Creer un dashboard grace a ces blocs dans Grafana Cloud (Prometheus datasource).
+#
+# remote_write:
+#   - url: https://prometheus-prod-<region>.grafana.net/api/prom/push
+#     basic_auth:
+#       username: <instance-id>
+#       password: <api-key>

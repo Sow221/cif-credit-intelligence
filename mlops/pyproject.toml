@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cif-credit-intelligence-mlops"
+version = "1.0.0"
+description = "CIF Credit Intelligence - MLops (training, orchestration, monitoring, warehouse)"
+requires-python = ">=3.11"
+dependencies = [
+    "mlflow[sqlalchemy]==2.14.0",
+    "prefect==2.19.7",
+    "wandb==0.17.0",
+    "duckdb==1.0.0",
+    "dvc==3.53.0",
+    "evidently==0.4.22",
+    "xgboost==3.2.0",
+    "scikit-learn==1.8.0",
+    "pandas==2.2.2",
+    "numpy==2.0.0",
+    "joblib==1.4.2",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest==8.2.1",
+    "ruff==0.4.4",
+]
+
+[tool.ruff]
+line-length = 100

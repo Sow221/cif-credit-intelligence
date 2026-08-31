@@ -1,11 +1,13 @@
 """Pipeline d'entrainement du modele XGBoost CIF.
 
 Produit `MODEL_OFFICIAL.joblib` dans `mlops/artifacts/` (les 25 features
-exactes du registre) et journalise le run dans MLflow.
+exactes du registre), journalise le run dans MLflow, enregistre le modele
+dans le Registry (`microcredit_risk/Production`) et logge les metriques
+dans Weights & Biases (optionnel).
 
 Usage :
     python mlops/training/train_pipeline.py [--data chemin.csv] [--experiment cif]
-    python mlops/training/train_pipeline.py --no-mlflow
+    python mlops/training/train_pipeline.py --no-mlflow --no-wandb
 
 Si `--data` est absent, un jeu synthetique documente est genere (meme
 contrat de 25 features) pour valider le pipeline de bout en bout.
@@ -22,6 +24,10 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[2]
 ARTIFACT_DIR = ROOT / "mlops" / "artifacts"
 MODEL_PATH = ARTIFACT_DIR / "MODEL_OFFICIAL.joblib"
+
+# Nom du modele dans le Registry MLflow (stack validee).
+REGISTRY_NAME = "microcredit_risk"
+REGISTRY_ALIAS = "Production"
 
 # 25 features exactes (ordre du registre officiel).
 FEATURES = [
@@ -104,7 +110,14 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Entrainement XGBoost CIF")
     parser.add_argument("--data", type=str, default=None, help="CSV d'entrainement (optionnel)")
     parser.add_argument("--experiment", type=str, default="cif-credit")
+    parser.add_argument("--registry-name", type=str, default=REGISTRY_NAME,
+                        help="Nom du modele dans le Registry MLflow")
+    parser.add_argument("--alias", type=str, default=REGISTRY_ALIAS,
+                        help="Alias a attribuer dans le Registry")
+    parser.add_argument("--mlflow-uri", type=str, default="http://localhost:5001",
+                        help="URI du serveur MLflow")
     parser.add_argument("--no-mlflow", action="store_true", help="Desactiver MLflow")
+    parser.add_argument("--no-wandb", action="store_true", help="Desactiver W&B")
     args = parser.parse_args()
 
     if args.data:
@@ -135,18 +148,30 @@ def main() -> int:
         roc_auc_score,
     )
 
+    mlflow = None
     if not args.no_mlflow:
         try:
-            import mlflow
+            import mlflow as _mlflow
 
-            mlflow.set_tracking_uri("http://localhost:5001")
-            mlflow.set_experiment(args.experiment)
-            mlflow.autolog()
+            _mlflow.set_tracking_uri(args.mlflow_uri)
+            _mlflow.set_experiment(args.experiment)
+            mlflow = _mlflow
         except Exception as exc:  # noqa: BLE001 - MLflow optionnel
             print(f"[warn] MLflow indisponible : {exc}")
             mlflow = None
-    else:
-        mlflow = None
+
+    wandb_run = None
+    if not args.no_wandb:
+        try:
+            import wandb
+
+            wandb_run = wandb.init(project="cif-credit-intelligence", job_type="train")
+        except Exception as exc:  # noqa: BLE001 - W&B optionnel
+            print(f"[warn] W&B indisponible : {exc}")
+            wandb_run = None
+
+    if mlflow is not None:
+        mlflow.autolog()
 
     model = xgb.XGBClassifier(
         n_estimators=200,
@@ -173,6 +198,12 @@ def main() -> int:
     if mlflow is not None:
         mlflow.log_metrics(metrics)
         mlflow.log_param("n_features", len(FEATURES))
+        mlflow.log_param("registry_name", args.registry_name)
+        mlflow.log_param("registry_alias", args.alias)
+
+    if wandb_run is not None:
+        wandb_run.log(metrics)
+        wandb_run.log({"n_features": len(FEATURES)})
 
     ARTIFACT_DIR.mkdir(parents=True, exist_ok=True)
     import joblib
@@ -180,6 +211,40 @@ def main() -> int:
     joblib.dump(model, MODEL_PATH)
     print("[ok] Modele enregistre :", MODEL_PATH)
     print("[metrics]", metrics)
+
+    # Enregistrement dans le Registry MLflow (stack validee : models:/...).
+    if mlflow is not None:
+        try:
+            from mlflow import MlflowClient
+            from mlflow.models.signature import ModelSignature
+            from mlflow.types.schema import ColSpec, Schema
+
+            signature = ModelSignature(
+                inputs=Schema([ColSpec("double", name=c) for c in FEATURES]),
+                outputs=Schema([ColSpec("double"), ColSpec("double")]),
+            )
+            model_info = mlflow.sklearn.log_model(
+                model,
+                artifact_path="model",
+                registered_model_name=args.registry_name,
+                signature=signature,
+            )
+            client = MlflowClient()
+            versions = client.search_model_versions(
+                f"name = '{args.registry_name}'"
+            )
+            for v in versions:
+                client.set_registered_model_alias(
+                    args.registry_name, args.alias, v.version
+                )
+            mlflow.log_param("registered_model_uri", model_info.model_uri)
+            print("[ok] Modele enregistre dans le Registry :",
+                  f"models:/{args.registry_name}@{args.alias}")
+        except Exception as exc:  # noqa: BLE001 - enregistrement optionnel
+            print(f"[warn] Enregistrement dans le Registry echoue : {exc}")
+
+    if wandb_run is not None:
+        wandb_run.finish()
 
     return 0
 

@@ -18,6 +18,7 @@ PUBLIC_PATHS = {
     "/health",
     "/health/live",
     "/health/ready",
+    "/metrics",
     "/docs",
     "/redoc",
     "/openapi.json",

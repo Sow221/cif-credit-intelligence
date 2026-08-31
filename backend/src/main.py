@@ -13,7 +13,15 @@ from slowapi.middleware import SlowAPIMiddleware
 from src.api.middleware.auth import AuthMiddleware
 from src.api.middleware.rate_limit import limiter
 from src.api.middleware.request_id import RequestIDMiddleware
-from src.api.routes import audit, decisions, health, models, predict, reports
+from src.api.routes import (
+    audit,
+    decisions,
+    health,
+    metrics,
+    models,
+    predict,
+    reports,
+)
 
 app = FastAPI(
     title="CIF Credit Intelligence - API",
@@ -35,6 +43,7 @@ app.add_middleware(AuthMiddleware)
 app.add_middleware(RequestIDMiddleware)
 
 app.include_router(health.router)
+app.include_router(metrics.router)
 app.include_router(predict.router)
 app.include_router(decisions.router)
 app.include_router(audit.router)

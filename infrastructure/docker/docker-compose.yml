@@ -27,6 +27,7 @@ services:
       DATABASE_URL: postgresql+psycopg://cif:cif@db:5432/cif
       JWT_SECRET_KEY: changez-moi-en-production
       MODEL_PATH: /app/mlops/artifacts/MODEL_OFFICIAL.joblib
+      MLFLOW_TRACKING_URI: http://mlflow:5001
     ports:
       - "8000:8000"
     depends_on:
@@ -48,5 +49,30 @@ services:
     depends_on:
       - api
 
+  mlflow:
+    build:
+      context: ../..
+      dockerfile: mlops/mlflow/Dockerfile.mlflow
+    container_name: cif-mlflow
+    environment:
+      MLFLOW_BACKEND_STORE_URI: sqlite:////mlflow/mlflow.db
+      MLFLOW_DEFAULT_ARTIFACT_ROOT: /mlflow/artifacts
+    ports:
+      - "5001:5000"
+    volumes:
+      - cif_mlflow:/mlflow
+
+  prometheus:
+    image: prom/prometheus:v2.53.0
+    container_name: cif-prometheus
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "9090:9090"
+    depends_on:
+      - api
+      - mlflow
+
 volumes:
   cif_pgdata:
+  cif_mlflow:

@@ -1,0 +1,4 @@
+# Fichiers DVC a ignorer de l'index Git
+.dvc/cache
+.dvc/tmp
+mlops/data/.cache

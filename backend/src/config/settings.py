@@ -12,6 +12,7 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
     # --- Modele ---
+    # Chemin fichier (.joblib) utilise en fallback (tests / CI hors VM).
     model_path: str = str(
         Path(__file__).resolve().parents[3]
         / "mlops"
@@ -19,6 +20,11 @@ class Settings(BaseSettings):
         / "MODEL_OFFICIAL.joblib"
     )
     isocal_path: Optional[str] = None
+
+    # --- Modele via MLflow Registry (stack validee) ---
+    # Si renseigne, l'API charge depuis le Registry (ex: models:/microcredit_risk/Production).
+    model_uri: Optional[str] = None
+    mlflow_tracking_uri: str = "http://localhost:5001"
 
     # --- Securite / Auth ---
     jwt_secret: str = "change-me-in-production"

@@ -12,6 +12,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException, Request
 from sqlalchemy.orm import Session
 
+from src.api.routes.metrics import inc_prediction, set_model_loaded
 from src.api.schemas.request import PredictionRequest
 from src.api.schemas.response import (
     ConfidenceScore,
@@ -36,9 +37,15 @@ audit = AuditService()
 decision_engine = DecisionEngine()
 
 try:
-    predictor = Predictor(settings.model_path)
+    predictor = Predictor(
+        model_path=settings.model_path,
+        model_uri=settings.model_uri,
+        mlflow_tracking_uri=settings.mlflow_tracking_uri,
+    )
+    set_model_loaded(True)
 except ModelUnavailableError:
     predictor = None
+    set_model_loaded(False)
 
 
 def _persist_prediction(
@@ -95,6 +102,7 @@ async def predict(
 ) -> PredictionResponse:
     request_id = req.state.request_id
     payload = request.model_dump()
+    inc_prediction()
 
     # Cas Thin-File : pas d'appel au modele, decision = REVUE_HUMAINE
     if FeatureService.is_thin_file(payload) or request.has_history is False:

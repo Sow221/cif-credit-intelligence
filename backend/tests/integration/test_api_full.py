@@ -110,6 +110,14 @@ def test_health_ready_returns_200(client):
     assert "model_loaded" in body and "db_connected" in body
 
 
+def test_metrics_returns_prometheus_format(client):
+    response = client.get("/metrics")
+    assert response.status_code == 200
+    assert "text/plain" in response.headers["content-type"]
+    assert "cif_predictions_total" in response.text
+    assert "cif_model_loaded" in response.text
+
+
 # ----------------------------------------------------------- Prediction ---
 
 

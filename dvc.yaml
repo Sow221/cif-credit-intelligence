@@ -1,0 +1,18 @@
+# Donnees versionnees par DVC (stockees en cache, pas dans Git).
+
+# Pipelines DVC
+stages:
+  prepare:
+    cmd: python mlops/warehouse/duck.py
+    deps:
+      - mlops/warehouse/duck.py
+    outs:
+      - mlops/data/training.csv
+  train:
+    cmd: python mlops/training/train_pipeline.py --data mlops/data/training.csv
+    deps:
+      - mlops/data/training.csv
+      - mlops/training/train_pipeline.py
+    outs:
+      - mlops/artifacts/MODEL_OFFICIAL.joblib
+      - mlops/artifacts/MODEL_OFFICIAL_CALIBRATED.joblib

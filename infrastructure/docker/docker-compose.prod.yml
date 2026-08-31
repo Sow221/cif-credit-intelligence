@@ -68,6 +68,18 @@ services:
     volumes:
       - cif_mlflow:/mlflow
 
+  prometheus:
+    image: prom/prometheus:v2.53.0
+    container_name: cif-prod-prometheus
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "${PROMETHEUS_PORT:-9090}:9090"
+    restart: unless-stopped
+    depends_on:
+      - api
+      - mlflow
+
 volumes:
   cif_prod_pgdata:
   cif_mlflow:

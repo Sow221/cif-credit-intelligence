@@ -61,3 +61,19 @@ def test_feature_vector_25(predictor):
 
 def test_version_shape(predictor):
     assert predictor.model_version.startswith("MODEL_OFFICIAL")
+
+
+def test_registry_unreachable_falls_back_to_file():
+    """Un model_uri pointe vers un serveur MLflow injoignable -> fallback fichier."""
+    p = Predictor(
+        model_path=Settings().model_path,
+        model_uri="models:/microcredit_risk/Production",
+        mlflow_tracking_uri="http://127.0.0.1:1",
+    )
+    assert p.is_loaded()
+    assert p.source.startswith("file:")
+    assert p.model_version.startswith("MODEL_OFFICIAL")
+
+
+def test_source_is_file_when_no_uri(predictor):
+    assert predictor.source.startswith("file:")
