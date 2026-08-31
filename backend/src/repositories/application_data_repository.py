@@ -73,3 +73,9 @@ class ApplicationDataRepository:
     def get_source_by_code(self, code: str) -> Optional[DataSource]:
         stmt = select(DataSource).where(DataSource.code == code)
         return self._db.scalar(stmt)
+
+    def update_quality_status(
+        self, entry: ApplicationData, quality_status: str, availability_status: str
+    ) -> None:
+        entry.quality_status = quality_status
+        entry.availability_status = availability_status

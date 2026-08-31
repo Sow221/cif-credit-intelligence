@@ -14,6 +14,7 @@ from src.api.dependencies import CurrentUser, require_permission
 from src.core.security import Permission
 from src.db.session import get_db
 from src.features.data_intake import DataIntakeService
+from src.features.data_quality import DataQualityResult
 from src.schemas.application_data import (
     ApplicationDataEntryResponse,
     ApplicationDataIngest,
@@ -44,6 +45,27 @@ def submit_application_data(
         application_id=application_id,
         institution_id=uuid.UUID(current_user.institution_id),
         payload=payload,
+        actor_id=current_user.subject,
+        request_id=getattr(request.state, "request_id", None),
+    )
+
+
+@router.post(
+    "/{application_id}/data/validate",
+    response_model=DataQualityResult,
+)
+def validate_application_data(
+    application_id: uuid.UUID,
+    request: Request,
+    db: DbSession,
+    current_user: CurrentUser = Depends(require_permission(Permission.APPLICATION_UPDATE)),
+) -> DataQualityResult:
+    if not current_user.institution_id:
+        raise HTTPException(status_code=401, detail="Utilisateur sans institution")
+    service = DataIntakeService(db)
+    return service.validate(
+        application_id=application_id,
+        institution_id=uuid.UUID(current_user.institution_id),
         actor_id=current_user.subject,
         request_id=getattr(request.state, "request_id", None),
     )
