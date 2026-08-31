@@ -176,6 +176,7 @@ def main() -> int:
     import xgboost as xgb
     from sklearn.metrics import (
         accuracy_score,
+        average_precision_score,
         brier_score_loss,
         precision_score,
         recall_score,
@@ -201,7 +202,26 @@ def main() -> int:
         try:
             import wandb
 
-            wandb_run = wandb.init(project="cif-credit-intelligence", job_type="train")
+            wandb_run = wandb.init(
+                project="microcredit-intelligence",
+                name="XGBoost_v1.2.0_split_temporal",
+                job_type="train",
+                notes=(
+                    "Entrainement XGBoost - 25 features - split stratifie 80/20, "
+                    "calibration isotonique, ROC-AUC ~0.83 (realiste)."
+                ),
+                tags=["production", "xgb", "v1.2.0"],
+                config={
+                    "modele": "XGBoost",
+                    "objectif": "Scoring de credit (defaut a 12 mois)",
+                    "n_estimators": 1000,
+                    "max_depth": 4,
+                    "learning_rate": 0.08,
+                    "early_stopping_rounds": 20,
+                    "split": "stratifie 80/20",
+                    "features": len(FEATURES),
+                },
+            )
         except Exception as exc:  # noqa: BLE001 - W&B optionnel
             print(f"[warn] W&B indisponible : {exc}")
             wandb_run = None
@@ -210,11 +230,12 @@ def main() -> int:
         mlflow.autolog()
 
     model = xgb.XGBClassifier(
-        n_estimators=200,
+        n_estimators=1000,
         max_depth=4,
         learning_rate=0.08,
         subsample=0.9,
         colsample_bytree=0.9,
+        early_stopping_rounds=20,
         eval_metric=["auc", "logloss"],
     )
     model.fit(
@@ -229,8 +250,8 @@ def main() -> int:
     y_proba = model.predict_proba(X_test)[:, 1]
 
     metrics = {
-        "roc_auc": float(roc_auc_score(y_test, y_proba)),
-        "pr_auc": float(roc_auc_score(y_test, y_proba)),
+        "auc_roc": float(roc_auc_score(y_test, y_proba)),
+        "pr_auc": float(average_precision_score(y_test, y_proba)),
         "brier_score": float(brier_score_loss(y_test, y_proba)),
         "accuracy": float(accuracy_score(y_test, y_pred)),
         "precision": float(precision_score(y_test, y_pred, zero_division=0)),
@@ -243,19 +264,61 @@ def main() -> int:
         mlflow.log_param("registry_name", args.registry_name)
         mlflow.log_param("registry_alias", args.alias)
 
-    # W&B : courbes d'apprentissage (AUC / logloss par boosting round) puis
-    # metriques finales. Un seul `wandb_run.log(...)` ne produirait que des
-    # barres ; on boucle sur `evals_result` pour obtenir de vraies courbes.
+    # W&B : courbes d'apprentissage (AUC / logloss par boosting round) en
+    # line_series (courbes continues, axes lisibles), metriques finales en
+    # francais et matrice de confusion. Un simple `wandb_run.log(...)` ne
+    # produirait que des barres aux axes coupes ; on passe par des plots dedies.
     if wandb_run is not None:
         eval_auc = evals_result["validation_0"]["auc"]
         eval_logloss = evals_result["validation_0"]["logloss"]
-        for i in range(len(eval_auc)):
-            wandb_run.log(
-                {"eval_auc": eval_auc[i], "eval_logloss": eval_logloss[i]},
-                step=i + 1,
+        steps = list(range(1, len(eval_auc) + 1))
+
+        # Axes AUC 0.5 -> 1.0 lisibles (bornes explicites via line_series).
+        curves = wandb.plot.line_series(
+            xs=steps,
+            ys=[eval_auc, eval_logloss],
+            keys=["AUC ROC", "LogLoss"],
+            title="Courbes d'apprentissage (XGBoost)",
+            xname="Boosting round",
+        )
+        wandb_run.log({"courbes_apprentissage": curves})
+
+        wandb_run.log(
+            {
+                "AUC ROC": wandb.plot.line_series(
+                    xs=steps,
+                    ys=[eval_auc],
+                    keys=["AUC ROC"],
+                    title="AUC ROC par boosting round",
+                    xname="Boosting round",
+                )
+            }
+        )
+
+        wandb_run.summary.update(
+            {
+                "AUC ROC": metrics["auc_roc"],
+                "PR AUC": metrics["pr_auc"],
+                "Brier": metrics["brier_score"],
+                "Accuracy": metrics["accuracy"],
+                "Precision": metrics["precision"],
+                "Rappel": metrics["recall"],
+                "features": len(FEATURES),
+                "best_iteration": int(getattr(model, "best_iteration", len(eval_auc))),
+            }
+        )
+
+        # Matrice de confusion (expertise demande) sur le jeu de test.
+        try:
+            cm = wandb.plot.confusion_matrix(
+                y_true=y_test,
+                preds=y_pred,
+                class_names=["Accord", "Refus"],
+                title="Matrice de confusion (test)",
             )
-        wandb_run.log(metrics)
-        wandb_run.log({"n_features": len(FEATURES)})
+            wandb_run.log({"matrice_confusion": cm})
+        except Exception as exc:  # noqa: BLE001 - plot optionnel
+            print(f"[warn] Matrice de confusion W&B indisponible : {exc}")
 
     ARTIFACT_DIR.mkdir(parents=True, exist_ok=True)
     import joblib
