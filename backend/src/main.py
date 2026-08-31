@@ -20,6 +20,7 @@ from src.api.routes import (
     audit,
     clients,
     decisions,
+    eligibility,
     health,
     metrics,
     models,
@@ -59,3 +60,4 @@ app.include_router(reports.router)
 app.include_router(clients.router)
 app.include_router(applications.router)
 app.include_router(application_data.router)
+app.include_router(eligibility.router)
