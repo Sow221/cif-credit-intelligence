@@ -23,6 +23,7 @@ from src.api.routes import (
     decisions,
     eligibility,
     health,
+    information_profile,
     metrics,
     models,
     predict,
@@ -63,3 +64,4 @@ app.include_router(applications.router)
 app.include_router(application_data.router)
 app.include_router(eligibility.router)
 app.include_router(consents.router)
+app.include_router(information_profile.router)
