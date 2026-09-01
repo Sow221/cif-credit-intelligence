@@ -70,6 +70,7 @@ class ErrorCode:
     IDEMPOTENCY_CONFLICT = "IDEMPOTENCY_CONFLICT"
     TENANT_ACCESS_DENIED = "TENANT_ACCESS_DENIED"
     EXTERNAL_PROVIDER_ERROR = "EXTERNAL_PROVIDER_ERROR"
+    LINEAGE = "LINEAGE"
     TIMEOUT = "TIMEOUT"
     RATE_LIMITED = "RATE_LIMITED"
     INTERNAL_ERROR = "INTERNAL_ERROR"
@@ -160,6 +161,11 @@ class IdempotencyConflictError(StandardError):
     status_code = 409
 
 
+class LineageError(StandardError):
+    code = ErrorCode.LINEAGE
+    status_code = 409
+
+
 # Registry pour le handler global.
 ERROR_BY_CODE = {
     cls.code: cls
@@ -181,5 +187,6 @@ ERROR_BY_CODE = {
         OverrideReasonRequiredError,
         InvalidStateTransitionError,
         IdempotencyConflictError,
+        LineageError,
     ]
 }
