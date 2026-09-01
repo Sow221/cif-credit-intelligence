@@ -28,6 +28,7 @@ from src.api.routes import (
     models,
     predict,
     reports,
+    snapshots,
 )
 
 app = FastAPI(
@@ -65,3 +66,4 @@ app.include_router(application_data.router)
 app.include_router(eligibility.router)
 app.include_router(consents.router)
 app.include_router(information_profile.router)
+app.include_router(snapshots.router)
