@@ -23,6 +23,7 @@ from src.config.settings import Settings
 from src.db.models import Customer, Prediction
 from src.db.session import get_db
 from src.models.predictor import ModelUnavailableError, Predictor
+from src.models.risk_engine import RiskEngine
 from src.services.audit_service import AuditService
 from src.services.confidence import ConfidenceService
 from src.services.decision_engine import DecisionEngine
@@ -46,6 +47,9 @@ try:
 except ModelUnavailableError:
     predictor = None
     set_model_loaded(False)
+
+# Le scoring passe par le RiskEngine (jamais XGBClassifier/MLflow en direct).
+risk_engine = RiskEngine(predictor)
 
 
 def _persist_prediction(
@@ -132,7 +136,8 @@ async def predict(
         raise HTTPException(status_code=503, detail="Modele indisponible")
 
     try:
-        pd_score = predictor.predict_pd(payload)
+        risk_result = risk_engine.score_payload(payload, feature_set="FULL_ADMISSIBLE")
+        pd_score = risk_result.pd_raw
     except FeatureServiceError as exc:
         # Donnees incompletes -> 422 (jamais de zeros artificiels)
         raise HTTPException(status_code=422, detail=str(exc)) from exc
