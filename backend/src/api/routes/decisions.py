@@ -19,7 +19,7 @@ from src.api.schemas.response import (
     DecisionListResponse,
 )
 from src.config.settings import Settings
-from src.db.models import AuditLog, Prediction
+from src.db.models import AuditLog, Decision, DecisionOverride, Prediction
 from src.db.session import get_db
 
 router = APIRouter(tags=["decisions"])
@@ -94,5 +94,16 @@ async def override_decision(
         is_override=True,
     )
     db.add(audit)
+
+    decision_obj = db.query(Decision).filter(Decision.prediction_id == prediction_id).first()
+    if decision_obj is not None:
+        override = DecisionOverride(
+            decision_id=decision_obj.decision_id,
+            original_recommendation=decision_obj.recommendation,
+            final_decision=body.decision,
+            override_reason=body.justification,
+            actor_id=body.agent_id,
+        )
+        db.add(override)
     db.commit()
     return {"status": "success", "audit_id": str(audit.audit_id)}

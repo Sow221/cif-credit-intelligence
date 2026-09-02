@@ -26,8 +26,10 @@ from src.api.routes import (
     information_profile,
     metrics,
     models,
+    outcomes,
     predict,
     reports,
+    reviews,
     snapshots,
 )
 
@@ -66,4 +68,6 @@ app.include_router(application_data.router)
 app.include_router(eligibility.router)
 app.include_router(consents.router)
 app.include_router(information_profile.router)
+app.include_router(reviews.router)
+app.include_router(outcomes.router)
 app.include_router(snapshots.router)
