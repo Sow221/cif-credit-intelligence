@@ -1,4 +1,5 @@
 import i18n from "i18next";
+import type { Resource } from "i18next";
 import { initReactI18next } from "react-i18next";
 import frCommon from "./fr/common.json";
 import frDashboard from "./fr/dashboard.json";
@@ -17,32 +18,43 @@ import enModels from "./en/models.json";
 import enMonitoring from "./en/monitoring.json";
 import enAdmin from "./en/admin.json";
 
+interface LocaleModules {
+  common: typeof frCommon;
+  dashboard: typeof frDashboard;
+  applications: typeof frApplications;
+  clients: typeof frClients;
+  review: typeof frReview;
+  models: typeof frModels;
+  monitoring: typeof frMonitoring;
+  admin: typeof frAdmin;
+}
+
+function buildLanguage(modules: LocaleModules): { translation: LocaleModules } & LocaleModules {
+  return { translation: modules, ...modules };
+}
+
 export const resources = {
-  fr: {
-    translation: {
-      common: frCommon,
-      dashboard: frDashboard,
-      applications: frApplications,
-      clients: frClients,
-      review: frReview,
-      models: frModels,
-      monitoring: frMonitoring,
-      admin: frAdmin,
-    },
-  },
-  en: {
-    translation: {
-      common: enCommon,
-      dashboard: enDashboard,
-      applications: enApplications,
-      clients: enClients,
-      review: enReview,
-      models: enModels,
-      monitoring: enMonitoring,
-      admin: enAdmin,
-    },
-  },
-} as const;
+  fr: buildLanguage({
+    common: frCommon,
+    dashboard: frDashboard,
+    applications: frApplications,
+    clients: frClients,
+    review: frReview,
+    models: frModels,
+    monitoring: frMonitoring,
+    admin: frAdmin,
+  }),
+  en: buildLanguage({
+    common: enCommon,
+    dashboard: enDashboard,
+    applications: enApplications,
+    clients: enClients,
+    review: enReview,
+    models: enModels,
+    monitoring: enMonitoring,
+    admin: enAdmin,
+  }),
+} as unknown as Resource;
 
 function resolveInitialLanguage(): string {
   if (typeof localStorage !== "undefined") {

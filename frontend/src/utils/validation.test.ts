@@ -68,9 +68,7 @@ describe("validateLogin", () => {
   it("reports missing username", () => {
     const result = validateLogin({ username: "", password: "secret" });
     expect(result.valid).toBe(false);
-    expect(result.errors).toEqual([
-      { field: "username", message: "common.errors.required" },
-    ]);
+    expect(result.errors).toEqual([{ field: "username", message: "common.errors.required" }]);
   });
 
   it("reports missing password", () => {

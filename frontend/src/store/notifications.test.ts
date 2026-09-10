@@ -19,9 +19,7 @@ describe("useNotificationsStore", () => {
 
   it("addNotifications merges and sorts by newest", () => {
     useNotificationsStore.setState({ items: [notification("a", "2024-03-01T10:00:00Z")] });
-    useNotificationsStore.getState().addNotifications([
-      notification("b", "2024-03-02T10:00:00Z"),
-    ]);
+    useNotificationsStore.getState().addNotifications([notification("b", "2024-03-02T10:00:00Z")]);
     const ids = useNotificationsStore.getState().items.map((item) => item.id);
     expect(ids).toEqual(["b", "a"]);
   });
