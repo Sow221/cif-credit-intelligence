@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import type { AuthUser } from "@/services/auth";
-import { loadStoredSession } from "@/services/auth";
+import { loadStoredSession } from "@/services/session";
 
 export type AuthStatus = "idle" | "loading" | "authenticated" | "unauthenticated";
 

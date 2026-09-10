@@ -1,4 +1,5 @@
 import { api, clearToken, setToken } from "./api";
+import { clearStoredSession, loadStoredSession, storeSession } from "./session";
 import { useAuthStore } from "@/store/auth";
 
 export interface LoginPayload {
@@ -24,24 +25,7 @@ export interface Session {
   user: AuthUser;
 }
 
-const SESSION_KEY = "cif_session";
-
-export function loadStoredSession(): Session | null {
-  try {
-    const raw = localStorage.getItem(SESSION_KEY);
-    return raw ? (JSON.parse(raw) as Session) : null;
-  } catch {
-    return null;
-  }
-}
-
-function storeSession(session: Session): void {
-  localStorage.setItem(SESSION_KEY, JSON.stringify(session));
-}
-
-export function clearStoredSession(): void {
-  localStorage.removeItem(SESSION_KEY);
-}
+export { loadStoredSession, clearStoredSession };
 
 export async function login(payload: LoginPayload): Promise<AuthUser> {
   const data = await api.post<LoginResponse>("/auth/login", payload);
