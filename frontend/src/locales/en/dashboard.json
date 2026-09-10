@@ -1,0 +1,32 @@
+{
+  "greeting": "Hello",
+  "quickActions": "Quick actions",
+  "kpis": {
+    "pending": "Pending",
+    "approved": "Approved",
+    "review": "In review",
+    "declined": "Declined"
+  },
+  "alerts": {
+    "title": "Alerts",
+    "empty": "No active alerts",
+    "thinFile": "thin files not processed",
+    "modelDrift": "model drift detected",
+    "overrides": "overrides this week"
+  },
+  "recent": {
+    "title": "Recent applications",
+    "columns": {
+      "id": "ID",
+      "client": "Client",
+      "amount": "Amount",
+      "status": "Status",
+      "date": "Date"
+    }
+  },
+  "activity": {
+    "title": "7-day activity",
+    "applications": "Applications",
+    "approved": "Approved"
+  }
+}

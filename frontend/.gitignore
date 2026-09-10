@@ -1,0 +1,11 @@
+node_modules/
+dist/
+coverage/
+storybook-static/
+playwright-report/
+test-results/
+.vite/
+*.local
+.env
+.env.*
+!.env.example

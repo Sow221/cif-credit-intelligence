@@ -1,0 +1,30 @@
+{
+  "title": "File de revue",
+  "filters": {
+    "status": "Statut",
+    "assignedTo": "Assigné à",
+    "date": "Date"
+  },
+  "columns": {
+    "id": "ID",
+    "client": "Client",
+    "pd": "PD",
+    "reason": "Raison",
+    "age": "Âge",
+    "actions": "Actions"
+  },
+  "actions": {
+    "assign": "Assigner",
+    "start": "Démarrer",
+    "complete": "Compléter"
+  },
+  "toasts": {
+    "assigned": "Revue assignée.",
+    "started": "Revue démarrée.",
+    "completed": "Revue complétée."
+  },
+  "completeModal": {
+    "title": "Décision finale",
+    "description": "Choisissez la décision finale pour cette revue."
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "title": "Admin",
+  "tabs": {
+    "users": "Users",
+    "roles": "Roles",
+    "policies": "Policies",
+    "config": "Configuration"
+  },
+  "users": {
+    "columns": {
+      "name": "Name",
+      "username": "Username",
+      "role": "Role",
+      "institution": "Institution",
+      "status": "Status"
+    }
+  },
+  "roles": {
+    "permissions": "Permissions",
+    "users": "Users"
+  },
+  "policies": {
+    "thresholds": "Thresholds",
+    "description": "Configure decision thresholds"
+  },
+  "config": {
+    "featureFlags": "Feature flags",
+    "settings": "Settings"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "title": "Clients",
+  "search": "Search by ID, name or phone",
+  "columns": {
+    "id": "ID",
+    "name": "Name",
+    "sector": "Sector",
+    "zone": "Zone",
+    "status": "Status",
+    "applications": "Applications"
+  },
+  "toasts": {
+    "created": "Client created successfully."
+  },
+  "detail": {
+    "identity": "Identity",
+    "savings": "Savings",
+    "loans": "Loans",
+    "applications": "Applications",
+    "decisions": "Decisions",
+    "consents": "Consents",
+    "audit": "Audit",
+    "balance": "Balance",
+    "average": "Average balance",
+    "stability": "Stability",
+    "noLoans": "No loans",
+    "noApplications": "No applications",
+    "noConsents": "No consents"
+  },
+  "statusLabel": {
+    "ACTIVE": "Active",
+    "BLOCKED": "Blocked",
+    "PENDING": "Pending"
+  }
+}

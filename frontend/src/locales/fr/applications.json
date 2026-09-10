@@ -1,0 +1,113 @@
+{
+  "title": "Demandes",
+  "filters": {
+    "status": "Statut",
+    "riskBand": "Bande de risque",
+    "infoState": "Info state",
+    "date": "Date",
+    "product": "Produit",
+    "search": "Rechercher"
+  },
+  "columns": {
+    "id": "ID",
+    "client": "Client",
+    "amount": "Montant",
+    "pd": "PD",
+    "status": "Statut",
+    "infoState": "Info State",
+    "date": "Date",
+    "actions": "Actions"
+  },
+  "detail": "Voir le détail",
+  "toasts": {
+    "created": "Demande créée avec succès.",
+    "statusUpdated": "Statut mis à jour."
+  },
+  "new": {
+    "title": "Nouvelle demande",
+    "client": "Rechercher un client existant",
+    "createNew": "Créer un nouveau client",
+    "product": "Produit",
+    "amount": "Montant",
+    "term": "Durée",
+    "purpose": "Objet",
+    "submit": "Soumettre la demande",
+    "created": "Demande créée avec succès."
+  },
+  "errors": {
+    "amount": "Montant invalide (doit être > 0)",
+    "term": "Durée invalide (6, 12, 18 ou 24 mois)",
+    "overrideReason": "Une justification est obligatoire pour déroger à la recommandation.",
+    "invalidForm": "Veuillez corriger les champs en rouge."
+  },
+  "sections": {
+    "summary": "Résumé",
+    "client": "Client",
+    "eligibility": "Éligibilité",
+    "informationProfile": "Information Profile",
+    "risk": "Risque",
+    "uncertainty": "Incertitude",
+    "explanation": "Explication",
+    "informationGap": "Information Gap",
+    "recommendation": "Recommandation",
+    "finalDecision": "Décision finale"
+  },
+  "eligibility": {
+    "eligible": "Éligible",
+    "notEligible": "Non éligible",
+    "reasons": "Raisons",
+    "notEvaluated": "Non évaluée"
+  },
+  "risk": {
+    "pd": "PD estimée",
+    "pdCalibrated": "PD calibrée",
+    "model": "Modèle",
+    "featureSet": "Feature set",
+    "band": "Bande de risque"
+  },
+  "uncertainty": {
+    "level": "Niveau",
+    "method": "Méthode",
+    "factors": "Facteurs de risque",
+    "confidence": "Intervalle de confiance",
+    "LOW": "Faible",
+    "MODERATE": "Modérée",
+    "HIGH": "Élevée"
+  },
+  "explanation": {
+    "model": "Facteurs du modèle",
+    "decision": "Raisons de la décision",
+    "empty": "Aucune explication disponible."
+  },
+  "gap": {
+    "missing": "Manquant",
+    "stale": "Obsolète",
+    "unavailable": "Indisponible",
+    "empty": "Aucun écart d'information."
+  },
+  "recommendation": {
+    "label": "Recommandation",
+    "policyVersion": "Version de politique"
+  },
+  "finalDecision": {
+    "label": "Décision finale",
+    "approveModal": {
+      "title": "Confirmer l'approbation ?",
+      "description": "La demande sera approuvée et le dossier sera décidé."
+    },
+    "rejectModal": {
+      "title": "Confirmer le rejet ?",
+      "description": "La raison du rejet est obligatoire.",
+      "reason": "Raison du rejet"
+    },
+    "overrideModal": {
+      "title": "Déroger à la recommandation ?",
+      "description": "Recommandation : {{recommendation}}",
+      "yourDecision": "Votre décision",
+      "result": "Résultat",
+      "reason": "Justification"
+    },
+    "decisionSaved": "Décision enregistrée.",
+    "overrideSaved": "Override enregistré."
+  }
+}

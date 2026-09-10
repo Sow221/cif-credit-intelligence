@@ -1,0 +1,113 @@
+{
+  "title": "Applications",
+  "filters": {
+    "status": "Status",
+    "riskBand": "Risk band",
+    "infoState": "Info state",
+    "date": "Date",
+    "product": "Product",
+    "search": "Search"
+  },
+  "columns": {
+    "id": "ID",
+    "client": "Client",
+    "amount": "Amount",
+    "pd": "PD",
+    "status": "Status",
+    "infoState": "Info state",
+    "date": "Date",
+    "actions": "Actions"
+  },
+  "detail": "View details",
+  "toasts": {
+    "created": "Application created successfully.",
+    "statusUpdated": "Status updated."
+  },
+  "new": {
+    "title": "New application",
+    "client": "Search an existing client",
+    "createNew": "Create a new client",
+    "product": "Product",
+    "amount": "Amount",
+    "term": "Term",
+    "purpose": "Purpose",
+    "submit": "Submit the application",
+    "created": "Application created successfully."
+  },
+  "errors": {
+    "amount": "Invalid amount (must be > 0)",
+    "term": "Invalid term (6, 12, 18 or 24 months)",
+    "overrideReason": "A justification is required to override the recommendation.",
+    "invalidForm": "Please fix the highlighted fields."
+  },
+  "sections": {
+    "summary": "Summary",
+    "client": "Client",
+    "eligibility": "Eligibility",
+    "informationProfile": "Information Profile",
+    "risk": "Risk",
+    "uncertainty": "Uncertainty",
+    "explanation": "Explanation",
+    "informationGap": "Information Gap",
+    "recommendation": "Recommendation",
+    "finalDecision": "Final decision"
+  },
+  "eligibility": {
+    "eligible": "Eligible",
+    "notEligible": "Not eligible",
+    "reasons": "Reasons",
+    "notEvaluated": "Not evaluated"
+  },
+  "risk": {
+    "pd": "Estimated PD",
+    "pdCalibrated": "Calibrated PD",
+    "model": "Model",
+    "featureSet": "Feature set",
+    "band": "Risk band"
+  },
+  "uncertainty": {
+    "level": "Level",
+    "method": "Method",
+    "factors": "Risk factors",
+    "confidence": "Confidence interval",
+    "LOW": "Low",
+    "MODERATE": "Moderate",
+    "HIGH": "High"
+  },
+  "explanation": {
+    "model": "Model factors",
+    "decision": "Decision reasons",
+    "empty": "No explanation available."
+  },
+  "gap": {
+    "missing": "Missing",
+    "stale": "Stale",
+    "unavailable": "Unavailable",
+    "empty": "No information gaps."
+  },
+  "recommendation": {
+    "label": "Recommendation",
+    "policyVersion": "Policy version"
+  },
+  "finalDecision": {
+    "label": "Final decision",
+    "approveModal": {
+      "title": "Confirm approval?",
+      "description": "The application will be approved."
+    },
+    "rejectModal": {
+      "title": "Confirm rejection?",
+      "description": "The rejection reason is required.",
+      "reason": "Rejection reason"
+    },
+    "overrideModal": {
+      "title": "Override the recommendation?",
+      "description": "Recommendation: {{recommendation}}",
+      "yourDecision": "Your decision",
+      "result": "Result",
+      "reason": "Justification"
+    },
+    "decisionSaved": "Decision saved.",
+    "overrideSaved": "Override saved."
+  }
+}

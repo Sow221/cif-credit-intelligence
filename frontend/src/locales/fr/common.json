@@ -1,0 +1,107 @@
+{
+  "app": {
+    "name": "Adaptive Credit",
+    "tagline": "Décision de crédit intelligente",
+    "version": "Version 2.0.0"
+  },
+  "nav": {
+    "dashboard": "Tableau de bord",
+    "applications": "Demandes",
+    "clients": "Clients",
+    "review": "Revue",
+    "models": "Modèles",
+    "monitoring": "Monitoring",
+    "admin": "Administration"
+  },
+  "actions": {
+    "search": "Rechercher",
+    "submit": "Soumettre",
+    "approve": "Approuver",
+    "reject": "Rejeter",
+    "override": "Déroger",
+    "confirm": "Confirmer",
+    "cancel": "Annuler",
+    "justification": "Justification",
+    "retry": "Réessayer",
+    "save": "Enregistrer",
+    "assign": "Assigner",
+    "start": "Démarrer",
+    "complete": "Compléter",
+    "promote": "Promouvoir",
+    "demote": "Rétrograder",
+    "archive": "Archiver",
+    "newApplication": "Nouvelle demande",
+    "newClient": "Nouveau client",
+    "markAllRead": "Tout marquer comme lu",
+    "close": "Fermer",
+    "logout": "Déconnexion",
+    "viewAll": "Voir tout"
+  },
+  "status": {
+    "DRAFT": "Brouillon",
+    "SUBMITTED": "Soumise",
+    "DATA_VALIDATION": "Validation données",
+    "PROFILED": "Profilée",
+    "SCORED": "Notée",
+    "REVIEW": "En revue",
+    "DECIDED": "Décidée",
+    "CANCELLED": "Annulée",
+    "APPROVE": "Approuvée",
+    "DECLINE": "Refusée",
+    "APPROVED": "Approuvée",
+    "DECLINED": "Refusée"
+  },
+  "informationState": {
+    "FULL_FILE": "Complet",
+    "THIN_FILE": "Faible",
+    "NO_FILE": "Absent",
+    "DATA_POOR": "Pauvre",
+    "UNKNOWN": "Inconnu"
+  },
+  "riskBand": {
+    "LOW": "Risque faible",
+    "MEDIUM": "Risque moyen",
+    "HIGH": "Risque élevé",
+    "UNKNOWN": "Risque inconnu"
+  },
+  "reviewStatus": {
+    "PENDING": "En attente",
+    "ASSIGNED": "Assignée",
+    "IN_PROGRESS": "En cours",
+    "COMPLETED": "Terminée",
+    "CANCELLED": "Annulée"
+  },
+  "roles": {
+    "ADMIN": "Administrateur",
+    "CREDIT_MANAGER": "Responsable crédit",
+    "CREDIT_OFFICER": "Agent crédit",
+    "ANALYST": "Analyste",
+    "AUDITOR": "Auditeur"
+  },
+  "errors": {
+    "required": "Champ obligatoire",
+    "title": "Oups, une erreur est survenue",
+    "description": "Impossible de charger les données. Veuillez réessayer.",
+    "retry": "Réessayer",
+    "forbidden": "Vous n'avez pas les permissions nécessaires.",
+    "missing": "Ressource introuvable.",
+    "invalidRequest": "Requête invalide. Vérifiez les champs.",
+    "tooManyRequests": "Trop de requêtes. Réessayez dans un instant.",
+    "internal": "Erreur interne. Contactez l'administrateur."
+  },
+  "login": {
+    "username": "Identifiant",
+    "password": "Mot de passe",
+    "submit": "Se connecter"
+  },
+  "loading": "Chargement...",
+  "empty": {
+    "applications": "Aucune demande",
+    "clients": "Aucun client",
+    "reviews": "Aucune revue",
+    "events": "Aucun événement"
+  },
+  "date": {
+    "today": "Aujourd'hui"
+  }
+}

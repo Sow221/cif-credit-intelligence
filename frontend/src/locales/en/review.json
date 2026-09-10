@@ -1,0 +1,30 @@
+{
+  "title": "Review queue",
+  "filters": {
+    "status": "Status",
+    "assignedTo": "Assigned to",
+    "date": "Date"
+  },
+  "columns": {
+    "id": "ID",
+    "client": "Client",
+    "pd": "PD",
+    "reason": "Reason",
+    "age": "Age",
+    "actions": "Actions"
+  },
+  "actions": {
+    "assign": "Assign",
+    "start": "Start",
+    "complete": "Complete"
+  },
+  "toasts": {
+    "assigned": "Review assigned.",
+    "started": "Review started.",
+    "completed": "Review completed."
+  },
+  "completeModal": {
+    "title": "Final decision",
+    "description": "Choose the final decision for this review."
+  }
+}

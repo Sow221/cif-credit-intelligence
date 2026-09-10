@@ -1,0 +1,32 @@
+{
+  "greeting": "Bonjour",
+  "quickActions": "Actions rapides",
+  "kpis": {
+    "pending": "En attente",
+    "approved": "Approuvés",
+    "review": "En revue",
+    "declined": "Refusés"
+  },
+  "alerts": {
+    "title": "Alertes",
+    "empty": "Aucune alerte en cours",
+    "thinFile": "dossiers faibles non traités",
+    "modelDrift": "modèle en dérive détectée",
+    "overrides": "dérogations cette semaine"
+  },
+  "recent": {
+    "title": "Dernières demandes",
+    "columns": {
+      "id": "ID",
+      "client": "Client",
+      "amount": "Montant",
+      "status": "Statut",
+      "date": "Date"
+    }
+  },
+  "activity": {
+    "title": "Activité sur 7 jours",
+    "applications": "Demandes",
+    "approved": "Approuvées"
+  }
+}

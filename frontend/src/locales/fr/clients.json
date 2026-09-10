@@ -1,0 +1,35 @@
+{
+  "title": "Clients",
+  "search": "Rechercher par ID, nom ou téléphone",
+  "columns": {
+    "id": "ID",
+    "name": "Nom",
+    "sector": "Secteur",
+    "zone": "Zone",
+    "status": "Statut",
+    "applications": "Nb demandes"
+  },
+  "toasts": {
+    "created": "Client créé avec succès."
+  },
+  "detail": {
+    "identity": "Identité",
+    "savings": "Épargne",
+    "loans": "Prêts",
+    "applications": "Demandes",
+    "decisions": "Décisions",
+    "consents": "Consentements",
+    "audit": "Audit",
+    "balance": "Solde",
+    "average": "Solde moyen",
+    "stability": "Stabilité",
+    "noLoans": "Aucun prêt",
+    "noApplications": "Aucune demande",
+    "noConsents": "Aucun consentement"
+  },
+  "statusLabel": {
+    "ACTIVE": "Actif",
+    "BLOCKED": "Bloqué",
+    "PENDING": "En attente"
+  }
+}

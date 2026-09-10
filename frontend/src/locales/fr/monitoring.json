@@ -1,0 +1,30 @@
+{
+  "title": "Monitoring",
+  "tabs": {
+    "data": "Data",
+    "model": "Modèle",
+    "decisions": "Décisions",
+    "fairness": "Fairness",
+    "incidents": "Incidents"
+  },
+  "dataQuality": "Qualité des données",
+  "missingRate": "Taux de missing",
+  "drift": "Dérive",
+  "auc": "AUC",
+  "brier": "Brier",
+  "calibration": "Calibration",
+  "approvalRate": "Taux d'approbation",
+  "overrideRate": "Taux de dérogation",
+  "incidents": {
+    "empty": "Aucun incident",
+    "open": "Ouvert",
+    "acknowledged": "Accusé",
+    "resolved": "Résolu"
+  },
+  "fairness": {
+    "group": "Groupe",
+    "size": "Taille d'échantillon",
+    "approvalRate": "Taux d'approbation",
+    "adverseImpact": "Impact adverse"
+  }
+}

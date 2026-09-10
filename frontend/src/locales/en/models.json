@@ -1,0 +1,31 @@
+{
+  "title": "Models",
+  "columns": {
+    "model": "Model",
+    "version": "Version",
+    "status": "Status",
+    "auc": "AUC",
+    "featureSet": "Feature set",
+    "date": "Date",
+    "actions": "Actions"
+  },
+  "detail": {
+    "title": "Model card",
+    "features": "Features",
+    "thresholds": "Thresholds",
+    "calibration": "Calibration",
+    "metrics": "Metrics",
+    "notApproved": "Not approved",
+    "approved": "Approved"
+  },
+  "statusLabel": {
+    "DRAFT": "Draft",
+    "STAGING": "Staging",
+    "PRODUCTION": "Production",
+    "ARCHIVED": "Archived",
+    "DEPRECATED": "Deprecated"
+  },
+  "toasts": {
+    "promoted": "Model promoted."
+  }
+}

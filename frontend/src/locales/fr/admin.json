@@ -1,0 +1,30 @@
+{
+  "title": "Administration",
+  "tabs": {
+    "users": "Utilisateurs",
+    "roles": "Rôles",
+    "policies": "Politiques",
+    "config": "Configuration"
+  },
+  "users": {
+    "columns": {
+      "name": "Nom",
+      "username": "Identifiant",
+      "role": "Rôle",
+      "institution": "Institution",
+      "status": "Statut"
+    }
+  },
+  "roles": {
+    "permissions": "Permissions",
+    "users": "Utilisateurs"
+  },
+  "policies": {
+    "thresholds": "Seuils",
+    "description": "Configurer les seuils de décision"
+  },
+  "config": {
+    "featureFlags": "Feature flags",
+    "settings": "Paramètres"
+  }
+}

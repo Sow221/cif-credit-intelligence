@@ -1,0 +1,31 @@
+{
+  "title": "Modèles",
+  "columns": {
+    "model": "Modèle",
+    "version": "Version",
+    "status": "Statut",
+    "auc": "AUC",
+    "featureSet": "Feature set",
+    "date": "Date",
+    "actions": "Actions"
+  },
+  "detail": {
+    "title": "Fiche du modèle",
+    "features": "Caractéristiques",
+    "thresholds": "Seuils",
+    "calibration": "Calibration",
+    "metrics": "Métriques",
+    "notApproved": "Non approuvé",
+    "approved": "Approuvé"
+  },
+  "statusLabel": {
+    "DRAFT": "Brouillon",
+    "STAGING": "Staging",
+    "PRODUCTION": "Production",
+    "ARCHIVED": "Archivé",
+    "DEPRECATED": "Déprécié"
+  },
+  "toasts": {
+    "promoted": "Modèle promu."
+  }
+}

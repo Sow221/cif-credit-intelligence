@@ -1,0 +1,107 @@
+{
+  "app": {
+    "name": "Adaptive Credit",
+    "tagline": "Intelligent credit decisioning",
+    "version": "Version 2.0.0"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "applications": "Applications",
+    "clients": "Clients",
+    "review": "Review",
+    "models": "Models",
+    "monitoring": "Monitoring",
+    "admin": "Admin"
+  },
+  "actions": {
+    "search": "Search",
+    "submit": "Submit",
+    "approve": "Approve",
+    "reject": "Reject",
+    "override": "Override",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "justification": "Justification",
+    "retry": "Retry",
+    "save": "Save",
+    "assign": "Assign",
+    "start": "Start",
+    "complete": "Complete",
+    "promote": "Promote",
+    "demote": "Demote",
+    "archive": "Archive",
+    "newApplication": "New application",
+    "newClient": "New client",
+    "markAllRead": "Mark all as read",
+    "close": "Close",
+    "logout": "Logout",
+    "viewAll": "View all"
+  },
+  "status": {
+    "DRAFT": "Draft",
+    "SUBMITTED": "Submitted",
+    "DATA_VALIDATION": "Data validation",
+    "PROFILED": "Profiled",
+    "SCORED": "Scored",
+    "REVIEW": "In review",
+    "DECIDED": "Decided",
+    "CANCELLED": "Cancelled",
+    "APPROVE": "Approved",
+    "DECLINE": "Declined",
+    "APPROVED": "Approved",
+    "DECLINED": "Declined"
+  },
+  "informationState": {
+    "FULL_FILE": "Full file",
+    "THIN_FILE": "Thin file",
+    "NO_FILE": "No file",
+    "DATA_POOR": "Data poor",
+    "UNKNOWN": "Unknown"
+  },
+  "riskBand": {
+    "LOW": "Low risk",
+    "MEDIUM": "Medium risk",
+    "HIGH": "High risk",
+    "UNKNOWN": "Unknown risk"
+  },
+  "reviewStatus": {
+    "PENDING": "Pending",
+    "ASSIGNED": "Assigned",
+    "IN_PROGRESS": "In progress",
+    "COMPLETED": "Completed",
+    "CANCELLED": "Cancelled"
+  },
+  "roles": {
+    "ADMIN": "Administrator",
+    "CREDIT_MANAGER": "Credit manager",
+    "CREDIT_OFFICER": "Credit officer",
+    "ANALYST": "Analyst",
+    "AUDITOR": "Auditor"
+  },
+  "errors": {
+    "required": "Required field",
+    "title": "Something went wrong",
+    "description": "Unable to load data. Please try again.",
+    "retry": "Retry",
+    "forbidden": "You do not have the required permissions.",
+    "missing": "Resource not found.",
+    "invalidRequest": "Invalid request. Check your inputs.",
+    "tooManyRequests": "Too many requests. Try again shortly.",
+    "internal": "Internal error. Contact the administrator."
+  },
+  "login": {
+    "username": "Username",
+    "password": "Password",
+    "submit": "Sign in"
+  },
+  "loading": "Loading...",
+  "empty": {
+    "applications": "No applications",
+    "clients": "No clients",
+    "reviews": "No reviews",
+    "events": "No events"
+  },
+  "date": {
+    "today": "Today"
+  }
+}
