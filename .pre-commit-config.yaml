@@ -3,6 +3,8 @@
 # Gates locaux : formattage, lint, typecheck, tests avant chaque
 # commit. Installation :  uv run pre-commit install
 # =============================================================
+default_install_hook_types: [pre-commit, commit-msg]
+
 repos:
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.6.9
@@ -36,3 +38,9 @@ repos:
         language: system
         pass_filenames: false
         always_run: true
+
+  - repo: https://github.com/compilerla/conventional-pre-commit
+    rev: v3.4.0
+    hooks:
+      - id: conventional-pre-commit
+        stages: [commit-msg]
