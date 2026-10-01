@@ -1,196 +1,157 @@
-# CIF Credit Intelligence
+# CIF Credit Platform
 
-**Infrastructure d'intelligence de crédit et de décision de risque** pour les
-institutions financières (SFD / microfinance) d'Afrique de l'Ouest. Le projet
-combine un moteur de scoring (machine learning), un moteur de décision supervisée,
-et un **protocole de validation rigoureux** conçu *avant* toute donnée réelle —
-pour produire des décisions de financement contextualisées, explicables et
-auditables.
+Decision-support application for credit-risk decisions. Transforms risk scores into explainable and auditable lending decisions with governance, monitoring, and human-in-the-loop review.
 
-> ⚠️ **Statut méthodologique** : la phase **synthétique** est clôturée et a servi
-> d'environnement de validation méthodologique. Le `ROC-AUC ≈ 0.83` est un
-> résultat **expérimental sur données synthétiques**, ce **n'est pas un benchmark
-> CIF**. La performance réelle ne pourra être évaluée que sur les données CIF
-> anonymisées, via le protocole de validation locké dans `docs/`.
+## Overview
 
----
+Infrastructure for credit intelligence and risk decision-making for financial institutions (SFD / microfinance) in West Africa. Combines machine learning scoring engine, supervised decision engine, and validation protocol designed before real-data ingestion to ensure methodology rigor.
 
-## Table des matières
+## System Architecture
 
-- [Pourquoi ce projet](#pourquoi-ce-projet)
-- [Ce que fait la solution](#ce-que-fait-la-solution)
-- [Le point différenciant : la méthode](#le-point-diff%C3%A9renciant--la-m%C3%A9thode)
-- [Architecture du dépôt](#architecture-du-d%C3%A9p%C3%B4t)
-- [Quickstart](#quickstart)
-- [Stack technique](#stack-technique)
-- [Résultats synthétiques](#r%C3%A9sultats-synth%C3%A9tiques)
-- [Limites & frontière méthodologique](#limites--fronti%C3%A8re-m%C3%A9thodologique)
-- [Gouvernance & conformité](#gouvernance--conformit%C3%A9)
-- [Roadmap](#roadmap)
-
----
-
-## Pourquoi ce projet
-
-Les institutions de microfinance de l'UEMOA disposent de **données réelles mais
-fragmentées** (crédit, épargne, remboursements). Transformer ces données en
-décisions de financement **fiables** exige plus qu'un modèle de ML : il faut une
-chaîne de validation capable de prouver l'absence de fuite d'information
-(leakage), la stabilité temporelle, l'équité entre groupes et la rentabilité
-d'une supervision humaine.
-
-Ce projet formalise cette chaîne, du **jeu de données synthétique calibré**
-jusqu'à un **protocole verrouillé pour la phase réelle**.
-
-## Ce que fait la solution
-
-1. **Moteur de scoring** : probabilité de défaut estimée par XGBoost sur
-   25 caractéristiques (profil, épargne, historique de remboursement),
-   recalibrée par régression **isotonique** (les probabilités sorties sont
-   *fiables*, pas seulement *bien classées*).
-2. **Moteur de décision** : à partir de la probabilité et du profil
-   (notamment les *thin-file*), oriente vers 4 décisions :
-   `APPROBATION`, `REVUE_HUMAINE`, `AJUSTEMENT`, `REFUS`.
-3. **Pilotage économique** : fonction de coût (revue, faux positifs, faux
-   négatifs) pour choisir le seuil et la capacité de revue humaine optimaux.
-4. **Explicabilité** : chaîne `DATA → INTELLIGENCE → RISK → DECISION`,
-   avec importance globale et contributions **SHAP** locales par client
-   (exposées via l'API).
-
-## Le point différenciant : la méthode
-
-La valeur n'est pas le score, c'est **la discipline de validation lockée avant
-les données** (cf. `docs/`). Les protocoles suivants sont gelés pour la phase
-réelle :
-
-| Protocole | Fichier | Contenu |
-|---|---|---|
-| Protocole de validation CIF | `docs/03_protocole_validation_cif_*.json` | Split temporel, IC95 bootstrap, segments, fairness, GO/NO-GO |
-| Template Data Audit | `docs/CIF_DATA_AUDIT_V1.1_*.json` | Audit population/temporalité/cible/qualité/biais |
-| Readiness pack | `docs/CIF_REAL_DATA_READINESS_PACK_*.json` | Intake, validation stat., leakage, gate, registry de décision |
-
-**Garanties imposées** : split **temporel** (jamais aléatoire), exclusion de
-toute variable **post-décision**, IC95 sur **chaque** métrique et **chaque**
-groupe, thin-file segmentés, coûts réels pour les seuils.
-
-## Architecture du dépôt
-
-```
-.
-├── src/cifci/          # Package principal (source de vérité)
-│   ├── data/          #   ingestion / génération synthétique seedée
-│   ├── features/      #   feature engineering + GARDE ANTI-LEAKAGE
-│   ├── models/        #   entraînement, calibration, registre
-│   ├── evaluate/      #   métriques, bootstrap CI, segments CIF
-│   ├── decision/      #   moteur de décision
-│   ├── explain/       #   explicabilité (SHAP local + global)
-│   ├── pipeline/      #   étapes CLI appelées par DVC
-│   └── api/           #   service de scoring (FastAPI) + CLI
-├── tests/             # pytest : anti-leakage, temporalité, features, API
-├── configs/params.yaml# Tous les paramètres centralisés (source de vérité)
-├── dvc.yaml           # Pipeline reproductible (prepare → train → evaluate)
-├── data/              # Données (DVC-tracked, hors git)
-├── models/            # Modèles & registre (DVC-tracked, hors git)
-├── reports/           # Audits A-F, figures, métriques (versionnées)
-├── docs/              # Protocoles & documentation de validation
-├── .github/workflows/ # CI : ruff, mypy, pytest, garde anti-leakage
-└── dashboard/         # (à venir) interface de suivi
+```mermaid
+graph TD
+    A["Application UI<br/>Risk Assessment"] -->|SHAP Explanations| B["Decision Service"]
+    C["Credit Score<br/>Risk Probability"] -->|Threshold Logic| B
+    B -->|Decision Gate| D["Review Queue<br/>Human Oversight"]
+    D -->|Audit Trail| E["PostgreSQL<br/>Decision Log"]
+    F["Customer Profile<br/>Financial History"] -->|Feature Builder| C
+    G["Fairness Monitor<br/>Segment Analysis"] -->|Bias Detection| B
+    H["Performance Tracker<br/>Calibration Check"] -->|Drift Alerts| B
 ```
 
-## Quickstart
+## Quick Start
 
 ```bash
-# 1. Installer uv (gestionnaire d'environnements)
-#    https://docs.astral.sh/uv/
-
-# 2. Installer les dépendances et le package (mode édit)
+# Using uv (Python environment manager)
 uv sync --extra dev --extra test
 
-# 3. Vérifier la santé : le garde anti-leakage doit être VERT
+# Validate anti-leakage guards
 uv run pytest tests/ -q
 
-# 4. Lancer la pipeline complète (reproductible — DVC)
-uv run dvc repro          # prepare → train → evaluate
+# Run full pipeline (DVC reproducible)
+uv run dvc repro
 
-# 5. (Optionnel) Lancer l'API de scoring en local
-uv run uvicorn cifci.api.app:app --reload   # → http://127.0.0.1:8000/docs
+# Start API locally
+uv run uvicorn cifci.api.app:app --reload
+# API available at http://127.0.0.1:8000/docs
 ```
 
-> [!NOTE] **Industrialisation livrée** : pipeline DVC rejouable, CI/CD
-> (GitHub Actions : ruff, mypy, pytest, garde anti-leakage), API FastAPI
-> (`/score`, `/explain`, `/health`), CLI de prédiction, SHAP et pre-commit.
-> Chaque étape est versionnée et testable — rien de jetable.
+Docker alternative:
 
-## Stack technique
+```bash
+docker compose up -d
+```
 
-- **Langage** : Python 3.11
-- **ML** : scikit-learn, XGBoost
-- **Calibration** : régression isotonique (IC`sklearn`)
-- **Validation** : bootstrap stratifié, IC95, PSI, ablation, multi-seed
-- **Suivi / registre** : MLflow (Tracking + Model Registry)
-- **API** : FastAPI + Uvicorn
-- **Qualité** : pytest, ruff, mypy, pre-commit (CI GitHub Actions)
-- **Versioning données/modèles** : DVC
+## Tech Stack
 
-## Résultats synthétiques
+| Layer | Technology |
+|-------|------------|
+| Language | Python 3.11 |
+| ML Framework | scikit-learn, XGBoost |
+| Calibration | Isotonic regression |
+| Validation | Bootstrap stratified, 95% CI |
+| Model Registry | MLflow (Tracking + Model Registry) |
+| API | FastAPI + Uvicorn |
+| Workflow Orchestration | DVC |
+| Data Versioning | DVC |
+| Quality Assurance | pytest, ruff, mypy, pre-commit |
+| CI/CD | GitHub Actions |
 
-> Ces chiffres sont **expérimentaux** sur données synthétiques calibrées
-> (taux de défaut cible ≈ 11.8%, seed contrôlé). À ne JAMAIS présenter comme
-> une performance réelle.
+## Key Features
 
-| Métrique | Modèle officiel (synthétique) | Pipeline reproduit (DVC) |
-|---|---|---|
-| ROC-AUC | ≈ 0.83 | ≈ 0.87 |
-| PR-AUC | ≈ 0.47 | ≈ 0.49 |
-| Brier (après calibration) | ≈ 0.084 | ≈ 0.075 |
-| IC95 bootstrap (ROC-AUC) | — | [0.86, 0.88] |
-| Segmentation thin-file / riche | validée | thin-file 0.82 → historique 4+ 0.85 |
+- **Scoring Engine** : XGBoost probability estimate for credit default
+- **Calibration** : isotonic regression ensures reliable probabilities
+- **Decision Logic** : risk score + profile → `APPROVAL | REVIEW | ADJUSTMENT | REJECTION`
+- **Explainability** : SHAP contributions (global importance, local decisions)
+- **Fairness** : segmented metrics (thin-file vs rich history) with 95% CI
+- **Thin-File Handling** : targeted approach for customers with limited credit history
+- **Cost Optimization** : threshold selection based on review capacity and risk costs
+- **Governance** : human review gates, audit trail, decision logging
 
-Le pipeline reproduit les métriques du modèle officiel **à partir du code**
-(`dvc repro`), avec un léger gain lié à la reconstruction propre des features.
+## Repository Structure
 
-Audits menés (`reports/audit/`) : multi-seed, sans-signal, facteur latent,
-bootstrap, robustesse, drift, fairness, matrice de généralisation
-(`A_to_B ≈ 0.57` → généralisation **partielle**, loyalement documentée),
-fonction de coût et capacité de revue.
+```
+src/cifci/
+├── data/               # Data ingestion and synthetic generation
+├── features/           # Feature engineering + anti-leakage guards
+├── models/             # Training, calibration, registry
+├── evaluate/           # Metrics, bootstrap CI, fairness analysis
+├── decision/           # Decision engine logic
+├── explain/            # SHAP explanations (local + global)
+├── pipeline/           # DVC and CLI orchestration
+├── api/                # FastAPI scoring service
+└── cli/                # Command-line tools
+tests/                  # Unit and integration tests
+configs/params.yaml     # Centralized parameters
+dvc.yaml                # DVC pipeline definition
+data/                   # Data (DVC-tracked)
+models/                 # Model registry (DVC-tracked)
+reports/                # Generated audit reports
+docs/                   # Protocols and validation documentation
+.github/workflows/      # CI/CD (ruff, mypy, pytest, anti-leakage)
+```
 
-## Limites & frontière méthodologique
+## Validation & Compliance
 
-- **Données synthétiques ≠ données CIF réelles.** Aucun chiffre ici ne se
-  substitue à un benchmark sur données réelles.
-- **Généralisation partielle** mesurée entre générateurs de données : ~25 % de
-  la performance est spécifique au générateur d'entraînement → le niveau
-  réaliste sur données hors-échantillon est bien plus bas que 0.83.
-- **Seuils du décision engine PROVISOIRES** : à recalculer avec target, coûts
-  et capacité réels de la CIF.
-- Ce qui **ne doit pas être inventé** : définition CIF du défaut, variables
-  disponibles, période couverte, taux de défaut réel, seuils définitifs.
+**Anti-Leakage Protocol** : two-level guard
+1. Blocklist: variables post-decision (e.g., `loan_status`) rejected at feature engineering
+2. Correlation threshold: any feature with target correlation > 0.75 triggers blocking error
 
-## Gouvernance & conformité
+**Temporal Split** : chronological ordering prevents data leakage; never random split
 
-Alignement intentionnel avec les exigences d'un environnement réglementé
-(BCEAO / SFD) :
-- **Split temporel** et exclusion des variables post-décision (anti-leakage
-  formel, test en CI).
-- **Équité** analysée par groupe (genre, secteur, zone) avec IC95 ; petits
-  groupes marqués « estimation instable » plutôt que cachés.
-- **Traçabilité** : registre de modèles + journal de bord des décisions
-  (`journal_bord.json`).
-- **Supervision humaine** : le système n'automatise que ce qui est
-  statistiquement et économiquement justifié (revue optimale ≈ 590/2000).
+**Fairness** : segmented metrics per group (gender, sector, geography) with 95% confidence intervals
 
-## Roadmap
+**Audit**: Multi-seed validation, robustness testing, drift simulation, generalization measurement
 
-- [x] **Industrialisation** : pipeline DVC rejouable (`make`/`dvc repro`),
-  CI/CD GitHub Actions (ruff, mypy, pytest, anti-leakage), API FastAPI
-  conteneurisable, CLI de prédiction, SHAP local/global, pre-commit.
-- [ ] **Phase réelle CIF** : recevoir un échantillon anonymisé → exécuter
-  `CIF_DATA_AUDIT_V1.1` → GO/NO-GO.
-- [ ] **Extension produit** : early-warning, portfolio intelligence,
-  interopérabilité (TELQAN Connect), monitoring (drift/performance),
-  Model Card & Data Card, dashboard de suivi.
+## Experimental Results
+
+Results on synthetic data (seed-controlled, 11.8% default rate target):
+
+| Metric | Official Model | DVC Pipeline |
+|--------|-----------------|--------------|
+| ROC-AUC | ~0.83 | ~0.87 |
+| PR-AUC | ~0.47 | ~0.49 |
+| Brier (post-calibration) | ~0.084 | ~0.075 |
+| ROC-AUC 95% CI (bootstrap) | — | [0.86, 0.88] |
+| Thin-file / Rich history generalization | validated | 0.82 → 0.85 |
+
+**Important**: These are experimental results on synthetic, calibrated data. They do not represent real CIF performance and should never be presented as benchmarks.
+
+## Development
+
+Install development environment:
+
+```bash
+uv sync --extra dev --extra test
+```
+
+Run validation suite:
+
+```bash
+uv run pytest tests/ -q                # test suite (14 cases, anti-leakage guard, states)
+uv run dvc repro                       # full DVC pipeline
+uv run ruff check .                    # linting
+uv run mypy .                          # type checking
+```
+
+## Governance & Compliance
+
+- **BCEAO/SFD Alignment** : methodology designed for regulated environment
+- **Temporal Validation** : split by application date, no information leakage
+- **Human-in-the-Loop** : decision engine only automates what is statistically justified
+- **Decision Logging** : audit trail and journal for all lending decisions
+- **Model Registry** : version control, promotion, rollback capability
+
+## Deployment
+
+**Current**: API in development mode with DVC pipeline execution
+
+**Roadmap**:
+- Real CIF data ingestion (shadow mode)
+- Production FastAPI deployment
+- Model monitoring (drift detection, performance tracking)
+- Extended features (portfolio intelligence, early warning)
 
 ---
 
-*Projet personnel — spécialisation IA & données appliquée à la finance.
-Phase synthétique clôturée : `READY FOR REAL-DATA AUDIT`.*
+**Status**: Methodology phase complete and frozen. Ready for real-data audit on CIF anonymized data.
