@@ -48,7 +48,7 @@ export function Sidebar() {
         </div>
         <div className="flex flex-col">
           <span className="text-body font-semibold text-white">{t("common:app.name")}</span>
-          <span className="text-label text-primary-400">CIF Intelligence</span>
+          <span className="text-label text-primary-400">Avalix</span>
         </div>
       </div>
 

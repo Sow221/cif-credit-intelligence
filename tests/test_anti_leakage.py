@@ -15,8 +15,8 @@ from pathlib import Path
 import pandas as pd
 import pytest
 
-from cifci.config import PROJECT_ROOT, get_config
-from cifci.features.validate import (
+from avalix.config import PROJECT_ROOT, get_config
+from avalix.features.validate import (
     LeakageError,
     assert_no_leakage,
     forbidden_features,
@@ -74,7 +74,7 @@ def test_processed_features_are_contamination_free(csv_path: Path) -> None:
 
     ⚠️ Si ce test échoue, il signale un leak résiduel NON purgé dans
     ``data/processed/``. C'est un blocage volontaire : toute feature issue
-    de ce fichier serait disqualifiante pour un audit CIF.
+    de ce fichier serait disqualifiante pour un audit.
     """
     df = pd.read_csv(csv_path)
     assert forbidden_features(df) == [], (

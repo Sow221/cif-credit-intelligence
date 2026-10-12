@@ -1,6 +1,6 @@
-"""Évaluation du modèle (métriques, bootstrap, segments CIF)."""
+"""Évaluation du modèle (métriques, bootstrap, segments)."""
 
-from cifci.evaluate.metrics import (
+from avalix.evaluate.metrics import (
     bootstrap_ci,
     global_metrics,
     segment_metrics,

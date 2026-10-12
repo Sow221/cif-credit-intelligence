@@ -1,11 +1,11 @@
-"""API de scoring CIF (FastAPI).
+"""API de scoring (FastAPI).
 
 Expose un service de prédiction micro-crédit : à partir des features d'un
 client, retourne la probabilité de défaut calibrée, la décision métier et
 une explication SHAP locale.
 
 Démarrage (dev) :
-    uv run uvicorn cifci.api.app:app --reload
+    uv run uvicorn avalix.api.app:app --reload
 """
 
 from __future__ import annotations
@@ -17,15 +17,15 @@ import pandas as pd
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
-from cifci.config import PROJECT_ROOT, get_config
+from avalix.config import PROJECT_ROOT, get_config
 
 app = FastAPI(
-    title="CIF Credit Intelligence API",
+    title="Avalix API",
     description="Scoring & décision micro-crédit (UEMOA)",
     version=get_config().project.get("version", "0.1.0"),
 )
 
-# Chemin du modèle par défaut ; surchargeable via env var CIFCI_MODEL_PATH.
+# Chemin du modèle par défaut ; surchargeable via env var AVALIX_MODEL_PATH.
 _DEFAULT_MODEL = (
     PROJECT_ROOT / "models" / "trained" / "reproduced_model.joblib"
 )
@@ -85,7 +85,7 @@ def predict_proba_row(artifact: dict, values: dict) -> float:
 @app.post("/score", response_model=dict)
 def score(req: DynamicScoreRequest) -> dict:  # type: ignore[valid-type]
     """Retourne probabilité, décision et décision brute d'un client."""
-    from cifci.decision.engine import decide
+    from avalix.decision.engine import decide
 
     artifact = get_artifact()
     values = req.model_dump()  # type: ignore[attr-defined]
@@ -97,7 +97,7 @@ def score(req: DynamicScoreRequest) -> dict:  # type: ignore[valid-type]
 @app.post("/explain", response_model=dict)
 def explain(req: DynamicScoreRequest) -> dict:  # type: ignore[valid-type]
     """Retourne l'explication SHAP locale d'un client (top features)."""
-    from cifci.explain.shap_explainer import explain_one
+    from avalix.explain.shap_explainer import explain_one
 
     artifact = get_artifact()
     values = req.model_dump()  # type: ignore[attr-defined]

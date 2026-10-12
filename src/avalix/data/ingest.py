@@ -1,10 +1,10 @@
-"""Ingestion des données brutes CIF.
+"""Ingestion des données brutes.
 
 Charge les tables ``customers`` et ``loans`` depuis ``data/raw``, et
 fournit un générateur synthétique seedé (LFSR + normal distorsions) pour
 permettre une reproduction déterministe de la phase synthétique.
 
-Le split est TOUJOURS temporel (protocole CIF) ; jamais aléatoire.
+Le split est TOUJOURS temporel (protocole de validation) ; jamais aléatoire.
 """
 
 from __future__ import annotations
@@ -14,7 +14,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from cifci.config import PROJECT_ROOT, get_config
+from avalix.config import PROJECT_ROOT, get_config
 
 
 def _resolve(rel: str, base_dir: str | None = None) -> Path:
@@ -34,7 +34,7 @@ def load_customers(
     if not path.exists():
         raise FileNotFoundError(
             f"Fichier clients introuvable : {path}. "
-            "Placez les données CIF dans data/raw/."
+            "Placez les données dans data/raw/."
         )
     return pd.read_csv(path)
 

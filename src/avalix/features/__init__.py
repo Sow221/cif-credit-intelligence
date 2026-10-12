@@ -1,11 +1,11 @@
 """Feature engineering: construction des 25 features officielles."""
 
-from cifci.features.build import (
+from avalix.features.build import (
     aggregate_loans,
     build_features,
     prepare_feature_matrix,
 )
-from cifci.features.validate import (
+from avalix.features.validate import (
     LeakageError,
     assert_no_leakage,
     forbidden_features,

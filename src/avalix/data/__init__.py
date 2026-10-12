@@ -1,6 +1,6 @@
 """Ingestion des données: chargement, génération synthétique seedée."""
 
-from cifci.data.ingest import (
+from avalix.data.ingest import (
     generate_synthetic,
     load_customers,
     load_loans,

@@ -1,6 +1,6 @@
 """Explicabilité du modèle (SHAP, local et global)."""
 
-from cifci.explain.shap_explainer import (
+from avalix.explain.shap_explainer import (
     explain_local,
     explain_one,
     global_importance,

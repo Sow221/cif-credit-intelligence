@@ -1,6 +1,6 @@
 """Moteur de décision métier (approbation / revue / ajustement / refus)."""
 
-from cifci.decision.engine import (
+from avalix.decision.engine import (
     DECISIONS,
     decide,
     decision_distribution,

@@ -1,6 +1,6 @@
 """Entraînement et reproduction du modèle de scoring."""
 
-from cifci.models.train import (
+from avalix.models.train import (
     calibrate,
     evaluate_model,
     main,

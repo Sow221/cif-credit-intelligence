@@ -11,7 +11,7 @@ from pathlib import Path
 import yaml
 from pydantic import BaseModel, Field, ValidationError
 
-# Racine du dépôt (trois niveaux au-dessus de ce fichier : src/cifci/config.py)
+# Racine du dépôt (trois niveaux au-dessus de ce fichier : src/avalix/config.py)
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_PARAMS_PATH = PROJECT_ROOT / "configs" / "params.yaml"
 

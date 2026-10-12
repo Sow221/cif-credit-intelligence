@@ -6,12 +6,12 @@ import argparse
 import json
 import sys
 
-from cifci.api.app import load_artifact
+from avalix.api.app import load_artifact
 
 
 def predict_cli(argv: list[str] | None = None) -> int:
     """Lit les features d'un client depuis stdin (JSON) et affiche le score."""
-    parser = argparse.ArgumentParser(prog="cifci-predict")
+    parser = argparse.ArgumentParser(prog="avalix-predict")
     parser.add_argument("--model", type=str, help="Chemin vers l'artefact joblib")
     parser.add_argument("--json", type=str, default="-", help="JSON des features (ou '-' pour stdin)")
     args = parser.parse_args(argv)
@@ -24,8 +24,8 @@ def predict_cli(argv: list[str] | None = None) -> int:
         return 2
 
     artifact = load_artifact(args.model if args.model else None)
-    from cifci.api.app import predict_proba_row
-    from cifci.decision.engine import decide
+    from avalix.api.app import predict_proba_row
+    from avalix.decision.engine import decide
 
     p = predict_proba_row(artifact, values)
     decision = decide([p])["decision"].tolist()[0]

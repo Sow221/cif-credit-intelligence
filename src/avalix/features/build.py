@@ -1,4 +1,4 @@
-"""Construction des 25 features officielles du modèle CIF.
+"""Construction des 25 features officielles du modèle.
 
 Reconstruit le pipeline de feature engineering qui transforme les tables
 brutes ``customers`` + ``loans`` en la matrice de 25 features utilisée par
@@ -16,8 +16,8 @@ import warnings
 import numpy as np
 import pandas as pd
 
-from cifci.config import get_config
-from cifci.features.validate import LeakageError, assert_no_leakage, forbidden_features
+from avalix.config import get_config
+from avalix.features.validate import LeakageError, assert_no_leakage, forbidden_features
 
 # Colonnes de la table customers que l'on conserve (id + cible gérés à part)
 _CUSTOMER_FEATURE_COLS = [

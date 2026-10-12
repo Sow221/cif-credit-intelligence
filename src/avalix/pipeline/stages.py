@@ -10,12 +10,12 @@ import argparse
 import json
 import sys
 
-from cifci.config import get_config
+from avalix.config import get_config
 
 
 def _prepare_features(argv: list[str] | None = None) -> int:
     """Étape 1 : génère le CSV de features préparées (anti-leakage inclus)."""
-    parser = argparse.ArgumentParser(prog="cifci-prepare-features")
+    parser = argparse.ArgumentParser(prog="avalix-prepare-features")
     parser.add_argument("--customers", required=True)
     parser.add_argument("--loans", required=True)
     parser.add_argument("--out", required=True)
@@ -23,7 +23,7 @@ def _prepare_features(argv: list[str] | None = None) -> int:
 
     import pandas as pd
 
-    from cifci.features.build import build_features
+    from avalix.features.build import build_features
 
     customers = pd.read_csv(args.customers)
     loans = pd.read_csv(args.loans)
@@ -36,7 +36,7 @@ def _prepare_features(argv: list[str] | None = None) -> int:
 
 def _train(argv: list[str] | None = None) -> int:
     """Étape 2 : entraîne le modèle calibré depuis le CSV de features."""
-    parser = argparse.ArgumentParser(prog="cifci-apply-train")
+    parser = argparse.ArgumentParser(prog="avalix-apply-train")
     parser.add_argument("--features", required=True)
     parser.add_argument("--out", required=True)
     args = parser.parse_args(argv)
@@ -44,8 +44,8 @@ def _train(argv: list[str] | None = None) -> int:
     import joblib
     import pandas as pd
 
-    from cifci.features.validate import assert_no_leakage
-    from cifci.models.train import calibrate, evaluate_model, train_model
+    from avalix.features.validate import assert_no_leakage
+    from avalix.models.train import calibrate, evaluate_model, train_model
 
     cfg = get_config()
     df = pd.read_csv(args.features)
@@ -82,8 +82,8 @@ def _train(argv: list[str] | None = None) -> int:
 
 
 def _evaluate(argv: list[str] | None = None) -> int:
-    """Étape 3 : évalue le modèle sur les segments CIF et écrit metrics.json."""
-    parser = argparse.ArgumentParser(prog="cifci-evaluate")
+    """Étape 3 : évalue le modèle sur les segments et écrit metrics.json."""
+    parser = argparse.ArgumentParser(prog="avalix-evaluate")
     parser.add_argument("--features", required=True)
     parser.add_argument("--model", required=True)
     parser.add_argument("--out", required=True)
@@ -92,7 +92,7 @@ def _evaluate(argv: list[str] | None = None) -> int:
     import joblib
     import pandas as pd
 
-    from cifci.evaluate.metrics import bootstrap_ci, global_metrics, segment_metrics
+    from avalix.evaluate.metrics import bootstrap_ci, global_metrics, segment_metrics
 
     cfg = get_config()
     artifact = joblib.load(args.model)

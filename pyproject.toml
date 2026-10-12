@@ -3,13 +3,13 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "cif-credit-intelligence"
+name = "avalix"
 version = "0.1.0"
-description = "CIF Credit Intelligence — Infrastructure de décision et de suivi du risque crédit pour les institutions financières africaines (scoring + validation méthodologique + production-ready)."
+description = "Avalix — Infrastructure de décision et de suivi du risque crédit pour les institutions financières africaines (scoring + validation méthodologique + production-ready)."
 readme = "README.md"
 requires-python = ">=3.11,<3.12"
 license = { text = "Proprietary — usage interne et de démonstration. Ne pas redistribuer sans autorisation." }
-authors = [{ name = "CIF Credit Intelligence Team" }]
+authors = [{ name = "Moussa Sow" }]
 keywords = ["credit-scoring", "machine-learning", "microfinance", "financial-inclusion", "west-africa", "decision-engine"]
 classifiers = [
     "Programming Language :: Python :: 3.11",
@@ -54,14 +54,14 @@ dev = [
 test = ["pytest>=8.0", "pytest-cov>=4.1", "httpx>=0.27"]
 
 [project.scripts]
-cifci-train = "cifci.models.train:main"
-cifci-predict = "cifci.api.cli:predict_cli"
-cifci-prepare = "cifci.pipeline.stages:prepare_main"
-cifci-run-train = "cifci.pipeline.stages:train_main"
-cifci-evaluate = "cifci.pipeline.stages:evaluate_main"
+avalix-train = "avalix.models.train:main"
+avalix-predict = "avalix.api.cli:predict_cli"
+avalix-prepare = "avalix.pipeline.stages:prepare_main"
+avalix-run-train = "avalix.pipeline.stages:train_main"
+avalix-evaluate = "avalix.pipeline.stages:evaluate_main"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/cifci"]
+packages = ["src/avalix"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -80,12 +80,12 @@ ignore = ["E501"]
 [tool.ruff.lint.per-file-ignores]
 # Conventions ML idiomatiques : X/y/X_train/X_val sont explicites et lisibles
 # pour les matrices de features ; on ne les renomme pas en minuscules.
-"src/cifci/models/*.py" = ["N803", "N806", "B008"]
-"src/cifci/evaluate/*.py" = ["N803", "N806"]
-"src/cifci/explain/*.py" = ["N803", "N806"]
-"src/cifci/features/build.py" = ["N806"]
-"src/cifci/pipeline/*.py" = ["N806"]
-"src/cifci/decision/*.py" = ["N803"]
+"src/avalix/models/*.py" = ["N803", "N806", "B008"]
+"src/avalix/evaluate/*.py" = ["N803", "N806"]
+"src/avalix/explain/*.py" = ["N803", "N806"]
+"src/avalix/features/build.py" = ["N806"]
+"src/avalix/pipeline/*.py" = ["N806"]
+"src/avalix/decision/*.py" = ["N803"]
 "tests/test_features_build.py" = ["N806"]
 "tests/test_api.py" = ["N806"]
 "tests/test_models_decision.py" = ["N806"]

@@ -31,7 +31,7 @@ export interface RequestOptions {
   idempotencyKey?: string;
 }
 
-const TOKEN_KEY = "cif_access_token";
+const TOKEN_KEY = "avalix_access_token";
 
 export function getToken(): string | null {
   return localStorage.getItem(TOKEN_KEY);

@@ -1,17 +1,17 @@
 # =============================================================
-# CIF CREDIT INTELLIGENCE — Paramètres du projet (source de vérité)
+# AVALIX — Paramètres du projet (source de vérité)
 # Centralisation de tous les hyperparamètres et settings.
 # Toute exécution lit ces valeurs : pas de constantes dispersées.
 # =============================================================
 
 project:
-  name: CIF Credit Intelligence
+  name: Avalix
   version: 0.1.0
   status: SYNTHETIC_PHASE_CLOSED   # phases: SYNTHETIC → REAL_DATA_AUDIT → PILOT
   description: >
     Scoring de crédit & infrastructure de décision pour les SFD
     (institutions de microfinance) de l'UEMOA. Phase synthétique validée
-    méthodologiquement. En attente des données CIF réelles.
+    méthodologiquement. En attente des données réelles.
 
 data:
   raw_dir: data/raw
@@ -20,7 +20,7 @@ data:
   random_seed: 42
   # Taux de défaut cible calibré pour la phase synthétique
   target_default_rate: 0.1183
-  # Split CORRIGE : toujours temporel, jamais aléatoire (protocole CIF)
+  # Split CORRIGE : toujours temporel, jamais aléatoire (protocole de validation)
   split: temporal
 
 features:
@@ -81,7 +81,7 @@ calibration:
     brier: 0.0842
 
 evaluation:
-  # Métriques verrouillées AVANT les données réelles (protocole CIF)
+  # Métriques verrouillées AVANT les données réelles (protocole de validation)
   metrics:
     - roc_auc
     - pr_auc
@@ -94,7 +94,7 @@ evaluation:
   confidence_level: 0.95
   # Validation temporelle multi-fenêtres
   time_windows: 5
-  # Segments obligatoires d'évaluation (protocole CIF)
+  # Segments obligatoires d'évaluation (protocole de validation)
   segments:
     - thin_file_0_loan
     - thin_file_1_loan
@@ -106,7 +106,7 @@ evaluation:
 
 decision_engine:
   # Seuils PROVISOIRES (valables uniquement en phase synthétique).
-  # À RECALCULER avec les coûts/target réels de la CIF (protocole, frontière).
+  # À RECALCULER avec les coûts réels de l'institution (protocole, frontière).
   thresholds:
     auto_approve: 0.05      # probabilité de défaut sous laquelle → APPROBATION
     human_review: 0.20      # entre approve et review → REVUE_HUMAINE

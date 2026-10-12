@@ -1,4 +1,4 @@
-"""Évaluation du modèle selon le protocole CIF.
+"""Évaluation du modèle selon le protocole de validation.
 
 Inclut : métriques globales (ROC-AUC, PR-AUC, Brier, log-loss, MCC),
 intervalles de confiance par bootstrap, et évaluation par segments
@@ -85,7 +85,7 @@ def segment_metrics(
     target_col: str = "is_default",
     order_col: str | None = None,
 ) -> pd.DataFrame:
-    """Évalue les métriques par segment d'historique (protocole CIF).
+    """Évalue les métriques par segment d'historique (protocole de validation).
 
     Les segments (thin-file 0 prêt / 1 prêt / 2-3 / 4+) sont inférés depuis
     une colonne de comptage d'historique si fournie, sinon estimés.

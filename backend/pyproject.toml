@@ -1,7 +1,7 @@
 [project]
-name = "cif-credit-intelligence-backend"
+name = "avalix-backend"
 version = "0.1.0"
-description = "CIF Credit Intelligence Backend API"
+description = "Avalix Backend API"
 requires-python = ">=3.11"
 dependencies = [
     "fastapi>=0.100.0",

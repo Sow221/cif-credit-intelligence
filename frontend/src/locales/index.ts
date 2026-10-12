@@ -58,7 +58,7 @@ export const resources = {
 
 function resolveInitialLanguage(): string {
   if (typeof localStorage !== "undefined") {
-    const stored = localStorage.getItem("cif_lang");
+    const stored = localStorage.getItem("avalix_lang");
     if (stored === "fr" || stored === "en") return stored;
   }
   if (typeof navigator !== "undefined" && navigator.language?.toLowerCase().startsWith("en")) {

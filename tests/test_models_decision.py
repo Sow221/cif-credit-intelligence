@@ -8,19 +8,19 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from cifci.decision.engine import (
+from avalix.decision.engine import (
     DECISIONS,
     decide,
     decision_distribution,
     decision_for_probability,
 )
-from cifci.evaluate.metrics import bootstrap_ci, global_metrics, segment_metrics
-from cifci.models.train import temporal_split, train_pipeline
+from avalix.evaluate.metrics import bootstrap_ci, global_metrics, segment_metrics
+from avalix.models.train import temporal_split, train_pipeline
 
 
 @pytest.fixture(scope="module")
 def data():
-    from cifci.data.ingest import load_customers, load_loans
+    from avalix.data.ingest import load_customers, load_loans
 
     return load_customers(), load_loans()
 
@@ -79,7 +79,7 @@ def test_segment_metrics_produces_segments(data):
         warnings.simplefilter("ignore")
         cust, loans = data
         art = train_pipeline(cust, loans)
-    X, y = __import__("cifci.features.build", fromlist=["prepare_feature_matrix"]).prepare_feature_matrix(cust, loans)
+    X, y = __import__("avalix.features.build", fromlist=["prepare_feature_matrix"]).prepare_feature_matrix(cust, loans)
     prob = art["calibrator"].predict(art["model"].predict_proba(X)[:, 1])
     df = pd.DataFrame({"prob": prob, "is_default": y, "history_len": X["n_loans"]})
     res = segment_metrics(df)

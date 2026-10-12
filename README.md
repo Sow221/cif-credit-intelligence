@@ -1,6 +1,6 @@
-# CIF Credit Platform
+# Avalix
 
-> **Projet personnel et indépendant.** Développé à titre individuel ; sans lien avec la Confédération des Institutions Financières d'Afrique de l'Ouest (CIF) ni avec son hackathon DigiCoop-WA+. Toutes les données utilisées sont synthétiques. Le nom du projet va changer.
+> **Projet personnel et indépendant**, développé par [Moussa Sow](https://github.com/Sow221). Sans lien avec aucune institution financière. Toutes les données utilisées à ce stade sont **synthétiques**.
 
 Decision-support application for credit-risk decisions. Transforms risk scores into explainable and auditable lending decisions with governance, monitoring, and human-in-the-loop review.
 
@@ -34,7 +34,7 @@ uv run pytest tests/ -q
 uv run dvc repro
 
 # Start API locally
-uv run uvicorn cifci.api.app:app --reload
+uv run uvicorn avalix.api.app:app --reload
 # API available at http://127.0.0.1:8000/docs
 ```
 
@@ -73,7 +73,7 @@ docker compose up -d
 ## Repository Structure
 
 ```
-src/cifci/
+src/avalix/
 ├── data/               # Data ingestion and synthetic generation
 ├── features/           # Feature engineering + anti-leakage guards
 ├── models/             # Training, calibration, registry
@@ -117,7 +117,7 @@ Results on synthetic data (seed-controlled, 11.8% default rate target):
 | ROC-AUC 95% CI (bootstrap) | — | [0.86, 0.88] |
 | Thin-file / Rich history generalization | validated | 0.82 → 0.85 |
 
-**Important**: These are experimental results on synthetic, calibrated data. They do not represent real CIF performance and should never be presented as benchmarks.
+**Important**: These are experimental results on synthetic, calibrated data. They do not represent real-world performance and should never be presented as benchmarks.
 
 ## Development
 
@@ -149,11 +149,11 @@ uv run mypy .                          # type checking
 **Current**: API in development mode with DVC pipeline execution
 
 **Roadmap**:
-- Real CIF data ingestion (shadow mode)
+- Real anonymized data ingestion (shadow mode)
 - Production FastAPI deployment
 - Model monitoring (drift detection, performance tracking)
 - Extended features (portfolio intelligence, early warning)
 
 ---
 
-**Status**: Methodology phase complete and frozen. Ready for real-data audit on CIF anonymized data.
+**Status**: Methodology phase complete and frozen. Ready for a real-data audit on anonymized microfinance data.

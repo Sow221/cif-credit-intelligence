@@ -1,5 +1,5 @@
 # =============================================================
-# Pre-commit — CIF Credit Intelligence
+# Pre-commit — Avalix
 # Gates locaux : formattage, lint, typecheck, tests avant chaque
 # commit. Installation :  uv run pre-commit install
 # =============================================================
@@ -18,7 +18,7 @@ repos:
     hooks:
       - id: mypy
         additional_dependencies: ["pydantic>=2.5", "pandas>=2.1", "numpy>=1.26"]
-        args: [src/cifci]
+        args: [src/avalix]
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.6.0

@@ -7,11 +7,11 @@ from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
-    PROJECT_NAME: str = "CIF Credit Intelligence"
+    PROJECT_NAME: str = "Avalix"
     API_V1_PREFIX: str = "/api/v1"
     DATABASE_URL: str = os.getenv(
         "DATABASE_URL",
-        "postgresql+psycopg://cif:cif@localhost:5432/cif",
+        "postgresql+psycopg://avalix:avalix@localhost:5432/avalix",
     )
     JWT_SECRET_KEY: str = os.getenv("JWT_SECRET_KEY", "change-me-in-production")
     JWT_ALGORITHM: str = "HS256"

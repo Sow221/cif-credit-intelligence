@@ -16,7 +16,7 @@ réinjectés dans un entraînement sans validation préalable.
   cible `is_default` par construction). Son inclusion dans un entraînement
   constituerait un **leakage catégorique**.
 - **Risque réel** : ce fichier est la source supposée de `best_model_140415`
-  (AUC 0.56). Son utilisation est disqualifiante pour un audit CIF.
+  (AUC 0.56). Son utilisation est disqualifiante pour un audit.
 - **Preuve objective** : le garde anti-leakage (`tests/test_anti_leakage.py`,
   `test_processed_features_are_contamination_free`) détecte `p_default_true`
   dans ce fichier et **bloque** son usage. C'est pourquoi il a été archivé ici.

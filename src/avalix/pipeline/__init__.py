@@ -1,5 +1,5 @@
 """Étapes du pipeline DVC (préparation → entraînement → évaluation)."""
 
-from cifci.pipeline.stages import main
+from avalix.pipeline.stages import main
 
 __all__ = ["main"]

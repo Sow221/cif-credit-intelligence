@@ -8,9 +8,9 @@ vi.mock("@/services/api", () => {
   const get = vi.fn();
   return {
     api: { get, post },
-    getToken: vi.fn(() => localStorage.getItem("cif_access_token")),
-    setToken: vi.fn((token: string) => localStorage.setItem("cif_access_token", token)),
-    clearToken: vi.fn(() => localStorage.removeItem("cif_access_token")),
+    getToken: vi.fn(() => localStorage.getItem("avalix_access_token")),
+    setToken: vi.fn((token: string) => localStorage.setItem("avalix_access_token", token)),
+    clearToken: vi.fn(() => localStorage.removeItem("avalix_access_token")),
   };
 });
 
@@ -40,12 +40,12 @@ describe("session storage", () => {
   });
 
   it("returns null on corrupted JSON", () => {
-    localStorage.setItem("cif_session", "{not json");
+    localStorage.setItem("avalix_session", "{not json");
     expect(loadStoredSession()).toBeNull();
   });
 
   it("clears the stored session", () => {
-    localStorage.setItem("cif_session", JSON.stringify({ user }));
+    localStorage.setItem("avalix_session", JSON.stringify({ user }));
     clearStoredSession();
     expect(loadStoredSession()).toBeNull();
   });
@@ -68,7 +68,7 @@ describe("login / fetchCurrentUser", () => {
       password: "pw",
     });
     expect(mockedApi.get).toHaveBeenCalledWith("/auth/me");
-    expect(localStorage.getItem("cif_access_token")).toBe("token-1");
+    expect(localStorage.getItem("avalix_access_token")).toBe("token-1");
   });
 
   it("fetchCurrentUser stores the session", async () => {
@@ -89,7 +89,7 @@ describe("logout", () => {
   it("clears credentials and store state", async () => {
     await login({ username: "awa", password: "pw" });
     logout();
-    expect(localStorage.getItem("cif_access_token")).toBeNull();
+    expect(localStorage.getItem("avalix_access_token")).toBeNull();
     expect(loadStoredSession()).toBeNull();
     expect(useAuthStore.getState().user).toBeNull();
     expect(useAuthStore.getState().status).toBe("unauthenticated");

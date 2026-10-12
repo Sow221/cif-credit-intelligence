@@ -354,7 +354,7 @@ wheels = [
 ]
 
 [[package]]
-name = "cif-credit-intelligence"
+name = "avalix"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [

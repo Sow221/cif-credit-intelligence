@@ -1,4 +1,4 @@
-"""Moteur de décision CIF : probabilité calibrée → décision métier.
+"""Moteur de décision : probabilité calibrée → décision métier.
 
 Convertit la probabilité de défaut calibrée d'un client en une décision
 parmi APPROBATION / REVUE_HUMAINE / AJUSTEMENT / REFUS, selon les seuils
@@ -10,7 +10,7 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 
-from cifci.config import get_config
+from avalix.config import get_config
 
 # Décisions possibles (ordre croissant de risque).
 DECISIONS = ["APPROBATION", "REVUE_HUMAINE", "AJUSTEMENT", "REFUS"]

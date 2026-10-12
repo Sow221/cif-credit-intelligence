@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import pandas as pd
 
-from cifci.data.ingest import generate_synthetic, load_customers, load_loans
-from cifci.features.validate import forbidden_features
+from avalix.data.ingest import generate_synthetic, load_customers, load_loans
+from avalix.features.validate import forbidden_features
 
 
 def test_load_customers_real_file() -> None:

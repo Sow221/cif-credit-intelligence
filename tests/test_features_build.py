@@ -9,10 +9,10 @@ from __future__ import annotations
 import pandas as pd
 import pytest
 
-from cifci.config import get_config
-from cifci.data.ingest import load_customers, load_loans
-from cifci.features.build import build_features, prepare_feature_matrix
-from cifci.features.validate import LeakageError
+from avalix.config import get_config
+from avalix.data.ingest import load_customers, load_loans
+from avalix.features.build import build_features, prepare_feature_matrix
+from avalix.features.validate import LeakageError
 
 
 @pytest.fixture(scope="module")

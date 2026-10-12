@@ -1,5 +1,5 @@
 # =============================================================
-# CIF Credit Intelligence — Pipeline DVC reproductible
+# Avalix — Pipeline DVC reproductible
 #
 # Étapes : préparation des features → entraînement → évaluation.
 # Paramètres entrepris dans configs/params.yaml (source de vérité)
@@ -11,14 +11,14 @@
 stages:
   prepare:
     cmd: >-
-      uv run cifci-prepare
+      uv run avalix-prepare
       --customers data/raw/customers_final_20260817_145043.csv
       --loans data/raw/loans_final_20260817_145043.csv
       --out data/processed/features_prepared_pipeline.csv
     deps:
       - data/raw/customers_final_20260817_145043.csv
       - data/raw/loans_final_20260817_145043.csv
-      - src/cifci/features/build.py
+      - src/avalix/features/build.py
     params:
       - configs/params.yaml:
           - data.random_seed
@@ -29,13 +29,13 @@ stages:
 
   train:
     cmd: >-
-      uv run cifci-run-train
+      uv run avalix-run-train
       --features data/processed/features_prepared_pipeline.csv
       --out models/trained/pipeline_model.joblib
     deps:
       - data/processed/features_prepared_pipeline.csv
-      - src/cifci/features/validate.py
-      - src/cifci/models/train.py
+      - src/avalix/features/validate.py
+      - src/avalix/models/train.py
     params:
       - configs/params.yaml:
           - model.algorithm
@@ -54,14 +54,14 @@ stages:
 
   evaluate:
     cmd: >-
-      uv run cifci-evaluate
+      uv run avalix-evaluate
       --features data/processed/features_prepared_pipeline.csv
       --model models/trained/pipeline_model.joblib
       --out reports/metrics/pipeline_evaluation.json
     deps:
       - data/processed/features_prepared_pipeline.csv
       - models/trained/pipeline_model.joblib
-      - src/cifci/evaluate/metrics.py
+      - src/avalix/evaluate/metrics.py
     params:
       - configs/params.yaml:
           - evaluation.bootstrap_splits

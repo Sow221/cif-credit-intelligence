@@ -7,7 +7,7 @@ import warnings
 import pytest
 from fastapi.testclient import TestClient
 
-from cifci.api.app import DynamicScoreRequest, _feature_names, app
+from avalix.api.app import DynamicScoreRequest, _feature_names, app
 
 
 @pytest.fixture(scope="module")
@@ -19,8 +19,8 @@ def client() -> TestClient:
 
 @pytest.fixture(scope="module")
 def payload() -> dict:
-    from cifci.data.ingest import load_customers, load_loans
-    from cifci.features.build import prepare_feature_matrix
+    from avalix.data.ingest import load_customers, load_loans
+    from avalix.features.build import prepare_feature_matrix
 
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")

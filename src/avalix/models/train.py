@@ -1,6 +1,6 @@
 """Splits temporels et entraînement du modèle de scoring.
 
-Implémente le contrat de validation CIF : split TOUJOURS temporel (jamais
+Implémente le contrat de validation : split TOUJOURS temporel (jamais
 aléatoire), XGBoost, calibration isotonique, et enregistrement d'un artefact
 de modèle au même format que ``MODEL_OFFICIAL_CALIBRATED.joblib``.
 """
@@ -21,7 +21,7 @@ from sklearn.metrics import (
 )
 from xgboost import XGBClassifier
 
-from cifci.config import PROJECT_ROOT, get_config
+from avalix.config import PROJECT_ROOT, get_config
 
 
 def temporal_split(
@@ -30,12 +30,12 @@ def temporal_split(
     order_col: str = "customer_id",
     split_date: float = 0.8,
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
-    """Split temporel (protocole CIF) : l'ordre des lignes est l'ordre du temps.
+    """Split temporel (protocole de validation) : l'ordre des lignes est l'ordre du temps.
 
     NB: le jeude données synthétique ne porte pas de vraie date. Le split
     temporel est représenté par l'ordre des ``customer_id`` (les premiers
     contrats sont les plus anciens). À substituer par une vraie colonne
-    ``application_date`` lorsque les données CIF réelles arriveront.
+    ``application_date`` lorsque les données réelles arriveront.
     """
     df = df.sort_values(order_col).reset_index(drop=True)
     cutoff = int(len(df) * split_date)
@@ -129,7 +129,7 @@ def train_pipeline(
         format compatible avec ``MODEL_OFFICIAL_CALIBRATED.joblib``.
     """
     cfg = get_config()
-    from cifci.features.build import prepare_feature_matrix
+    from avalix.features.build import prepare_feature_matrix
 
     X, y = prepare_feature_matrix(customers, loans)
     df = X.copy()
@@ -173,7 +173,7 @@ def _split_metrics(metrics: dict) -> tuple[dict, dict]:
 
 def main() -> None:
     """CLI: entraîne le modèle sur data/raw et sauvegarde l'artefact."""
-    from cifci.data.ingest import load_customers, load_loans
+    from avalix.data.ingest import load_customers, load_loans
 
     customers = load_customers()
     loans = load_loans()

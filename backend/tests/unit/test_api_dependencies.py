@@ -114,7 +114,7 @@ def test_openapi_docs():
     client = TestClient(app)
     resp = client.get("/api/v1/openapi.json")
     assert resp.status_code == 200
-    assert resp.json()["info"]["title"] == "CIF Credit Intelligence"
+    assert resp.json()["info"]["title"] == "Avalix"
 
 
 def test_get_current_user_requires_bearer(db, user):

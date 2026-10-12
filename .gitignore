@@ -1,5 +1,5 @@
 # =============================================================
-# CIF CREDIT INTELLIGENCE — .gitignore professionnel
+# AVALIX — .gitignore professionnel
 # Le code, la config, la documentation et les rapports sont
 # versionnés. Les données et artefacts volumineux sont gérés
 # par DVC (hors git). Aucun secret ne doit être commité.
@@ -47,7 +47,7 @@ data/*
 !data/raw/
 !data/processed/
 !data/external/
-!data/cif_real/
+!data/real/
 !data/test_adversarial/
 !data/archived/
 # à l'intérieur des dossiers data ré-inclus, ignore les artefacts lourds

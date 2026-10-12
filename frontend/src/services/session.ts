@@ -1,6 +1,6 @@
 import type { Session } from "./auth";
 
-const SESSION_KEY = "cif_session";
+const SESSION_KEY = "avalix_session";
 
 export function loadStoredSession(): Session | null {
   try {
