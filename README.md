@@ -1,5 +1,7 @@
 # CIF Credit Platform
 
+> **Projet personnel et indépendant.** Développé à titre individuel ; sans lien avec la Confédération des Institutions Financières d'Afrique de l'Ouest (CIF) ni avec son hackathon DigiCoop-WA+. Toutes les données utilisées sont synthétiques. Le nom du projet va changer.
+
 Decision-support application for credit-risk decisions. Transforms risk scores into explainable and auditable lending decisions with governance, monitoring, and human-in-the-loop review.
 
 ## Overview
