@@ -115,6 +115,14 @@ def test_decision_thin_file_boost():
     assert dec[1] == "APPROBATION"
 
 
+def test_decision_thin_file_never_automatic():
+    # Sans historique, ni approbation ni refus automatique, quel que soit le score.
+    out = decide([0.01, 0.25, 0.90], history_len=[0, 0, 0])
+    assert out["decision"].tolist() == ["REVUE_HUMAINE"] * 3
+    # Avec historique, un risque élevé reste refusé.
+    assert decide([0.90], history_len=[3])["decision"].tolist() == ["REFUS"]
+
+
 def test_decision_distribution():
     out = decide([0.01, 0.05, 0.15, 0.70])
     dist = decision_distribution(out)

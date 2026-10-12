@@ -59,9 +59,10 @@ def decide(
     thin_boost = bool(get_config().decision_engine.get("thin_file_boost_review", True))
     for i in range(n):
         d = decision_for_probability(p[i])
-        # Les thin-file (sans historique, connu = 0) sont orientés revue humaine.
-        # NB: si l'historique est inconnu (None), on n'applique pas ce boost.
-        if thin_boost and has_history and hist.iloc[i] == 0 and d == "APPROBATION":
+        # Sans historique (connu = 0), le score seul ne suffit pas : ni approbation
+        # ni refus automatique, le dossier part toujours en revue humaine.
+        # NB: si l'historique est inconnu (None), on n'applique pas cette règle.
+        if thin_boost and has_history and hist.iloc[i] == 0:
             d = "REVUE_HUMAINE"
         decisions.append(d)
 
