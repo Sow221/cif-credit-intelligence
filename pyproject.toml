@@ -60,6 +60,7 @@ avalix-prepare = "avalix.pipeline.stages:prepare_main"
 avalix-run-train = "avalix.pipeline.stages:train_main"
 avalix-evaluate = "avalix.pipeline.stages:evaluate_main"
 avalix-bootstrap = "avalix.data.bootstrap:main"
+avalix-report = "avalix.evaluate.report:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/avalix"]

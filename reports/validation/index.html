@@ -1,0 +1,59 @@
+<!doctype html><html lang=fr><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
+<title>Avalix · Rapport de validation</title>
+<style>
+@font-face{font-family:IS;src:url(../assets/fonts/InstrumentSans-Regular.ttf)}
+@font-face{font-family:IS;font-weight:600;src:url(../assets/fonts/InstrumentSans-SemiBold.ttf)}
+@font-face{font-family:GM;src:url(../assets/fonts/GeistMono-Regular.ttf)}
+body{margin:0;background:#0E0F11;color:#ECEAE4;font-family:IS,system-ui,sans-serif;line-height:1.55}
+main{max-width:1080px;margin:0 auto;padding:48px 20px 80px}
+h1{font-size:40px;font-weight:600;letter-spacing:-.02em;margin:.2em 0}
+h2{font-size:24px;font-weight:600;margin:56px 0 12px;padding-top:24px;border-top:1px solid #2A2D33}
+.k{font-family:GM;color:#6E727A;letter-spacing:.12em;font-size:13px;text-transform:uppercase}
+p,li{color:#A3A7AE} strong{color:#ECEAE4}
+table{border-collapse:collapse;width:100%;margin:12px 0;font-size:15px}
+td,th{border-bottom:1px solid #2A2D33;padding:9px 8px;text-align:left} th{color:#6E727A;font-weight:400;font-family:GM;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+td.n{font-family:GM;color:#ECEAE4} td.d{font-family:GM;color:#6E727A}
+figure{margin:24px 0} img{width:100%;border:1px solid #2A2D33;border-radius:8px} figcaption{font-family:GM;font-size:12px;color:#6E727A;margin-top:6px}
+.note{border:1px dashed #6E727A;border-radius:8px;padding:14px 18px;color:#A3A7AE}
+.dia{display:inline-block;width:10px;height:10px;background:#3D4BFF;transform:rotate(45deg);margin-right:10px}
+</style></head><body><main>
+<div class=k><span class=dia></span>Avalix · rapport de validation</div>
+<h1>Un moteur de décision qui sait quand il ne sait pas</h1>
+<p class=note><strong>Données synthétiques.</strong> Ce rapport démontre une méthode ; il ne mesure aucune performance réelle. Toutes les métriques sont calculées sur le <strong>bloc de test temporel</strong> (2000 demandes, 12,0 % de défauts), jamais vu pendant l'entraînement (6000) ni la calibration (2000).</p>
+
+<h2>1. Performance (analyse des résultats)</h2>
+<table><tr><th>Métrique</th><th>Avalix</th><th>IC 95 % (bootstrap)</th><th>Régression logistique</th></tr>
+<tr><td>ROC-AUC</td><td class=n>0,841</td><td class=d>[0,813 – 0,866]</td><td class=n>0,843</td></tr><tr><td>Gini</td><td class=n>0,683</td><td class=d>[0,627 – 0,733]</td><td class=n>0,686</td></tr><tr><td>KS</td><td class=n>0,534</td><td class=d>[0,487 – 0,591]</td><td class=n>0,563</td></tr><tr><td>PR-AUC</td><td class=n>0,454</td><td class=d>[0,392 – 0,523]</td><td class=n>0,448</td></tr><tr><td>Brier (plus bas = mieux)</td><td class=n>0,082</td><td class=d>[0,074 – 0,091]</td><td class=n>0,083</td></tr></table>
+<p><strong>Modèle challenger.</strong> La régression logistique fait jeu égal avec XGBoost : leurs intervalles de confiance se recouvrent largement. Sur ces données synthétiques, la complexité du modèle n'apporte pas de gain mesurable ; la valeur du système tient à la calibration, aux seuils et à la revue humaine, pas au choix de l'algorithme. Sur données réelles, le modèle le plus simple sera retenu tant qu'il ne fait pas significativement moins bien.</p>
+<figure><img src="figures/01_roc_pr.png" alt="ROC et précision/rappel, comparés à une régression logistique"><figcaption>ROC et précision/rappel, comparés à une régression logistique</figcaption></figure>
+
+<h2>2. Calibration et classement</h2>
+<p>Une probabilité de 10 % doit correspondre à environ 10 % de défauts observés. Le taux de défaut doit croître d'une tranche de score à l'autre (classement monotone).</p>
+<figure><img src="figures/02_calibration.png" alt="Fiabilité des probabilités avant et après calibration isotonique"><figcaption>Fiabilité des probabilités avant et après calibration isotonique</figcaption></figure>
+<figure><img src="figures/03_score_bands.png" alt="Taux de défaut par décile de risque"><figcaption>Taux de défaut par décile de risque</figcaption></figure>
+<figure><img src="figures/04_strategy.png" alt="Compromis acceptation / défaut aux seuils du moteur de décision"><figcaption>Compromis acceptation / défaut aux seuils du moteur de décision</figcaption></figure>
+
+<h2>3. Les clients sans historique</h2>
+<table><tr><th>Profil</th><th>Demandes</th><th>Défauts</th><th>Variables</th><th>ROC-AUC</th><th>IC 95 %</th></tr><tr><td>Sans historique</td><td class=n>330</td><td class=n>11</td><td class=n>14/25</td><td class=n>0,68</td><td class=d>[0,52 – 0,81]</td></tr><tr><td>1 prêt</td><td class=n>334</td><td class=n>46</td><td class=n>23/25</td><td class=n>0,86</td><td class=d>[0,80 – 0,91]</td></tr><tr><td>2 à 3 prêts</td><td class=n>695</td><td class=n>95</td><td class=n>23/25</td><td class=n>0,81</td><td class=d>[0,77 – 0,86]</td></tr><tr><td>4 prêts et +</td><td class=n>641</td><td class=n>89</td><td class=n>23/25</td><td class=n>0,86</td><td class=d>[0,83 – 0,90]</td></tr></table>
+<p>Décisions du moteur sur le bloc de test : <strong>REVUE_HUMAINE 924 · APPROBATION 817 · REFUS 252 · AJUSTEMENT 7</strong>. Pour les demandeurs sans historique : <strong>REVUE_HUMAINE 330</strong>. Faute d'information, ils sont orientés vers une revue humaine plutôt qu'approuvés ou refusés automatiquement.</p>
+<figure><img src="figures/05_segments.png" alt="ROC-AUC par profil d'historique, avec intervalle de confiance"><figcaption>ROC-AUC par profil d'historique, avec intervalle de confiance</figcaption></figure>
+
+<h2>4. Équité</h2>
+<figure><img src="figures/06_fairness.png" alt="ROC-AUC et taux d’approbation automatique par sexe, secteur et zone"><figcaption>ROC-AUC et taux d’approbation automatique par sexe, secteur et zone</figcaption></figure>
+
+<h2>5. Explicabilité</h2>
+<figure><img src="figures/07_shap_global.png" alt="Importance globale des variables (SHAP)"><figcaption>Importance globale des variables (SHAP)</figcaption></figure>
+<figure><img src="figures/08_shap_local.png" alt="Explication locale de deux décisions (codes de motif)"><figcaption>Explication locale de deux décisions (codes de motif)</figcaption></figure>
+
+<h2>6. Contrôles et stabilité</h2>
+<p>Test sans signal : en mélangeant la cible, le modèle tombe en moyenne à <strong>0,52</strong> sur 20 tirages (intervalle 0,38–0,63, hasard = 0,50) : il n'apprend pas d'artefact. PSI du score entre entraînement et test : <strong>0,007</strong> (alerte au-delà de 0,25).</p>
+<figure><img src="figures/09_controls.png" alt="Test sans signal et backtest par période"><figcaption>Test sans signal et backtest par période</figcaption></figure>
+<figure><img src="figures/10_psi.png" alt="Stabilité des variables (Population Stability Index)"><figcaption>Stabilité des variables (Population Stability Index)</figcaption></figure>
+
+<h2>Limites</h2>
+<ul><li>Données synthétiques ; le générateur repose en partie sur un facteur de risque latent (voir <code>data/raw/DATASET.md</code>).</li>
+<li><strong>Absence d'historique codée comme un historique propre.</strong> Sans prêt passé, les retards valent 0 : le modèle lit « aucun retard » là où il devrait lire « aucune information » (voir l'explication locale, section 5). Le générateur synthétique rend ces demandeurs peu risqués (environ 3 % de défauts), ce qui masque le problème ici. C'est pourquoi le moteur de décision ne laisse jamais le score seul trancher pour eux. Correctif prévu avant toute donnée réelle : valeurs manquantes explicites et indicateur « sans historique ».</li>
+<li>L'ordre des identifiants sert de substitut à la date de demande.</li>
+<li>Les seuils de décision et les coûts sont provisoires et devront être recalibrés sur données réelles.</li></ul>
+<p class=k>Régénérer : uv run avalix-report</p>
+</main></body></html>

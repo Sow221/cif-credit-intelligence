@@ -1,0 +1,362 @@
+{
+  "dataset": {
+    "n_total": 10000,
+    "n_train": 6000,
+    "n_calibration": 2000,
+    "n_test": 2000,
+    "default_rate_test": 0.1205
+  },
+  "model": {
+    "roc_auc": 0.8413718186729069,
+    "gini": 0.6827436373458138,
+    "ks": 0.5339722918765142,
+    "pr_auc": 0.45430173365354326,
+    "brier": 0.08193135027996896,
+    "ci95": {
+      "roc_auc": [
+        0.8133147152774621,
+        0.8663807623071764
+      ],
+      "gini": [
+        0.6266294305549241,
+        0.7327615246143528
+      ],
+      "ks": [
+        0.4873410453226288,
+        0.5910213131185819
+      ],
+      "pr_auc": [
+        0.3915122251048802,
+        0.5226976702695957
+      ],
+      "brier": [
+        0.07389459499846611,
+        0.09063845278267044
+      ]
+    }
+  },
+  "baseline_logreg": {
+    "roc_auc": 0.8432294848780073,
+    "gini": 0.6864589697560146,
+    "ks": 0.5629070647930383,
+    "pr_auc": 0.44821619598069395,
+    "brier": 0.08323629897059666,
+    "ci95": {
+      "roc_auc": [
+        0.8165531270302318,
+        0.8672902803621051
+      ],
+      "gini": [
+        0.6331062540604635,
+        0.7345805607242101
+      ],
+      "ks": [
+        0.5181138833124368,
+        0.6149691903450664
+      ],
+      "pr_auc": [
+        0.3871890848999417,
+        0.5189829856225958
+      ],
+      "brier": [
+        0.07548234891967319,
+        0.0918122946919606
+      ]
+    }
+  },
+  "score_bands": [
+    {
+      "band": 1,
+      "n": 200,
+      "pd_mean": 0.010777778923511505,
+      "default_rate": 0.015
+    },
+    {
+      "band": 2,
+      "n": 200,
+      "pd_mean": 0.019999997690320015,
+      "default_rate": 0.02
+    },
+    {
+      "band": 3,
+      "n": 200,
+      "pd_mean": 0.019999997690320015,
+      "default_rate": 0.015
+    },
+    {
+      "band": 4,
+      "n": 200,
+      "pd_mean": 0.027411259710788727,
+      "default_rate": 0.035
+    },
+    {
+      "band": 5,
+      "n": 200,
+      "pd_mean": 0.037942394614219666,
+      "default_rate": 0.035
+    },
+    {
+      "band": 6,
+      "n": 200,
+      "pd_mean": 0.050554562360048294,
+      "default_rate": 0.06
+    },
+    {
+      "band": 7,
+      "n": 200,
+      "pd_mean": 0.08502795547246933,
+      "default_rate": 0.11
+    },
+    {
+      "band": 8,
+      "n": 200,
+      "pd_mean": 0.14342884719371796,
+      "default_rate": 0.135
+    },
+    {
+      "band": 9,
+      "n": 200,
+      "pd_mean": 0.21778613328933716,
+      "default_rate": 0.26
+    },
+    {
+      "band": 10,
+      "n": 200,
+      "pd_mean": 0.536490797996521,
+      "default_rate": 0.52
+    }
+  ],
+  "rank_ordering_monotonic": true,
+  "segments": [
+    {
+      "segment": "Sans historique",
+      "n": 330,
+      "n_defaults": 11,
+      "roc_auc": 0.6751211171273868,
+      "ci95": [
+        0.5232456144555215,
+        0.8148490877329192
+      ],
+      "features_available": 14,
+      "features_total": 25
+    },
+    {
+      "segment": "1 prêt",
+      "n": 334,
+      "n_defaults": 46,
+      "roc_auc": 0.8617527173913043,
+      "ci95": [
+        0.8010820752861707,
+        0.9126920741275101
+      ],
+      "features_available": 23,
+      "features_total": 25
+    },
+    {
+      "segment": "2 à 3 prêts",
+      "n": 695,
+      "n_defaults": 95,
+      "roc_auc": 0.8124736842105262,
+      "ci95": [
+        0.7660440229181383,
+        0.8558472161780555
+      ],
+      "features_available": 23,
+      "features_total": 25
+    },
+    {
+      "segment": "4 prêts et +",
+      "n": 641,
+      "n_defaults": 89,
+      "roc_auc": 0.8635503175378603,
+      "ci95": [
+        0.8273859778338944,
+        0.8976349444192459
+      ],
+      "features_available": 23,
+      "features_total": 25
+    }
+  ],
+  "decisions": {
+    "REVUE_HUMAINE": 924,
+    "APPROBATION": 817,
+    "REFUS": 252,
+    "AJUSTEMENT": 7
+  },
+  "decisions_no_history": {
+    "REVUE_HUMAINE": 330
+  },
+  "fairness": [
+    {
+      "group": "gender",
+      "value": "F",
+      "n": 1124,
+      "default_rate": 0.12277580071174377,
+      "roc_auc": 0.8350493870711703,
+      "auto_approval_rate": 0.39412811387900354
+    },
+    {
+      "group": "gender",
+      "value": "M",
+      "n": 876,
+      "default_rate": 0.11757990867579908,
+      "roc_auc": 0.8495710822793555,
+      "auto_approval_rate": 0.4269406392694064
+    },
+    {
+      "group": "sector",
+      "value": "agriculture",
+      "n": 884,
+      "default_rate": 0.11990950226244344,
+      "roc_auc": 0.845600717854198,
+      "auto_approval_rate": 0.417420814479638
+    },
+    {
+      "group": "sector",
+      "value": "artisanat",
+      "n": 284,
+      "default_rate": 0.13380281690140844,
+      "roc_auc": 0.8367030380830124,
+      "auto_approval_rate": 0.4225352112676056
+    },
+    {
+      "group": "sector",
+      "value": "commerce",
+      "n": 625,
+      "default_rate": 0.1136,
+      "roc_auc": 0.8068464941272182,
+      "auto_approval_rate": 0.3856
+    },
+    {
+      "group": "sector",
+      "value": "services",
+      "n": 207,
+      "default_rate": 0.12560386473429952,
+      "roc_auc": 0.917020824479388,
+      "auto_approval_rate": 0.42028985507246375
+    },
+    {
+      "group": "location",
+      "value": "peri-urbain",
+      "n": 593,
+      "default_rate": 0.11973018549747048,
+      "roc_auc": 0.8464599859694566,
+      "auto_approval_rate": 0.40978077571669475
+    },
+    {
+      "group": "location",
+      "value": "rural",
+      "n": 1127,
+      "default_rate": 0.12156166814551908,
+      "roc_auc": 0.8416390179163902,
+      "auto_approval_rate": 0.4152617568766637
+    },
+    {
+      "group": "location",
+      "value": "urbain",
+      "n": 280,
+      "default_rate": 0.11785714285714285,
+      "roc_auc": 0.8318611213348055,
+      "auto_approval_rate": 0.37857142857142856
+    }
+  ],
+  "shap_global_top": {
+    "savings_stability": 0.27320367097854614,
+    "max_historical_dpd": 0.1327793002128601,
+    "mean_historical_dpd": 0.11175541579723358,
+    "avg_repayment_regularity": 0.0529969185590744,
+    "loan_to_savings_ratio": 0.011240404099225998,
+    "n_past_loans": 0.009695446118712425,
+    "current_loan_request": 0.007329906336963177,
+    "savings_volatility": 0.006973110139369965,
+    "total_loan_amount": 0.006311464123427868,
+    "savings_std_24m": 0.006230046972632408,
+    "current_savings": 0.005969718564301729,
+    "age": 0.0058304304257035255
+  },
+  "reason_codes_examples": {
+    "Sans historique → revue humaine": [
+      "savings_stability (−)",
+      "mean_historical_dpd (−)",
+      "max_historical_dpd (−)",
+      "avg_repayment_regularity (+)"
+    ],
+    "4 prêts et + → approbation": [
+      "savings_stability (−)",
+      "max_historical_dpd (−)",
+      "mean_historical_dpd (−)",
+      "avg_repayment_regularity (−)"
+    ]
+  },
+  "controls": {
+    "no_signal_auc": 0.5172777700456928,
+    "no_signal_range95": [
+      0.38451201762600873,
+      0.631428498132898
+    ],
+    "no_signal_n": 20,
+    "backtest_windows": [
+      {
+        "window": 1,
+        "n": 500,
+        "roc_auc": 0.8596792091193382,
+        "ci95": [
+          0.8090909911137757,
+          0.9101785240858961
+        ]
+      },
+      {
+        "window": 2,
+        "n": 500,
+        "roc_auc": 0.8216919109367622,
+        "ci95": [
+          0.7504072095395481,
+          0.8734260589589611
+        ]
+      },
+      {
+        "window": 3,
+        "n": 500,
+        "roc_auc": 0.8101263316304305,
+        "ci95": [
+          0.7513761184882533,
+          0.8690256068427191
+        ]
+      },
+      {
+        "window": 4,
+        "n": 500,
+        "roc_auc": 0.8741200206043955,
+        "ci95": [
+          0.824086638460021,
+          0.9175646756333474
+        ]
+      }
+    ]
+  },
+  "stability": {
+    "psi_score": 0.006583423206464815,
+    "psi_features_top": {
+      "current_savings": 0.010446796467711147,
+      "monthly_income": 0.010316789506216664,
+      "age": 0.009984276327043245,
+      "savings_volatility": 0.007576950689140677,
+      "current_loan_request": 0.006226431314827663,
+      "savings_to_income_ratio": 0.005650665841362509,
+      "savings_std_24m": 0.005252433839509199,
+      "loan_to_income_ratio": 0.005151049919917116
+    }
+  },
+  "figures": {
+    "roc_pr": "figures/01_roc_pr.png",
+    "calibration": "figures/02_calibration.png",
+    "score_bands": "figures/03_score_bands.png",
+    "strategy": "figures/04_strategy.png",
+    "segments": "figures/05_segments.png",
+    "fairness": "figures/06_fairness.png",
+    "shap_global": "figures/07_shap_global.png",
+    "shap_local": "figures/08_shap_local.png",
+    "controls": "figures/09_controls.png",
+    "psi": "figures/10_psi.png"
+  }
+}
