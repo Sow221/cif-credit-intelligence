@@ -44,13 +44,19 @@ def explain_one(
     Returns:
         DataFrame avec ``feature`` et ``shap_value`` (ordonné desc).
     """
-    cols = display_columns or (list(model.feature_names_in_) if hasattr(model, "feature_names_in_") else list(X_row.columns))
+    cols = display_columns or (
+        list(model.feature_names_in_)
+        if hasattr(model, "feature_names_in_")
+        else list(X_row.columns)
+    )
     if isinstance(X_row, pd.Series):
         X_row = X_row.to_frame().T
     X_row = X_row[cols]
     vals = explain_local(model, X_row).iloc[0]
     out = pd.DataFrame({"feature": vals.index, "shap_value": vals.values})
-    return out.reindex(out["shap_value"].abs().sort_values(ascending=False).index).reset_index(drop=True)
+    return out.reindex(out["shap_value"].abs().sort_values(ascending=False).index).reset_index(
+        drop=True
+    )
 
 
 def global_importance(

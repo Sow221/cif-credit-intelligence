@@ -49,9 +49,7 @@ def _train(argv: list[str] | None = None) -> int:
 
     cfg = get_config()
     df = pd.read_csv(args.features)
-    df = assert_no_leakage(
-        df, feature_columns=list(cfg.features["list"]), allow_target=True
-    )
+    df = assert_no_leakage(df, feature_columns=list(cfg.features["list"]), allow_target=True)
     # Construction du split temporel et entraînement.
     df_sorted = df.sort_values("customer_id").reset_index(drop=True)
     cutoff = int(len(df_sorted) * 0.8)
@@ -70,7 +68,9 @@ def _train(argv: list[str] | None = None) -> int:
         "calibrator": calibrator,
         "model_features": feats,
         "calibration_method": cfg.calibration.method,
-        "metrics_before": {k.replace("_before", ""): v for k, v in metrics.items() if "_before" in k},
+        "metrics_before": {
+            k.replace("_before", ""): v for k, v in metrics.items() if "_before" in k
+        },
         "metrics_after": {k.replace("_after", ""): v for k, v in metrics.items() if "_after" in k},
     }
     import os

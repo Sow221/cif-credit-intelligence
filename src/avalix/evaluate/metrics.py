@@ -37,9 +37,7 @@ def global_metrics(y_true: pd.Series, y_prob: pd.Series, threshold: float = 0.5)
         "pr_auc": _safe(average_precision_score, y, p),
         "brier": _safe(brier_score_loss, y, p),
         "log_loss": _safe(log_loss, y, p),
-        "mcc": _safe(matthews_corrcoef, y, pred)
-        if len(set(y)) > 1
-        else float("nan"),
+        "mcc": _safe(matthews_corrcoef, y, pred) if len(set(y)) > 1 else float("nan"),
         "recall": _safe(recall_score, y, pred),
         "precision": _safe(precision_score, y, pred),
     }
@@ -98,11 +96,7 @@ def segment_metrics(
         raise ValueError("Le DataFrame doit contenir une colonne `prob`.")
     if "history_len" not in df.columns:
         # Estimation grossière : par défaut, pas d'historique connu.
-        df = (
-            df.assign(history_len=1)
-            if order_col is None
-            else df.copy()
-        )
+        df = df.assign(history_len=1) if order_col is None else df.copy()
 
     segments: dict[str, tuple[int, ...] | int] = {
         "thin_file_0_loan": 0,

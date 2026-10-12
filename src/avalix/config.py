@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-import yaml
+import yaml  # type: ignore[import-untyped]
 from pydantic import BaseModel, Field, ValidationError
 
 # Racine du dépôt (trois niveaux au-dessus de ce fichier : src/avalix/config.py)
@@ -51,6 +51,7 @@ class EvaluationConfig(BaseModel):
 
 class ProjectConfig(BaseModel):
     """Configuration complète du projet."""
+
     project: dict = Field(default_factory=dict)
     data: DataConfig = DataConfig()
     features: dict = Field(default_factory=dict)
@@ -74,8 +75,7 @@ def load_config(path: Path | None = None) -> ProjectConfig:
     cfg_path = path or DEFAULT_PARAMS_PATH
     if not cfg_path.exists():
         raise FileNotFoundError(
-            f"Fichier de paramètres introuvable : {cfg_path}. "
-            "Vérifiez configs/params.yaml."
+            f"Fichier de paramètres introuvable : {cfg_path}. Vérifiez configs/params.yaml."
         )
     with cfg_path.open("r", encoding="utf-8") as fh:
         raw = yaml.safe_load(fh) or {}

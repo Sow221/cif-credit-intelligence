@@ -46,9 +46,7 @@ def test_assert_no_leakage_raises_on_forbidden() -> None:
 
 def test_assert_no_leakage_accepts_clean_features() -> None:
     """Un jeu de features saines passe sans erreur."""
-    df = pd.DataFrame(
-        {"age": [30], "monthly_income": [1_200_000.0], "is_default": [0]}
-    )
+    df = pd.DataFrame({"age": [30], "monthly_income": [1_200_000.0], "is_default": [0]})
     assert_no_leakage(df, allow_target=True)  # ne doit pas lever
 
 
@@ -89,9 +87,9 @@ def test_params_features_are_allowed() -> None:
     cfg = get_config()
     feat = cfg.features.get("list", [])
     forbidden = cfg.features.get("forbidden_variables", [])
-    assert forbidden_features(pd.DataFrame(columns=[*feat, *forbidden])) == [
-        *forbidden
-    ], "Les variables interdites ne sont pas toutes purgées de la liste features."
+    assert forbidden_features(pd.DataFrame(columns=[*feat, *forbidden])) == [*forbidden], (
+        "Les variables interdites ne sont pas toutes purgées de la liste features."
+    )
     # Aucune feature autorisée ne doit être interdite
     flagged = forbidden_features(pd.DataFrame(columns=feat))
     assert flagged == [], f"params.yaml contient des features interdites : {flagged}"

@@ -67,9 +67,7 @@ def assert_no_leakage(
     if feature_columns is not None:
         missing = [c for c in feature_columns if c not in df.columns]
         if missing:
-            raise LeakageError(
-                f"Colonnes attendues absentes des features : {missing}."
-            )
+            raise LeakageError(f"Colonnes attendues absentes des features : {missing}.")
         allowed = set(feature_columns) | {
             "customer_id",
             "loan_id",
@@ -77,9 +75,7 @@ def assert_no_leakage(
         }
         extra = [c for c in df.columns if c not in allowed]
         if extra:
-            raise LeakageError(
-                f"Colonnes inattendues dans le jeu : {extra}."
-            )
+            raise LeakageError(f"Colonnes inattendues dans le jeu : {extra}.")
 
     return df
 

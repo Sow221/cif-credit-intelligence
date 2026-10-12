@@ -26,9 +26,7 @@ app = FastAPI(
 )
 
 # Chemin du modèle par défaut ; surchargeable via env var AVALIX_MODEL_PATH.
-_DEFAULT_MODEL = (
-    PROJECT_ROOT / "models" / "trained" / "reproduced_model.joblib"
-)
+_DEFAULT_MODEL = PROJECT_ROOT / "models" / "trained" / "reproduced_model.joblib"
 
 
 def _feature_names() -> list[str]:

@@ -38,7 +38,14 @@ def test_train_pipeline_artifact_shape(data):
         warnings.simplefilter("ignore")
         cust, loans = data
         art = train_pipeline(cust, loans)
-    assert set(art.keys()) == {"model", "calibrator", "model_features", "calibration_method", "metrics_before", "metrics_after"}
+    assert set(art.keys()) == {
+        "model",
+        "calibrator",
+        "model_features",
+        "calibration_method",
+        "metrics_before",
+        "metrics_after",
+    }
     assert len(art["model_features"]) == 25
     assert art["calibration_method"] == "isotonic"
     assert "roc_auc" in art["metrics_before"] and "brier" in art["metrics_after"]
@@ -79,7 +86,9 @@ def test_segment_metrics_produces_segments(data):
         warnings.simplefilter("ignore")
         cust, loans = data
         art = train_pipeline(cust, loans)
-    X, y = __import__("avalix.features.build", fromlist=["prepare_feature_matrix"]).prepare_feature_matrix(cust, loans)
+    X, y = __import__(
+        "avalix.features.build", fromlist=["prepare_feature_matrix"]
+    ).prepare_feature_matrix(cust, loans)
     prob = art["calibrator"].predict(art["model"].predict_proba(X)[:, 1])
     df = pd.DataFrame({"prob": prob, "is_default": y, "history_len": X["n_loans"]})
     res = segment_metrics(df)
@@ -88,6 +97,7 @@ def test_segment_metrics_produces_segments(data):
 
 
 # --- Decision engine ---
+
 
 def test_decision_thresholds_ordering():
     assert decision_for_probability(0.01) == "APPROBATION"

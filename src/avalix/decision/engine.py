@@ -65,9 +65,7 @@ def decide(
             d = "REVUE_HUMAINE"
         decisions.append(d)
 
-    return pd.DataFrame(
-        {"prob": p, "history_len": hist.to_numpy(), "decision": decisions}
-    )
+    return pd.DataFrame({"prob": p, "history_len": hist.to_numpy(), "decision": decisions})
 
 
 def decision_distribution(decisions: pd.DataFrame) -> dict[str, int]:

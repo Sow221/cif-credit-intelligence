@@ -71,9 +71,7 @@ def train_model(
         eval_metric=hp.get("eval_metric", mdl.eval_metric),
         random_state=seed,
         n_jobs=-1,
-        early_stopping_rounds=hp.get(
-            "early_stopping_rounds", mdl.early_stopping_rounds
-        ),
+        early_stopping_rounds=hp.get("early_stopping_rounds", mdl.early_stopping_rounds),
     )
     model.fit(
         X_train,
@@ -144,9 +142,7 @@ def train_pipeline(
 
     model = train_model(Xtr, ytr, Xval, yval)
     calibrator = calibrate(model, Xval, yval)
-    metrics_before, metrics_after = _split_metrics(
-        evaluate_model(model, calibrator, Xval, yval)
-    )
+    metrics_before, metrics_after = _split_metrics(evaluate_model(model, calibrator, Xval, yval))
 
     artifact = {
         "model": model,
@@ -178,12 +174,7 @@ def main() -> None:
     customers = load_customers()
     loans = load_loans()
 
-    out = (
-        PROJECT_ROOT
-        / "models"
-        / "trained"
-        / "reproduced_model.joblib"
-    )
+    out = PROJECT_ROOT / "models" / "trained" / "reproduced_model.joblib"
     artifact = train_pipeline(customers, loans, out_path=out)
     print("Entraînement terminé. Artefact :", out)
     print("Métriques (validation) :")

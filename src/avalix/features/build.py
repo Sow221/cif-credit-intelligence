@@ -58,9 +58,7 @@ def aggregate_loans(loans: pd.DataFrame) -> pd.DataFrame:
         .reset_index()
     )
     # Ratio historique de défaut (évite la division par zéro)
-    agg["historical_default_rate"] = agg["n_defaults"] / np.maximum(
-        agg["n_loans"], 1
-    )
+    agg["historical_default_rate"] = agg["n_defaults"] / np.maximum(agg["n_loans"], 1)
     return agg
 
 
@@ -123,12 +121,12 @@ def build_features(
             merged[col] = merged[col].fillna(0)
 
     # Features dérivées (rapports et conversions d'unités)
-    merged["loan_to_income_ratio"] = (
-        merged["current_loan_request"] / merged["monthly_income"].replace(0, np.nan)
-    )
-    merged["savings_to_income_ratio"] = (
-        merged["current_savings"] / merged["monthly_income"].replace(0, np.nan)
-    )
+    merged["loan_to_income_ratio"] = merged["current_loan_request"] / merged[
+        "monthly_income"
+    ].replace(0, np.nan)
+    merged["savings_to_income_ratio"] = merged["current_savings"] / merged[
+        "monthly_income"
+    ].replace(0, np.nan)
     merged["seniority_years"] = merged["seniority_months"] / 12.0
     merged["overall_payment_regularity"] = merged["avg_repayment_regularity"]
 
@@ -139,9 +137,7 @@ def build_features(
     result = merged[out_cols].copy()
 
     # Garde anti-leakage : s'assure que la sortie est propre et complète.
-    return assert_no_leakage(
-        result, feature_columns=feature_columns, allow_target=True
-    )
+    return assert_no_leakage(result, feature_columns=feature_columns, allow_target=True)
 
 
 def prepare_feature_matrix(
