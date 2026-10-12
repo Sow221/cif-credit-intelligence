@@ -120,3 +120,15 @@ def test_decision_distribution():
     dist = decision_distribution(out)
     assert set(dist) <= set(DECISIONS)
     assert dist["APPROBATION"] == 1
+
+
+def test_temporal_split_3_is_disjoint_and_ordered():
+    import pandas as pd
+
+    from avalix.models.train import temporal_split_3
+
+    df = pd.DataFrame({"customer_id": range(100), "x": range(100)})
+    tr, cal, te = temporal_split_3(df)
+    assert (len(tr), len(cal), len(te)) == (60, 20, 20)
+    assert tr["customer_id"].max() < cal["customer_id"].min()
+    assert cal["customer_id"].max() < te["customer_id"].min()

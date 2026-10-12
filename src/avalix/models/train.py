@@ -42,6 +42,26 @@ def temporal_split(
     return df.iloc[:cutoff].copy(), df.iloc[cutoff:].copy()
 
 
+def temporal_split_3(
+    df: pd.DataFrame,
+    *,
+    order_col: str = "customer_id",
+    fractions: tuple[float, float] = (0.6, 0.8),
+) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    """Split temporel en trois blocs : entraînement / calibration / test.
+
+    - entraînement (0 → 60 %) : apprentissage des arbres ;
+    - calibration (60 → 80 %) : early stopping + calibration isotonique ;
+    - test (80 → 100 %) : jamais vu, sert uniquement à l'évaluation.
+
+    Évaluer sur le bloc qui a servi à l'early stopping et à la calibration
+    donnerait des métriques optimistes.
+    """
+    df = df.sort_values(order_col).reset_index(drop=True)
+    a, b = (int(len(df) * f) for f in fractions)
+    return df.iloc[:a].copy(), df.iloc[a:b].copy(), df.iloc[b:].copy()
+
+
 def train_model(
     X_train: pd.DataFrame,
     y_train: pd.Series,
@@ -119,7 +139,7 @@ def train_pipeline(
     *,
     out_path: Path | None = None,
 ) -> dict:
-    """Pipeline d'entraînement complet (split temporel → modèle calibré).
+    """Pipeline d'entraînement complet (split temporel 60/20/20 → modèle calibré).
 
     Returns:
         dict with keys ``model``, ``calibrator``, ``model_features``,
@@ -134,15 +154,20 @@ def train_pipeline(
     df["__target__"] = y
     df["customer_id"] = customers["customer_id"].to_numpy()
 
-    Xtr, Xval = temporal_split(df)
-    ytr = Xtr["__target__"]
-    yval = Xval["__target__"]
-    Xtr = Xtr.drop(columns=["__target__", "customer_id"])
-    Xval = Xval.drop(columns=["__target__", "customer_id"])
+    tr, cal, te = temporal_split_3(df)
 
-    model = train_model(Xtr, ytr, Xval, yval)
-    calibrator = calibrate(model, Xval, yval)
-    metrics_before, metrics_after = _split_metrics(evaluate_model(model, calibrator, Xval, yval))
+    def _xy(part: pd.DataFrame) -> tuple[pd.DataFrame, pd.Series]:
+        return part.drop(columns=["__target__", "customer_id"]), part["__target__"]
+
+    Xtr, ytr = _xy(tr)
+    Xcal, ycal = _xy(cal)
+    Xte, yte = _xy(te)
+
+    model = train_model(Xtr, ytr, Xcal, ycal)
+    calibrator = calibrate(model, Xcal, ycal)
+    # Métriques sur le bloc de test, jamais utilisé pour l'apprentissage,
+    # l'early stopping ni la calibration.
+    metrics_before, metrics_after = _split_metrics(evaluate_model(model, calibrator, Xte, yte))
 
     artifact = {
         "model": model,

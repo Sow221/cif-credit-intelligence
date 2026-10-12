@@ -50,18 +50,14 @@ def _train(argv: list[str] | None = None) -> int:
     cfg = get_config()
     df = pd.read_csv(args.features)
     df = assert_no_leakage(df, feature_columns=list(cfg.features["list"]), allow_target=True)
-    # Construction du split temporel et entraînement.
-    df_sorted = df.sort_values("customer_id").reset_index(drop=True)
-    cutoff = int(len(df_sorted) * 0.8)
-    train_df = df_sorted.iloc[:cutoff].copy()
-    val_df = df_sorted.iloc[cutoff:].copy()
-    feats = list(cfg.features["list"])
-    Xtr, ytr = train_df[feats], train_df["is_default"]
-    Xval, yval = val_df[feats], val_df["is_default"]
+    # Split temporel 60/20/20 : entraînement / calibration / test.
+    from avalix.models.train import temporal_split_3
 
-    model = train_model(Xtr, ytr, Xval, yval)
-    calibrator = calibrate(model, Xval, yval)
-    metrics = evaluate_model(model, calibrator, Xval, yval)
+    feats = list(cfg.features["list"])
+    tr, cal, te = temporal_split_3(df)
+    model = train_model(tr[feats], tr["is_default"], cal[feats], cal["is_default"])
+    calibrator = calibrate(model, cal[feats], cal["is_default"])
+    metrics = evaluate_model(model, calibrator, te[feats], te["is_default"])
 
     artifact = {
         "model": model,

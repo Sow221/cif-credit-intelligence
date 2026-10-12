@@ -6,6 +6,7 @@ from avalix.models.train import (
     main,
     predict_proba,
     temporal_split,
+    temporal_split_3,
     train_model,
     train_pipeline,
 )
@@ -16,6 +17,7 @@ __all__ = [
     "main",
     "predict_proba",
     "temporal_split",
+    "temporal_split_3",
     "train_model",
     "train_pipeline",
 ]
