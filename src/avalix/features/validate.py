@@ -25,6 +25,7 @@ FORBIDDEN_SUBSTRINGS: tuple[str, ...] = (
     "p_default",
     "probability_default",
     "true_default",
+    "raw_score",
 )
 
 

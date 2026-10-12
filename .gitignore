@@ -52,6 +52,9 @@ data/*
 !data/archived/
 # à l'intérieur des dossiers data ré-inclus, ignore les artefacts lourds
 data/**/*.csv
+# Jeu de référence synthétique (petit, versionné pour la reproductibilité)
+!data/raw/customers_final_20260817_145043.csv
+!data/raw/loans_final_20260817_145043.csv
 data/**/*.joblib
 data/**/*.pkl
 data/**/*.parquet
@@ -110,3 +113,7 @@ tmp/
 !data/**/*.dvc
 !models/**/*.dvc
 !**/*.dvc
+
+# Jeu de référence synthétique Avalix (versionné pour la reproductibilité)
+!data/raw/customers_final_20260817_145043.csv
+!data/raw/loans_final_20260817_145043.csv

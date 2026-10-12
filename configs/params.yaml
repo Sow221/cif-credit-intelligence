@@ -59,6 +59,7 @@ features:
     - p_default
     - probability_default
     - true_default
+    - raw_score        # score latent du générateur synthétique
 
 model:
   algorithm: xgboost
