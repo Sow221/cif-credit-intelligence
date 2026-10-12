@@ -38,7 +38,7 @@ def make_decision(
         uncertainty_level="LOW",
         information_state="FULL_FILE",
         data_quality="PASS",
-        policy={"approve_threshold": 0.7, "decline_threshold": 0.3},
+        policy={"approve_max_pd": 0.05, "decline_min_pd": 0.30},
     )
     result = engine.decide(inputs)
     decision = Decision(

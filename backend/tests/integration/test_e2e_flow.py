@@ -58,7 +58,7 @@ def test_full_decision_flow():
         uncertainty_level=unc.level,
         information_state=profile.information_state,
         data_quality=qr.overall.value,
-        policy={"approve_threshold": 0.7, "decline_threshold": 0.3},
+        policy={"approve_max_pd": 0.05, "decline_min_pd": 0.30},
     )
     decision = decision_engine.decide(decision_input)
     assert decision.recommendation in ("APPROVE", "REVIEW", "DECLINE")
